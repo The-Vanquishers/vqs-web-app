@@ -36,3 +36,9 @@ body,
 .css-bwhex-MuiPaper-root {
   background-color: transparent !important;
 }
+.login-btn-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}

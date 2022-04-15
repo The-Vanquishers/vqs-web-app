@@ -6,7 +6,7 @@ function Button(props) {
   return (
     <div className="input-container">
       <MuiButton
-        variant="contained"
+        variant={props.variant || "contained"}
         color={props.color || "primary"}
         onClick={props.onClick}
         disabled={props.loading}
