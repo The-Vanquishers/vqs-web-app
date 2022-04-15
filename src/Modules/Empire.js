@@ -3,7 +3,7 @@ import "../App.css";
 import Grid from "@mui/material/Grid";
 import Wall from "../Assets/wall.png";
 import Buildings from "../Assets/buildings.png";
-const showGrid = false;
+const showGrid = true;
 function Empire() {
 
   return (
