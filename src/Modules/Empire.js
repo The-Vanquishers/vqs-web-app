@@ -220,7 +220,7 @@ function Empire({login}) {
                 cursor: "pointer"
               }}
               onClick={() => {
-                alert("Townhall");
+                setShowTownHallModal(!showTownHallModal);
               }}
             ></Grid>
             <Grid
@@ -489,8 +489,6 @@ function Empire({login}) {
           </Grid>
         </Grid>
       </Grid>
-
-
       {showTownHallModal && Object.keys(empireDetails).length && <TownHall empireDetails={empireDetails} />}
     </div>
   );
