@@ -13,7 +13,7 @@ function Login(props) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const Navigate = useNavigate();
-
+  console.log(props);
   useEffect(() => {
     if (props.login.isLoggedIn) {
       Navigate("/empire");
