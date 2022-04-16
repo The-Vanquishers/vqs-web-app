@@ -1,5 +1,4 @@
-// const apiUrl = process.env.REACT_APP_API_URL;
-const apiUrl = 'http://localhost:8080';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const buildingNameToId = {
   'Town Hall': '623173e1f10faea791509fb3',
