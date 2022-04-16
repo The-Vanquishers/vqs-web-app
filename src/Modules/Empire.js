@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import Grid from "@mui/material/Grid";
 import Wall from "../Assets/wall.png";
 import Buildings from "../Assets/buildings.png";
-const showGrid = false;
-function Empire() {
+import axios from "axios";
+import { apiUrl } from "../variables";
+import { connect } from "react-redux";
+import {loginReducer} from "../reducers/login"
 
+import TownHall from "./TownHall";
+
+const showGrid = false;
+
+function Empire({login}) {
+
+  const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [empireDetails, setEmpireDetails] = useState({});
+
+
+  useEffect(() => {
+    const fetchEmpireDetails = async() => {
+      const { data } = await axios.get(`${apiUrl}/user/empire/6245eddb033dd431b52544d2`,{headers:{token:login.token}});
+      setEmpireDetails(data);
+    }
+    fetchEmpireDetails();
+  }, [])
+  
   return (
     <div className="empire">
       <Grid sx={{ flexGrow: 1 }} container spacing={2}>
@@ -23,7 +43,7 @@ function Empire() {
                 backgroundSize: "cover",
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             >
               <Grid container>
@@ -33,7 +53,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -42,7 +62,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -51,7 +71,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -60,7 +80,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -69,7 +89,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -78,7 +98,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
               </Grid>
@@ -89,7 +109,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -98,7 +118,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -110,10 +130,10 @@ function Empire() {
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
                     backgroundPosition: `0% 0%`,
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                   onClick={() => {
-                    alert("Townhall");
+                    setShowTownHallModal(!showTownHallModal);
                   }}
                 ></Grid>
                 <Grid
@@ -124,7 +144,7 @@ function Empire() {
                     borderWidth: showGrid ? 1 : 0,
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
-                    backgroundPosition: `65% 16%`
+                    backgroundPosition: `65% 16%`,
                   }}
                 ></Grid>
                 <Grid
@@ -133,7 +153,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -142,7 +162,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
               </Grid>
@@ -153,7 +173,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -164,7 +184,7 @@ function Empire() {
                     borderWidth: showGrid ? 1 : 0,
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
-                    backgroundPosition: `68% -4%`
+                    backgroundPosition: `68% -4%`,
                   }}
                 ></Grid>
                 <Grid
@@ -173,7 +193,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -182,7 +202,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -193,7 +213,7 @@ function Empire() {
                     borderWidth: showGrid ? 1 : 0,
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
-                    backgroundPosition: `93% -1%`
+                    backgroundPosition: `93% -1%`,
                   }}
                 ></Grid>
                 <Grid
@@ -202,7 +222,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
               </Grid>
@@ -213,7 +233,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -224,7 +244,7 @@ function Empire() {
                     borderWidth: showGrid ? 1 : 0,
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
-                    backgroundPosition: `0% 20%`
+                    backgroundPosition: `0% 20%`,
                   }}
                 ></Grid>
                 <Grid
@@ -233,7 +253,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -242,7 +262,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -253,7 +273,7 @@ function Empire() {
                     borderWidth: showGrid ? 1 : 0,
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
-                    backgroundPosition: `-2% 34%`
+                    backgroundPosition: `-2% 34%`,
                   }}
                 ></Grid>
                 <Grid
@@ -262,7 +282,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
               </Grid>
@@ -273,7 +293,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -282,7 +302,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -293,7 +313,7 @@ function Empire() {
                     borderWidth: showGrid ? 1 : 0,
                     borderStyle: "solid",
                     backgroundImage: `url(${Buildings})`,
-                    backgroundPosition: `42% 36%`
+                    backgroundPosition: `42% 36%`,
                   }}
                 ></Grid>
                 <Grid
@@ -302,7 +322,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -311,7 +331,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -320,7 +340,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
               </Grid>
@@ -331,7 +351,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -340,7 +360,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -349,7 +369,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -358,7 +378,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -367,7 +387,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
                 <Grid
@@ -376,7 +396,7 @@ function Empire() {
                   sx={{
                     borderColor: "gray",
                     borderWidth: showGrid ? 1 : 0,
-                    borderStyle: "solid"
+                    borderStyle: "solid",
                   }}
                 ></Grid>
               </Grid>
@@ -384,8 +404,15 @@ function Empire() {
           </Grid>
         </Grid>
       </Grid>
+
+      {showTownHallModal && Object.keys(empireDetails).length && <TownHall empireDetails={empireDetails}/>}
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    login: loginReducer(state),
+  };
+};
 
-export default Empire;
+export default connect(mapStateToProps) (Empire);
