@@ -22,11 +22,16 @@ const showGrid = false;
 function Empire({login}) {
   const [showTownHallModal, setShowTownHallModal] = useState(false);
   const [empireDetails, setEmpireDetails] = useState({});
+  const [empireId, setEmpireId] = useState("");
+
 
 
   useEffect(() => {
     const fetchEmpireDetails = async () => {
-      const { data } = await axios.get(`${apiUrl}/user/empire/6245eddb033dd431b52544d2`, { headers: { token: login.token } });
+      //empireId fetching
+      const response = await axios.get(`${apiUrl}/user/empires`, { headers: { token: login.token } });
+      
+      const { data } = await axios.get(`${apiUrl}/user/empire/${response.data.empires[0]._id}`, { headers: { token: login.token } });
       setEmpireDetails(data);
     }
     fetchEmpireDetails();

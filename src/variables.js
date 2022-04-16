@@ -35,9 +35,18 @@ const buildingNames = {
   WORKSHOP: "Siege Workshop",
 };
 
+const resourceSets = {
+  Iron: "6231728ff10faea791509fac",
+  Wood: "623172adf10faea791509fae",
+  Stone: "623172a5f10faea791509fad",
+  Food: "6233f7f7e996f0998ee1ce7a",
+  Gold: "6233f80ae996f0998ee1ce7c",
+};
+
 module.exports = {
   apiUrl,
   buildingNameToId,
+  resourceSets,
   buildingNames,
   ITEM_HIDDEN_CLASS,
   ITEM_VISIBLE_CLASS,

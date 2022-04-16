@@ -9,6 +9,7 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
+import { resourceSets } from "../variables";
 
 const style = {
   position: "absolute",
@@ -25,63 +26,50 @@ const style = {
   py: 2,
 };
 
+const resourceMapper = (id) => {
+  switch (id) {
+    case resourceSets.Food:
+      return FoodIcon;
+    case resourceSets.Gold:
+      return GoldIcon;
+    case resourceSets.Stone:
+      return StoneIcon;
+    case resourceSets.Wood:
+      return WoodIcon;
+    case resourceSets.Iron:
+      return IronIcon;
+    default:
+      break;
+  }
+}
+
 const ModalComponent = ({ name, image, position, level,resources,resourceRequirements,constructionTime }) => {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => setOpen(false);
 
-  console.log(resources);
+ 
   return (
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Grid container spacing={2}>
-            <Grid
-              item
-              xs={2}
-              sx={{
-                my: 1,
-              }}
-            >
-              <img src={FoodIcon} alt="" style={{ width: "20px" }} /> 1500
+            {resourceRequirements.map(item => (
+              <Grid
+                item
+                xs={2}
+                key={item.resourceId}
+              >
+                <img src={resourceMapper(item.resourceId)} alt="" style={{ width: "20px" }} /> {item.quantity}
             </Grid>
-
+            ))}
             <Grid
               item
-              xs={2}
+              xs={4}
               sx={{
                 my: 1,
               }}
             >
-              <img src={WoodIcon} alt="" style={{ width: "20px" }} /> 1500
-            </Grid>
-
-            <Grid
-              item
-              xs={2}
-              sx={{
-                my: 1,
-              }}
-            >
-              <img src={StoneIcon} alt="" style={{ width: "20px" }} /> 1500
-            </Grid>
-
-            <Grid
-              item
-              xs={2}
-              sx={{
-                my: 1,
-              }}
-            >
-              <img src={IronIcon} alt="" style={{ width: "20px" }} /> 1500
-            </Grid>
-            <Grid
-              item
-              xs={2}
-              sx={{
-                my: 1,
-              }}
-            >
-              <img src={GoldIcon} alt="" style={{ width: "20px" }} /> 1500
+              Construction Time: {constructionTime}
             </Grid>
             <Grid
               item
@@ -94,7 +82,8 @@ const ModalComponent = ({ name, image, position, level,resources,resourceRequire
                 upgrade
               </Button>
             </Grid>
-
+          </Grid>
+          <Grid container spacing={2} sx={{my:3}}>
             <Grid
               item
               xs={3}

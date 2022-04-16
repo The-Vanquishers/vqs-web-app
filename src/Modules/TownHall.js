@@ -24,21 +24,20 @@ const TownHall = ({ empireDetails,login }) => {
       };
       fetchRequirements();
     }, []); 
-
-  
   
   return (
     <>
-      {
-        requirements && <ModalComponent
+      {Object.keys(requirements).length && (
+        <ModalComponent
           name="Town Hall"
-          level= {level}
+          level={level}
           image={Buildings}
           resources={empireDetails.resources}
-          requirements={requirements}
+          resourceRequirements={requirements.constructionCost}
+          constructionTime={requirements.constructionTime}
           position="0% 0%"
         />
-      }
+      )}
     </>
   );
 }
