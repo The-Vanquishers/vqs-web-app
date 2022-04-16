@@ -9,6 +9,7 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
+
 import {
   buildingNameToId,
   ITEM_HIDDEN_CLASS,
@@ -16,6 +17,7 @@ import {
   buildingNames
 } from "../variables";
 import { store } from "../store";
+import Spinner from "../Components/Spinner";
 
 
 const showGrid = true;
@@ -34,6 +36,7 @@ function Empire() {
 
   return (
     <div>
+      <Spinner />
       <Grid item xs={12} container justifyContent="center" className="empire">
         <Grid
           item
