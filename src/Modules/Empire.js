@@ -27,7 +27,8 @@ function Empire(props) {
     const state = store.getState();
     const token = state.login.token;
     props.getEmpireBuildings(token);
-  }, [props])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
 
   const getGridItemClass = (buildingList, buildingName) => {
@@ -42,7 +43,6 @@ function Empire(props) {
   return (
     <div>
       {props.empire.loading && !props.empire.error && <Spinner />}
-      {console.log(props.empire.data)}
       <Grid item xs={12} container justifyContent="center" className="empire">
         <Grid
           item
@@ -222,7 +222,7 @@ function Empire(props) {
 
             {/* TOWN HALL */}
             <Grid
-              className={getGridItemClass([], buildingNames.TOWN_HALL)}
+              className={getGridItemClass(props.empire.data, buildingNames.TOWN_HALL)}
               item
               xs={2}
               sx={{
@@ -240,7 +240,7 @@ function Empire(props) {
 
             {/* WATCH TOWER */}
             <Grid
-              className={getGridItemClass([], buildingNames.WATCH_TOWER)}
+              className={getGridItemClass(props.empire.data, buildingNames.WATCH_TOWER)}
               item
               xs={2}
               sx={{
@@ -286,7 +286,7 @@ function Empire(props) {
             ></Grid>
             {/* FIRM */}
             <Grid
-              className={getGridItemClass([], buildingNames.FARM)}
+              className={getGridItemClass(props.empire.data, buildingNames.FARM)}
               item
               xs={2}
               sx={{
@@ -304,7 +304,7 @@ function Empire(props) {
 
             {/* WAREHOUSE */}
             <Grid
-              className={getGridItemClass([], buildingNames.WAREHOUSE)}
+              className={getGridItemClass(props.empire.data, buildingNames.WAREHOUSE)}
               item
               xs={2}
               sx={{
@@ -331,7 +331,7 @@ function Empire(props) {
 
             {/* MARKET */}
             <Grid
-              className={getGridItemClass([], buildingNames.MARKET)}
+              className={getGridItemClass(props.empire.data, buildingNames.MARKET)}
               item
               xs={2}
               sx={{
@@ -368,7 +368,7 @@ function Empire(props) {
             ></Grid>
             {/* STABLE */}
             <Grid
-              className={getGridItemClass([], buildingNames.STABLE)}
+              className={getGridItemClass(props.empire.data, buildingNames.STABLE)}
               item
               xs={2}
               sx={{
@@ -395,7 +395,7 @@ function Empire(props) {
             ></Grid>
             {/* BARRACKS */}
             <Grid
-              className={getGridItemClass([], buildingNames.BARRACKS)}
+              className={getGridItemClass(props.empire.data, buildingNames.BARRACKS)}
               item
               xs={2}
               sx={{
@@ -413,7 +413,7 @@ function Empire(props) {
             ></Grid>
             {/* SIEGE WORKSHOP */}
             <Grid
-              className={getGridItemClass([], buildingNames.WORKSHOP)}
+              className={getGridItemClass(props.empire.data, buildingNames.WORKSHOP)}
               item
               xs={2}
               sx={{
@@ -459,7 +459,7 @@ function Empire(props) {
             ></Grid>
             {/* ROCK PICKER */}
             <Grid
-              className={getGridItemClass([], buildingNames.ROCK_PICKER)}
+              className={getGridItemClass(props.empire.data, buildingNames.ROCK_PICKER)}
               item
               xs={2}
               sx={{
@@ -477,7 +477,7 @@ function Empire(props) {
             ></Grid>
             {/* Logging */}
             <Grid
-              className={getGridItemClass([], buildingNames.LOGGING)}
+              className={getGridItemClass(props.empire.data, buildingNames.LOGGING)}
               item
               xs={2}
               sx={{
