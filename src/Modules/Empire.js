@@ -21,7 +21,7 @@ import {
 import { store } from "../store";
 import Spinner from "../Components/Spinner";
 
-const showGrid = true;
+const showGrid = false;
 function Empire(props) {
   useEffect(() => {
     const state = store.getState();
@@ -33,7 +33,7 @@ function Empire(props) {
 
   const getGridItemClass = (buildingList, buildingName) => {
     const buildingId = buildingNameToId[buildingName];
-    // return ITEM_VISIBLE_CLASS;
+    // return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
       return ITEM_VISIBLE_CLASS;
     }
@@ -43,6 +43,7 @@ function Empire(props) {
   return (
     <div>
       {props.empire.loading && !props.empire.error && <Spinner />}
+      {props.error && alert(props.errorMsg)}
       <Grid item xs={12} container justifyContent="center" className="empire">
         <Grid
           item
@@ -258,6 +259,7 @@ function Empire(props) {
 
             {/* MINE */}
             <Grid
+              className={getGridItemClass(props.empire.data, buildingNames.MINE)}
               item
               xs={2}
               sx={{

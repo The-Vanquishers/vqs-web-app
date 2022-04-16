@@ -30,7 +30,8 @@ export const fetchEmpireBuildings = (token) => {
                 dispatch(fetchEmpireBuildingsSuccess(buildings));
             })
             .catch(err => {
-                dispatch(fetchEmpireBuildingsError(err.message))
+                const errMsg = err.message;
+                dispatch(fetchEmpireBuildingsError(errMsg));
             })
     }
 }
