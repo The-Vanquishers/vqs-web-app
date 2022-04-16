@@ -33,7 +33,7 @@ function Empire(props) {
 
   const getGridItemClass = (buildingList, buildingName) => {
     const buildingId = buildingNameToId[buildingName];
-    //return ITEM_VISIBLE_CLASS;
+    // return ITEM_VISIBLE_CLASS;
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
       return ITEM_VISIBLE_CLASS;
     }
@@ -255,13 +255,22 @@ function Empire(props) {
                 alert("Watch Tower");
               }}
             ></Grid>
+
+            {/* MINE */}
             <Grid
               item
               xs={2}
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
+                backgroundImage: `url(${Buildings})`,
+                backgroundPosition: `68% 95%`,
+                zoom: 1.50,
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                alert("Mine");
               }}
             ></Grid>
             <Grid
