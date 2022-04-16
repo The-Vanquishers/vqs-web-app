@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Wall from "../Assets/wall.png";
 import Bg from "../Assets/trans.png";
@@ -11,28 +12,37 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import { connect } from "react-redux";
 import { loginReducer } from "../reducers/login";
-const { resources } = require("../actions/resources");
-const {resourcesReducer} = require("../reducers/Resources");
+import { getEmpireDetails } from "../actions/empire";
+import { empireReducer } from "../reducers/empire";
 const showGrid = true;
 
 function Empire(props) {
-  const {token} = props.login;
+  const Navigate = useNavigate();
+  const { token } = props.login;
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
-  if(token){
-    props.dispatch(resources(token));
+  if (!token) {
+    Navigate("/");
   }
   useEffect(() => {
-    if (props.resources.isFetched) {
-      setResource(props.resources.empireResource);
+    if (!props.empire.isFetching && !props.empire.isFetched) {
+      if (props.empire.fetchingFailed) {
+        setTimeout(() => {
+          props.dispatch(getEmpireDetails(token));
+        }, 2000);
+        return;
+      }
+      props.dispatch(getEmpireDetails(token));
+    }
+    if (props.empire.isFetched) {
+      setResource(props.empire.resources);
       return;
     }
-    if (props.resources.fetchingFailed) {
-      setErr(props.resources.errMsg);
+    if (props.empire.fetchingFailed) {
+      setErr(props.empire.errMsg);
       return;
     }
-  }, [props.resources]);
-  console.log(props);
+  }, [props.empire]);
   return (
     <div>
       <Grid item xs={12} container justifyContent="center" className="empire">
@@ -101,19 +111,24 @@ function Empire(props) {
                 }}
               >
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={FoodIcon} alt="" style={{ width: "20px" }} /> 1500
+                  <img src={FoodIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.food}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={WoodIcon} alt="" style={{ width: "20px" }} /> 168
+                  <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.wood}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={IronIcon} alt="" style={{ width: "20px" }} /> 1107
+                  <img src={IronIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.iron}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={StoneIcon} alt="" style={{ width: "20px" }} /> 450
+                  <img src={StoneIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.stone}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={GoldIcon} alt="" style={{ width: "20px" }} /> 10
+                  <img src={GoldIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.gold}
                 </div>
               </div>
             </Grid>
@@ -496,7 +511,7 @@ function Empire(props) {
 
 const mapStateToProps = state => {
   return {
-    resources: resourcesReducer(state),
+    empire: empireReducer(state),
     login: loginReducer(state)
   };
 };
