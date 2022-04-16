@@ -18,7 +18,7 @@ import {
 } from "../variables";
 import { store } from "../store";
 import Spinner from "../Components/Spinner";
-
+import { connect } from 'react-redux';
 
 const showGrid = true;
 function Empire() {
