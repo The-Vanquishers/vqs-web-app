@@ -4,8 +4,9 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
-const { login } = require("../actions/login");
-const { loginReducer } = require("../reducers/login");
+const { login} = require("../actions/login");
+const { loginReducer} = require("../reducers/login");
+
 
 
 function Login(props) {
@@ -15,7 +16,6 @@ function Login(props) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const Navigate = useNavigate();
-
   useEffect(() => {
     if (props.login.isLoggedIn) {
       Navigate("/empire");
@@ -26,6 +26,7 @@ function Login(props) {
       setErr(props.login.errMsg);
       return;
     }
+   
   }, [props.login, Navigate]);
 
   const onLoginBtnClick = () => {
@@ -37,6 +38,7 @@ function Login(props) {
     setLoading(true);
     props.dispatch(login(email, password));
   };
+
 
   return (
     <div className="login">
@@ -65,12 +67,21 @@ function Login(props) {
         />
         <br />
         <p>{err}</p>
+        <div className="login-btn-container">
         <Button
           text="Login"
           color="success"
           onClick={onLoginBtnClick}
           loading={loading}
         />
+         <Button
+          text="Don't have an account!"
+          color="primary"
+          variant="outlined"
+          onClick={()=>Navigate("/signup")}
+          loading={loading}
+        />
+        </div>
       </div>
     </div>
   );
