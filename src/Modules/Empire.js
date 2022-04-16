@@ -15,8 +15,13 @@ import {
   ITEM_VISIBLE_CLASS,
   buildingNames
 } from "../variables";
+import { store } from "../store";
+
+
 const showGrid = true;
 function Empire() {
+  const state = store.getState();
+  const token = state.login.token;
 
   const getGridItemClass = (buildingList, buildingName) => {
     const buildingId = buildingNameToId[buildingName];
