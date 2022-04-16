@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../App.css";
 import Grid from "@mui/material/Grid";
 import Wall from "../Assets/wall.png";
 import Bg from "../Assets/trans.png";
 import Buildings from "../Assets/buildings.png";
+import { connect } from 'react-redux';
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
+import { fetchEmpireBuildings } from "../actions/empire";
 
 import {
   buildingNameToId,
@@ -18,12 +20,15 @@ import {
 } from "../variables";
 import { store } from "../store";
 import Spinner from "../Components/Spinner";
-import { connect } from 'react-redux';
 
 const showGrid = true;
-function Empire() {
-  const state = store.getState();
-  const token = state.login.token;
+function Empire(props) {
+  useEffect(() => {
+    const state = store.getState();
+    const token = state.login.token;
+    props.getEmpireBuildings(token);
+  }, [props])
+
 
   const getGridItemClass = (buildingList, buildingName) => {
     const buildingId = buildingNameToId[buildingName];
@@ -36,7 +41,8 @@ function Empire() {
 
   return (
     <div>
-      <Spinner />
+      {props.empire.loading && !props.empire.error && <Spinner />}
+      {console.log(props.empire.data)}
       <Grid item xs={12} container justifyContent="center" className="empire">
         <Grid
           item
@@ -568,4 +574,16 @@ function Empire() {
   );
 }
 
-export default Empire;
+const mapDispatchToProps = dispatch => {
+  return {
+    getEmpireBuildings: (token) => dispatch(fetchEmpireBuildings(token))
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    empire: state.empireReducer
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Empire);
