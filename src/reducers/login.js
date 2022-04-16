@@ -3,7 +3,7 @@ import { LOGGED_IN, LOGGING_IN, LOGIN_FAILED } from "../actions/login";
 const initialState = {
   loggingIn: false,
   isLoggedIn: false,
-  logupFailed: false,
+  loginFailed: false,
   errMsg: null,
   token: null
 };
