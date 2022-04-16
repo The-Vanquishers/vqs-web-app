@@ -43,7 +43,6 @@ function Empire(props) {
   return (
     <div>
       {props.empire.loading && !props.empire.error && <Spinner />}
-      {props.error && alert(props.errorMsg)}
       <Grid item xs={12} container justifyContent="center" className="empire">
         <Grid
           item
