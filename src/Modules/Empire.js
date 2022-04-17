@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { loginReducer } from "../reducers/login";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
-const showGrid = true;
+const showGrid = false;
 
 function Empire(props) {
   const Navigate = useNavigate();
@@ -42,7 +42,7 @@ function Empire(props) {
       setErr(props.empire.errMsg);
       return;
     }
-  }, [props.empire]);
+  }, [props, token]);
   return (
     <div>
       <Grid item xs={12} container justifyContent="center" className="empire">
@@ -58,6 +58,7 @@ function Empire(props) {
           }}
           justifyContent="center"
         >
+          {err}
           <Grid
             item
             xs={6}
@@ -103,7 +104,7 @@ function Empire(props) {
                 style={{
                   width: "auto%",
                   height: "auto",
-                  float: "left",
+                  float: "right",
                   backgroundImage: `url(${Bg})`,
                   marginTop: "30px",
                   padding: "5px",
