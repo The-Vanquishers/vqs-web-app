@@ -12,18 +12,19 @@ const TownHall = ({ empireDetails,login }) => {
   const [requirements, setRequirements] = useState({});
   const  Town_Hall  = buildingNameToId['Town Hall'];
     
-    const level = empireDetails.buildings.filter((item) => item.buildingId === Town_Hall)[0].leve;
+  const level = empireDetails.buildings.filter((item) => item.buildingId === Town_Hall)[0].leve;
     
     
     useEffect(() => {
-      const fetchRequirements = async () => {
+      const fetchRequirements = async (id) => {
         const { data } = await axios.get(`${apiUrl}/buildings/${Town_Hall}`, {
           headers: { token: login.token, empireId: empireDetails.empireId },
         });
         setRequirements(data);
       };
+
       fetchRequirements();
-    }, []); 
+    }, []);
   
   return (
     <>
@@ -36,6 +37,8 @@ const TownHall = ({ empireDetails,login }) => {
           resourceRequirements={requirements.constructionCost}
           constructionTime={requirements.constructionTime}
           position="0% 0%"
+          buildings={empireDetails.buildings.filter(b=>b.buildingId!==Town_Hall)}
+          empireName={empireDetails.name}
         />
       )}
     </>

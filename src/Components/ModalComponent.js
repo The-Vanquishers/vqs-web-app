@@ -10,6 +10,7 @@ import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import { resourceSets } from "../variables";
+import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 
 const style = {
   position: "absolute",
@@ -17,7 +18,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 500,
-  color:"white",
+  color:"white", 
   // bgcolor: "#888888",
   bg: `url(${trans})`,
   border: "2px solid #000",
@@ -43,16 +44,23 @@ const resourceMapper = (id) => {
   }
 }
 
-const ModalComponent = ({ name, image, position, level,resources,resourceRequirements,constructionTime }) => {
+const ModalComponent = ({ name, image, position, level,resources,resourceRequirements,constructionTime,buildings,empireName }) => {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => setOpen(false);
 
- 
+  console.log(buildings);
   return (
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Grid container spacing={2}>
+            <Grid
+              item
+              xs={2}
+              
+            >
+              {empireName}
+            </Grid>
             {resourceRequirements.map(item => (
               <Grid
                 item
@@ -64,19 +72,19 @@ const ModalComponent = ({ name, image, position, level,resources,resourceRequire
             ))}
             <Grid
               item
-              xs={4}
-              sx={{
-                my: 1,
+              xs={2}
+              
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
               }}
             >
-              Construction Time: {constructionTime}
+              <AccessAlarmsIcon sx={{mx:1}}/> {constructionTime}
             </Grid>
             <Grid
               item
-              xs={2}
-              sx={{
-                my: 1,
-              }}
+              xs={2} 
             >
               <Button size="small" variant="contained" color="success">
                 upgrade

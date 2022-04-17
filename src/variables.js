@@ -35,6 +35,22 @@ const buildingNames = {
   WORKSHOP: "Siege Workshop",
 };
 
+const buildingPosition = {
+  HOUSE: "65% 16%",
+  TOWN_HALL: "0% 0%",
+  MINE: "0% 20%",
+  LOGGING: "-2% 34%",
+  ROCK_PICKER: "42% 36%",
+  BARRACKS: "68% -4%",
+  STABLE: "93% -1%",
+  WATCH_TOWER: "5% 6%",
+  RESEARCH_CENTER: "9% 8%",
+  MARKET: "49% -3%",
+  WAREHOUSE: "4% 23%",
+  FARM: "90% -4%",
+  WORKSHOP: "12% 94%",
+};
+
 const resourceSets = {
   Iron: "6231728ff10faea791509fac",
   Wood: "623172adf10faea791509fae",
@@ -43,8 +59,11 @@ const resourceSets = {
   Gold: "6233f80ae996f0998ee1ce7c",
 };
 
+
+
 module.exports = {
   apiUrl,
+  buildingPosition,
   buildingNameToId,
   resourceSets,
   buildingNames,

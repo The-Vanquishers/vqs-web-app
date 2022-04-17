@@ -22,7 +22,7 @@ const showGrid = false;
 function Empire({login}) {
   const [showTownHallModal, setShowTownHallModal] = useState(false);
   const [empireDetails, setEmpireDetails] = useState({});
-  const [empireId, setEmpireId] = useState("");
+  
 
 
 
