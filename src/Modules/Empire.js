@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Wall from "../Assets/wall.png";
 import Bg from "../Assets/trans.png";
 import Buildings from "../Assets/buildings.png";
-import axios from "axios";
-import { apiUrl } from "../variables";
 import { connect } from "react-redux";
 import {loginReducer} from "../reducers/login"
 import FoodIcon from "../Assets/resources/food.png";
@@ -13,30 +12,42 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
-import TownHall from "./TownHall";
+import { getEmpireDetails } from "../actions/empire";
+import { empireReducer } from "../reducers/empire";
+const showGrid = true;
 
-const showGrid = false;
-
-
- 
-function Empire({login}) {
+function Empire(props) {
+  const Navigate = useNavigate();
+  const { token } = props.login;
+  const [resource, setResource] = useState([]);
+  const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
-  const [empireDetails, setEmpireDetails] = useState({});
   
-
-
+  if (!token) {
+    Navigate("/");
+  }
 
   useEffect(() => {
-    const fetchEmpireDetails = async () => {
-      //empireId fetching
-      const response = await axios.get(`${apiUrl}/user/empires`, { headers: { token: login.token } });
-      
-      const { data } = await axios.get(`${apiUrl}/user/empire/${response.data.empires[0]._id}`, { headers: { token: login.token } });
-      setEmpireDetails(data);
+    if (!props.empire.isFetching && !props.empire.isFetched) {
+      if (props.empire.fetchingFailed) {
+        setTimeout(() => {
+          props.dispatch(getEmpireDetails(token));
+        }, 2000);
+        return;
+      }
+      props.dispatch(getEmpireDetails(token));
     }
-    fetchEmpireDetails();
-  }, [])
-  
+    if (props.empire.isFetched) {
+      setResource(props.empire.resources);
+      return;
+    }
+    if (props.empire.fetchingFailed) {
+      setErr(props.empire.errMsg);
+      return;
+    }
+  }, [props.empire]);
+
+  console.log(props.empire);
   return (
     <div>
       <Grid item xs={12} container justifyContent="center" className="empire">
@@ -105,19 +116,24 @@ function Empire({login}) {
                 }}
               >
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={FoodIcon} alt="" style={{ width: "20px" }} /> 1500
+                  <img src={FoodIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.food}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={WoodIcon} alt="" style={{ width: "20px" }} /> 168
+                  <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.wood}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={IronIcon} alt="" style={{ width: "20px" }} /> 1107
+                  <img src={IronIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.iron}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={StoneIcon} alt="" style={{ width: "20px" }} /> 450
+                  <img src={StoneIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.stone}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
-                  <img src={GoldIcon} alt="" style={{ width: "20px" }} /> 10
+                  <img src={GoldIcon} alt="" style={{ width: "20px" }} />{" "}
+                  {resource.gold}
                 </div>
               </div>
             </Grid>
@@ -494,15 +510,15 @@ function Empire({login}) {
           </Grid>
         </Grid>
       </Grid>
-      {showTownHallModal && Object.keys(empireDetails).length && <TownHall empireDetails={empireDetails} />}
+      {/* {showTownHallModal && Object.keys(empireDetails).length && <TownHall empireDetails={empireDetails} />} */}
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    login: loginReducer(state),
+    empire: empireReducer(state),
+    login: loginReducer(state)
   };
 };
-
-export default connect(mapStateToProps) (Empire);
+export default connect(mapStateToProps)(Empire);
