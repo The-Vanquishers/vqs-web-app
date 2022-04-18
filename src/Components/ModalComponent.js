@@ -39,6 +39,18 @@ const styles = (theme) => ({
     display: "block",
   },
 });
+const  msToTime= (time)=> {
+  let milliseconds = Math.floor((time % 1000) / 100),
+  seconds = Math.floor((time / 1000) % 60),
+  minutes = Math.floor((time / (1000 * 60)) % 60),
+  hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+}
 
 const resourceMapper = (id) => {
   switch (id) {
@@ -66,39 +78,7 @@ const ModalComponent = (props) => {
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          {props.resourceRequirements && (
-            <Grid container spacing={2}>
-              <Grid item xs={2}>
-                {props.empireName}
-              </Grid>
-              {props.resourceRequirements.map((item) => (
-                <Grid item xs={2} key={item.resourceId}>
-                  <img
-                    src={resourceMapper(item.resourceId)}
-                    alt=""
-                    style={{ width: "20px" }}
-                  />
-                  {item.quantity}
-                </Grid>
-              ))}
-              <Grid
-                item
-                xs={2}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                <AccessAlarmsIcon sx={{ mx: 1 }} /> {props.constructionTime}
-              </Grid>
-              <Grid item xs={2}>
-                <Button size="small" variant="contained" color="success">
-                  upgrade
-                </Button>
-              </Grid>
-            </Grid>
-          )}
+          
           <Grid container spacing={2} sx={{ my: 3 }}>
             <Grid
               item
@@ -130,11 +110,13 @@ const ModalComponent = (props) => {
                   </Grid>
                 ))}
               </Grid>
-              {/*  */}
+              
               <Grid container spacing={2} sx={{ my: 1 }}>
                 {props.belowBuildings.map((item, indx) => (
-                  <>
+                  
+                  <>  
                     {indx > 0 && (
+                      
                       <>
                         <Grid item xs={2} key={item.buildingId+indx+"22"}>
                           {buildingIdToName[item.buildingId]} <br />
@@ -175,11 +157,12 @@ const ModalComponent = (props) => {
                           }}
                         >
                           <AccessAlarmsIcon sx={{ mx: 1 }} />
-                          {item.constructionTime}
+                        
+                          {msToTime(item.constructionTime)}
                         </Grid>
-                        <Grid item xs={2} key={item.buildingId + "1"}>
+                        <Grid item xs={2} key={item.buildingId + "111"}>
                           <Button variant="outlined" color="inherit">
-                            {item.currentLevel + 1}
+                            Level {item.currentLevel + 1}
                           </Button>
                         </Grid>
                       </>
