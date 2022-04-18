@@ -59,7 +59,7 @@ function Empire(props) {
             borderColor: "gray",
             borderWidth: showGrid ? 1 : 0,
             borderStyle: "solid",
-            height: "100px"
+            height: "100px",
           }}
           justifyContent="center"
         >
@@ -72,7 +72,7 @@ function Empire(props) {
               borderColor: "gray",
               borderWidth: showGrid ? 1 : 0,
               borderStyle: "solid",
-              height: "100px"
+              height: "100px",
             }}
           >
             <Grid
@@ -82,7 +82,7 @@ function Empire(props) {
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
-                height: "100px"
+                height: "100px",
               }}
             ></Grid>
             <Grid
@@ -92,7 +92,7 @@ function Empire(props) {
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
-                height: "100px"
+                height: "100px",
               }}
             ></Grid>
             <Grid
@@ -102,7 +102,7 @@ function Empire(props) {
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
-                height: "100px"
+                height: "100px",
               }}
             >
               <div
@@ -113,7 +113,7 @@ function Empire(props) {
                   backgroundImage: `url(${Bg})`,
                   marginTop: "30px",
                   padding: "5px",
-                  borderRadius: "5px"
+                  borderRadius: "5px",
                 }}
               >
                 <div style={{ float: "left", marginRight: "10px" }}>
@@ -152,7 +152,7 @@ function Empire(props) {
             backgroundSize: "cover",
             borderColor: "gray",
             borderWidth: showGrid ? 1 : 0,
-            borderStyle: "solid"
+            borderStyle: "solid",
           }}
         >
           <Grid container>
@@ -162,7 +162,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -171,7 +171,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -180,7 +180,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -189,7 +189,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -198,7 +198,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -207,7 +207,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
           </Grid>
@@ -218,7 +218,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -227,7 +227,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -239,7 +239,19 @@ function Empire(props) {
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
                 backgroundPosition: `0% 0%`,
-                cursor: "pointer"
+                cursor: "pointer",
+              }}
+            ></Grid>
+            <Grid
+              item
+              xs={2}
+              sx={{
+                borderColor: "gray",
+                borderWidth: showGrid ? 1 : 0,
+                borderStyle: "solid",
+                backgroundImage: `url(${Buildings})`,
+                backgroundPosition: `65% 16%`,
+                cursor: "pointer",
               }}
               onClick={() => {
                 setShowTownHallModal(!showTownHallModal);
@@ -252,8 +264,6 @@ function Empire(props) {
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
-                backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `65% 16%`
               }}
             ></Grid>
             <Grid
@@ -262,16 +272,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
-              }}
-            ></Grid>
-            <Grid
-              item
-              xs={2}
-              sx={{
-                borderColor: "gray",
-                borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
           </Grid>
@@ -282,7 +283,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -293,7 +294,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `68% -4%`
+                backgroundPosition: `68% -4%`,
               }}
             ></Grid>
             <Grid
@@ -302,7 +303,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -311,7 +312,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -322,7 +323,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `93% -1%`
+                backgroundPosition: `93% -1%`,
               }}
             ></Grid>
             <Grid
@@ -331,7 +332,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
           </Grid>
@@ -342,7 +343,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -353,7 +354,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `0% 20%`
+                backgroundPosition: `0% 20%`,
               }}
             ></Grid>
             <Grid
@@ -362,7 +363,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -371,7 +372,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -382,7 +383,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `-2% 34%`
+                backgroundPosition: `-2% 34%`,
               }}
             ></Grid>
             <Grid
@@ -391,7 +392,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
           </Grid>
@@ -402,7 +403,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -411,7 +412,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -422,7 +423,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `42% 36%`
+                backgroundPosition: `42% 36%`,
               }}
             ></Grid>
             <Grid
@@ -431,7 +432,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -440,7 +441,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -449,7 +450,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
           </Grid>
@@ -460,7 +461,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -469,7 +470,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -478,7 +479,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -487,7 +488,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -496,7 +497,7 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
             <Grid
@@ -505,13 +506,13 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
               }}
             ></Grid>
           </Grid>
         </Grid>
       </Grid>
-      {showTownHallModal &&  <TownHall  />}
+      {showTownHallModal && <TownHall />}
     </div>
   );
 }

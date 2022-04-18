@@ -10,30 +10,20 @@ import { empireReducer } from '../reducers/empire';
 
 const TownHall = ({login,empire}) => {
 
-  const [requirements, setRequirements] = useState({});
   const Town_Hall = buildingNameToId['Town Hall'];
-  const [belowBuildings, setBelowBuildings] = useState([{}]);
+  const [buildings, setBuildings] = useState([{}]);
+  const [ok, setOk] = useState(false);
   const belowBuildingsHeader = ["Buildings", "Requirements", "Time", "Upgrade"];
   const gridSize = [2, 6, 2, 2];
   const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0].leve;
     
-    
-  useEffect(() => {
-    const fetchRequirements = async (id) => {
-      const { data } = await axios.get(`${apiUrl}/buildings/${Town_Hall}`, {
-        headers: { token: login.token, empireId: empire.empireId },
-      });
-      setRequirements(data);
-    };
-    fetchRequirements();
-  }, []);
 
   useEffect(() => {
     const fetchRequirements = async (id) => {
       const { data } = await axios.get(`${apiUrl}/buildings/${id}`, {
         headers: { token: login.token, empireId: empire.empireId },
       });
-      setBelowBuildings(oldArray=>[
+      setBuildings((oldArray) => [
         ...oldArray,
         {
           buildingId: data.buildingId,
@@ -44,24 +34,24 @@ const TownHall = ({login,empire}) => {
       ]);
     };
 
-    empire.buildings.filter((b) => b.buildingId !== Town_Hall).map(item => fetchRequirements(item.buildingId));
+    empire.buildings.map((item,indx) => {
+      fetchRequirements(item.buildingId)
+      if (indx === empire.buildings.length-1) {
+        setOk(true);
+      }
+    });
 
   }, []);
-  
- 
-  
+
   return (
     <>
-      {Object.keys(requirements).length && (
-        <ModalComponent
+      {ok && (
+        <ModalComponent  
           name="Town Hall"
           level={level}
           image={Buildings}
-          resources={empire.resources}
-          resourceRequirements={requirements.constructionCost}
-          constructionTime={requirements.constructionTime}
           position="0% 0%"
-          belowBuildings={belowBuildings}
+          belowBuildings={buildings}
           belowBuildingsHeader={belowBuildingsHeader}
           empireName={empire.empireName}
           gridSize={gridSize}
