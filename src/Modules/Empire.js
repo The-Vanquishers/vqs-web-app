@@ -5,15 +5,16 @@ import Grid from "@mui/material/Grid";
 import Wall from "../Assets/wall.png";
 import Bg from "../Assets/trans.png";
 import Buildings from "../Assets/buildings.png";
+import { connect } from "react-redux";
+import {loginReducer} from "../reducers/login"
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
-import { connect } from "react-redux";
-import { loginReducer } from "../reducers/login";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
+import TownHall from "./TownHall";
 const showGrid = false;
 
 function Empire(props) {
@@ -21,9 +22,12 @@ function Empire(props) {
   const { token } = props.login;
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
+  const [showTownHallModal, setShowTownHallModal] = useState(false);
+  
   if (!token) {
     Navigate("/");
   }
+
   useEffect(() => {
     if (!props.empire.isFetching && !props.empire.isFetched) {
       if (props.empire.fetchingFailed) {
@@ -43,6 +47,7 @@ function Empire(props) {
       return;
     }
   }, [props, token]);
+
   return (
     <div>
       <Grid item xs={12} container justifyContent="center" className="empire">
@@ -237,7 +242,7 @@ function Empire(props) {
                 cursor: "pointer"
               }}
               onClick={() => {
-                alert("Townhall");
+                setShowTownHallModal(!showTownHallModal);
               }}
             ></Grid>
             <Grid
@@ -506,6 +511,7 @@ function Empire(props) {
           </Grid>
         </Grid>
       </Grid>
+      {showTownHallModal &&  <TownHall  />}
     </div>
   );
 }
