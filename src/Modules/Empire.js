@@ -16,13 +16,14 @@ import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
 import TownHall from "./TownHall";
 import Spinner from "../Components/Spinner";
-const showGrid = true;
 import {
   buildingNameToId,
   ITEM_HIDDEN_CLASS,
   ITEM_VISIBLE_CLASS,
   buildingNames
 } from "../variables";
+
+const showGrid = true;
 
 function Empire(props) {
   const Navigate = useNavigate();
@@ -67,6 +68,7 @@ function Empire(props) {
 
   return (
     <div>
+      {props.empire.isFetching && !props.empire.isFetched && <Spinner />}
       <Grid item xs={12} container justifyContent="center" className="empire">
         <Grid
           item
@@ -251,7 +253,7 @@ function Empire(props) {
             ></Grid>
             {/* TOWN HALL */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.TOWN_HALL)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.TOWN_HALL)}
               item
               xs={2}
               sx={{
@@ -268,7 +270,7 @@ function Empire(props) {
             ></Grid>
             {/* WATCH TOWER */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.WATCH_TOWER)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.WATCH_TOWER)}
               item
               xs={2}
               sx={{
@@ -285,7 +287,7 @@ function Empire(props) {
             ></Grid>
             {/* MINE */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.MINE)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.MINE)}
               item
               xs={2}
               sx={{
@@ -323,7 +325,7 @@ function Empire(props) {
             ></Grid>
             {/* FIRM */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.FARM)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.FARM)}
               item
               xs={2}
               sx={{
@@ -340,7 +342,7 @@ function Empire(props) {
             ></Grid>
             {/* WAREHOUSE */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.WAREHOUSE)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.WAREHOUSE)}
               item
               xs={2}
               sx={{
@@ -366,7 +368,7 @@ function Empire(props) {
             ></Grid>
             {/* MARKET */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.MARKET)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.MARKET)}
               item
               xs={2}
               sx={{
@@ -403,7 +405,7 @@ function Empire(props) {
             ></Grid>
             {/* STABLE */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.STABLE)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.STABLE)}
               item
               xs={2}
               sx={{
@@ -430,7 +432,7 @@ function Empire(props) {
             ></Grid>
             {/* BARRACKS */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.BARRACKS)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.BARRACKS)}
               item
               xs={2}
               sx={{
@@ -448,7 +450,7 @@ function Empire(props) {
             ></Grid>
             {/* SIEGE WORKSHOP */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.WORKSHOP)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.WORKSHOP)}
               item
               xs={2}
               sx={{
@@ -494,7 +496,7 @@ function Empire(props) {
             ></Grid>
             {/* ROCK PICKER */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.ROCK_PICKER)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.ROCK_PICKER)}
               item
               xs={2}
               sx={{
@@ -512,7 +514,7 @@ function Empire(props) {
             ></Grid>
             {/* Logging */}
             <Grid
-              className={getGridItemClass(props.empire.data, buildingNames.LOGGING)}
+              className={getGridItemClass(props.empire.buildings, buildingNames.LOGGING)}
               item
               xs={2}
               sx={{
