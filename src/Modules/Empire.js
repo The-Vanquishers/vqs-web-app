@@ -10,11 +10,12 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
+import MapIcon from "../Assets/map.png";
 import { connect } from "react-redux";
 import { loginReducer } from "../reducers/login";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
-const showGrid = false;
+const showGrid = true;
 
 function Empire(props) {
   const Navigate = useNavigate();
@@ -500,9 +501,27 @@ function Empire(props) {
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
+                textAlign: "right",
+                flexGrow: "revert"
               }}
-            ></Grid>
+            >
+              <img
+                src={MapIcon}
+                alt="map"
+                title="World map"
+                onClick={() => {
+                  Navigate("/map");
+                }}
+                style={{
+                  width: "80px",
+                  position: "fixed",
+                  bottom: 0,
+                  marginLeft: "-80px",
+                  cursor: "pointer"
+                }}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
