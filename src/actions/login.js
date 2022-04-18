@@ -16,7 +16,7 @@ exports.login = (email, password) => dispatch => {
       type: this.LOGGED_IN,
       token: data.data.token
     });
-  }).catch(()=>{
+  }).catch(() => {
     dispatch({
       type: this.LOGIN_FAILED,
       errMsg: "Login failed! try again"
