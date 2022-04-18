@@ -55,17 +55,17 @@ const buildingIdToName = {
 const buildingPosition = {
   HOUSE: "65% 16%",
   TOWN_HALL: "0% 0%",
-  MINE: "0% 20%",
-  LOGGING: "-2% 34%",
+  MINE: "68% 95%",
+  LOGGING: "45% 82%",
   ROCK_PICKER: "42% 36%",
-  BARRACKS: "68% -4%",
-  STABLE: "93% -1%",
+  BARRACKS: "59% 80%",
+  STABLE: "-2% 19% ",
   WATCH_TOWER: "5% 6%",
-  RESEARCH_CENTER: "9% 8%",
-  MARKET: "49% -3%",
-  WAREHOUSE: "4% 23%",
-  FARM: "90% -4%",
-  WORKSHOP: "12% 94%",
+  RESEARCH_CENTER: "9% 9%",
+  MARKET: "93% -1%",
+  WAREHOUSE: "36% 64%",
+  FARM: "68% -4%",
+  WORKSHOP: "-2% 34%",
 };
 
 const resourceSets = {

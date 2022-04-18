@@ -20,10 +20,11 @@ import {
   buildingNameToId,
   ITEM_HIDDEN_CLASS,
   ITEM_VISIBLE_CLASS,
-  buildingNames
+  buildingNames,
+  buildingPosition
 } from "../variables";
 
-const showGrid = true;
+const showGrid = false;
 
 function Empire(props) {
   const Navigate = useNavigate();
@@ -39,7 +40,7 @@ function Empire(props) {
 
   const getGridItemClass = (buildingList, buildingName) => {
     const buildingId = buildingNameToId[buildingName];
-    // return ITEM_VISIBLE_CLASS; //to render all buildings
+    //return ITEM_VISIBLE_CLASS; //to test render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
       return ITEM_VISIBLE_CLASS;
     }
@@ -261,7 +262,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `0% 0%`,
+                backgroundPosition: `${buildingPosition.TOWN_HALL}`,
                 cursor: "pointer"
               }}
               onClick={() => {
@@ -295,7 +296,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `68% 95%`,
+                backgroundPosition: `${buildingPosition.MINE}`,
                 zoom: 1.50,
                 cursor: "pointer"
               }}
@@ -333,7 +334,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `68% -4%`,
+                backgroundPosition: `${buildingPosition.FARM}`,
                 cursor: 'pointer'
               }}
               onClick={() => {
@@ -350,7 +351,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `36% 64%`,
+                backgroundPosition: `${buildingPosition.WAREHOUSE}`,
                 cursor: 'pointer'
               }}
               onClick={() => {
@@ -376,7 +377,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `93% -1%`,
+                backgroundPosition: `${buildingPosition.MARKET}`,
                 cursor: 'pointer'
               }}
               onClick={() => {
@@ -413,7 +414,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `-2% 19%`,
+                backgroundPosition: `${buildingPosition.STABLE}`,
                 zoom: 1.18,
                 cursor: 'pointer'
               }}
@@ -421,13 +422,22 @@ function Empire(props) {
                 alert("Stable");
               }}
             ></Grid>
+            {/* Research Center */}
             <Grid
+              className={getGridItemClass(props.empire.buildings, buildingNames.RESEARCH_CENTER)}
               item
               xs={2}
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
-                borderStyle: "solid"
+                borderStyle: "solid",
+                backgroundImage: `url(${Buildings})`,
+                backgroundPosition: `${buildingPosition.RESEARCH_CENTER}`,
+                zoom: 1.35,
+                cursor: 'pointer'
+              }}
+              onClick={() => {
+                alert("Research Center");
               }}
             ></Grid>
             {/* BARRACKS */}
@@ -440,7 +450,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `59% 80%`,
+                backgroundPosition: `${buildingPosition.BARRACKS}`,
                 zoom: 1.35,
                 cursor: 'pointer'
               }}
@@ -458,7 +468,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `-2% 34%`,
+                backgroundPosition: `${buildingPosition.WORKSHOP}`,
                 cursor: 'pointer'
               }}
               onClick={() => {
@@ -504,7 +514,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `11.8% 85%`,
+                backgroundPosition: `${buildingPosition.ROCK_PICKER}`,
                 zoom: '1.28',
                 cursor: 'pointer'
               }}
@@ -522,7 +532,7 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `45% 82%`,
+                backgroundPosition: `${buildingPosition.LOGGING}`,
                 zoom: '1.25',
                 cursor: 'pointer'
               }}
