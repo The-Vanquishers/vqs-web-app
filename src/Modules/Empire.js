@@ -280,11 +280,11 @@ function Empire(props) {
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
                 backgroundImage: `url(${Buildings})`,
-                backgroundPosition: `66% 14%`,
-                cursor: "pointer"
+                backgroundPosition: `65% 16%`,
+                cursor: "pointer",
               }}
               onClick={() => {
-                alert("Watch Tower");
+                setShowTownHallModal(!showTownHallModal);
               }}
             ></Grid>
             {/* MINE */}
