@@ -7,11 +7,13 @@ body,
   margin: 0;
   padding: 0;
 }
+
 .login {
   background-image: url("./Assets/login-bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .login-container {
   width: 320px;
   height: 400px;
@@ -26,19 +28,38 @@ body,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
   text-align: center;
 }
+
 .login-container .title {
   font-size: 30px;
 }
+
 .empire {
   background-image: url("./Assets/bg.jpg");
   background-size: cover;
 }
+
 .css-bwhex-MuiPaper-root {
   background-color: transparent !important;
 }
-.login-btn-container{
+
+.login-btn-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+}
+
+.item-visible {
+  visibility: visible;
+}
+
+.item-hidden {
+  visibility: hidden;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
