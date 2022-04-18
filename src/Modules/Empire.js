@@ -14,6 +14,7 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
+import TownHall from "./TownHall";
 const showGrid = false;
 
 function Empire(props) {
@@ -46,7 +47,7 @@ function Empire(props) {
       return;
     }
   }, [props, token]);
-  
+
   return (
     <div>
       <Grid item xs={12} container justifyContent="center" className="empire">
@@ -510,7 +511,7 @@ function Empire(props) {
           </Grid>
         </Grid>
       </Grid>
-      {/* {showTownHallModal && Object.keys(empireDetails).length && <TownHall empireDetails={empireDetails} />} */}
+      {showTownHallModal &&  <TownHall  />}
     </div>
   );
 }

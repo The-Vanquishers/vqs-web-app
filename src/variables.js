@@ -16,6 +16,7 @@ const buildingNameToId = {
   Walls: "6231899db51742f20a955152",
   "Siege Workshop": "62318965b51742f20a95514d",
 };
+
 const ITEM_HIDDEN_CLASS = "item-hidden";
 const ITEM_VISIBLE_CLASS = "item-visible";
 
@@ -34,7 +35,22 @@ const buildingNames = {
   FARM: "Farm",
   WORKSHOP: "Siege Workshop",
 };
-
+const buildingIdToName = {
+  "623173e1f10faea791509fb3": "Town Hall",
+  "62318861b51742f20a95513e": "House",
+  "62318895b51742f20a955140": "Farm",
+  "623188b7b51742f20a955142": "Mine",
+  "623188e4b51742f20a955144": "Logging",
+  "62318919b51742f20a955147": "Rock picker",
+  "62318931b51742f20a955149": "Barracks",
+  "62318945b51742f20a95514b": "Stable",
+  "62318982b51742f20a95514f": "Watch Tower",
+  "623189b9b51742f20a955154": "Research Center",
+  "623189dab51742f20a955156": "Market",
+  "6232a83b79c7546bbfe20d58": "Warehouse",
+  "6231899db51742f20a955152": "Walls",
+  "62318965b51742f20a95514d": "Siege Workshop",
+};
 const buildingPosition = {
   HOUSE: "65% 16%",
   TOWN_HALL: "0% 0%",
@@ -63,6 +79,7 @@ const resourceSets = {
 
 module.exports = {
   apiUrl,
+  buildingIdToName,
   buildingPosition,
   buildingNameToId,
   resourceSets,

@@ -11,13 +11,16 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import { resourceSets } from "../variables";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
+// import { CardHeader, CardContent, Card } from "@mui/material";
+import { buildingIdToName } from "../variables";
+
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 700,
   color:"white", 
   // bgcolor: "#888888",
   bg: `url(${trans})`,
@@ -26,6 +29,16 @@ const style = {
   px: 3,
   py: 2,
 };
+const styles = (theme) => ({
+  modalStyle1: {
+    position: "absolute",
+    top: "10%",
+    left: "10%",
+    overflow: "scroll",
+    height: "100%",
+    display: "block",
+  },
+});
 
 const resourceMapper = (id) => {
   switch (id) {
@@ -44,57 +57,52 @@ const resourceMapper = (id) => {
   }
 }
 
-const ModalComponent = ({ name, image, position, level,resources,resourceRequirements,constructionTime,buildings,empireName }) => {
+const ModalComponent = (props) => {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => setOpen(false);
 
-  console.log(buildings);
+  
   return (
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={2}
-              
-            >
-              {empireName}
-            </Grid>
-            {resourceRequirements.map(item => (
+          {props.resourceRequirements && (
+            <Grid container spacing={2}>
+              <Grid item xs={2}>
+                {props.empireName}
+              </Grid>
+              {props.resourceRequirements.map((item) => (
+                <Grid item xs={2} key={item.resourceId}>
+                  <img
+                    src={resourceMapper(item.resourceId)}
+                    alt=""
+                    style={{ width: "20px" }}
+                  />
+                  {item.quantity}
+                </Grid>
+              ))}
               <Grid
                 item
                 xs={2}
-                key={item.resourceId}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                }}
               >
-                <img src={resourceMapper(item.resourceId)} alt="" style={{ width: "20px" }} /> {item.quantity}
+                <AccessAlarmsIcon sx={{ mx: 1 }} /> {props.constructionTime}
+              </Grid>
+              <Grid item xs={2}>
+                <Button size="small" variant="contained" color="success">
+                  upgrade
+                </Button>
+              </Grid>
             </Grid>
-            ))}
+          )}
+          <Grid container spacing={2} sx={{ my: 3 }}>
             <Grid
               item
               xs={2}
-              
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-              <AccessAlarmsIcon sx={{mx:1}}/> {constructionTime}
-            </Grid>
-            <Grid
-              item
-              xs={2} 
-            >
-              <Button size="small" variant="contained" color="success">
-                upgrade
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} sx={{my:3}}>
-            <Grid
-              item
-              xs={3}
               style={{
                 height: "100px",
               }}
@@ -102,17 +110,85 @@ const ModalComponent = ({ name, image, position, level,resources,resourceRequire
                 borderColor: "gray",
                 borderStyle: "solid",
                 borderWidth: 1,
-                backgroundImage: `url(${image})`,
-                backgroundPosition: `${position}`,
+                backgroundImage: `url(${props.image})`,
+                backgroundPosition: `${props.position}`,
                 cursor: "pointer",
               }}
             ></Grid>
             <Grid item xs={9}>
               <Typography variant="h5" component="h6">
-                {name} (Level {level})
+                {props.name} (Level {props.level})
               </Typography>
             </Grid>
           </Grid>
+          {props.belowBuildingsHeader && (
+            <>
+              <Grid container spacing={2} sx={{ my: 1 }}>
+                {props.belowBuildingsHeader.map((item, indx) => (
+                  <Grid item xs={props.gridSize[indx]} key={indx}>
+                    {item}
+                  </Grid>
+                ))}
+              </Grid>
+              {/*  */}
+              <Grid container spacing={2} sx={{ my: 1 }}>
+                {props.belowBuildings.map((item, indx) => (
+                  <>
+                    {indx > 0 && (
+                      <>
+                        <Grid item xs={2} key={item.buildingId+indx+"22"}>
+                          {buildingIdToName[item.buildingId]} <br />
+                          level: {item.currentLevel}
+                        </Grid>
+                        <Grid item xs={2} key={item.buildingId + "5"}>
+                          <img
+                            src={resourceMapper(item.constructionCost[0].resourceId)}
+                            alt=""
+                            style={{ width: "20px" }}
+                          />
+                          {item.constructionCost[1].quantity}
+                        </Grid>
+                        <Grid item xs={2} key={item.buildingId + "6"}>
+                          <img
+                            src={resourceMapper(item.constructionCost[1].resourceId)}
+                            alt=""
+                            style={{ width: "20px" }}
+                          />
+                          {item.constructionCost[1].quantity}
+                        </Grid>
+                        <Grid item xs={2} key={item.buildingId + "2"}>
+                          <img
+                            src={resourceMapper(item.constructionCost[2].resourceId)}
+                            alt=""
+                            style={{ width: "20px" }}
+                          />
+                          {item.constructionCost[1].quantity}
+                        </Grid>
+                        <Grid
+                          item
+                          xs={2}
+                          key={item.buildingId + "4"}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <AccessAlarmsIcon sx={{ mx: 1 }} />
+                          {item.constructionTime}
+                        </Grid>
+                        <Grid item xs={2} key={item.buildingId + "1"}>
+                          <Button variant="outlined" color="inherit">
+                            {item.currentLevel + 1}
+                          </Button>
+                        </Grid>
+                      </>
+                    )}
+                  </>
+                ))}
+              </Grid>
+            </>
+          )}
         </Box>
       </Modal>
     </div>
