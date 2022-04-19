@@ -24,7 +24,7 @@ import {
   buildingPosition
 } from "../variables";
 import AlertComponent from "../Components/AlertComponent";
-import LoggingModal from "./LoggingModal";
+import Logging from "./Logging";
 
 const showGrid = false;
 
@@ -70,9 +70,6 @@ function Empire(props) {
       return;
     }
   }, [props, token,showloggingModal]);
-
-  const loggingBuildingId = buildingNameToId['Logging'];
-  console.log(loggingBuildingId);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -627,7 +624,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
-      {showloggingModal && <LoggingModal/>}
+      {showloggingModal && <Logging/>}
     </div>
   );
 }
