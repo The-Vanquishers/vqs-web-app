@@ -46,11 +46,11 @@ const TownHall = ({login,empire}) => {
   return (
     <>
       {ok && (
-        <ModalComponent  
+        <ModalComponent
           name="Town Hall"
           level={level}
           image={Buildings}
-          position="0% 0%"
+          position="65% 16%"
           belowBuildings={buildings}
           belowBuildingsHeader={belowBuildingsHeader}
           empireName={empire.empireName}
