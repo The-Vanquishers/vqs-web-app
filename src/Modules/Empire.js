@@ -24,6 +24,7 @@ import {
   buildingPosition
 } from "../variables";
 import AlertComponent from "../Components/AlertComponent";
+import StableComponent from "../Components/StableComponent";
 
 const showGrid = false;
 
@@ -33,6 +34,8 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [toggleStableModal, setToggleStableModal] = useState(false);
+
 
 
   if (!token) {
@@ -43,7 +46,6 @@ function Empire(props) {
     const buildingId = buildingNameToId[buildingName];
     //return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
-      console.log('yes')
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
@@ -429,7 +431,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Stable");
+                setToggleStableModal(!toggleStableModal);
               }}
             ></Grid>
             <Grid
@@ -623,6 +625,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {toggleStableModal && <StableComponent />}
     </div>
   );
 }
