@@ -4,11 +4,9 @@ import { mine } from "../actions/mine";
 import { empireReducer } from '../reducers/empire';
 import { loginReducer } from '../reducers/login';
 import { mineReducer } from '../reducers/mine';
-import Buildings from "../Assets/buildings.png";
-import { buildingPosition } from '../variables';
 
 
-const Modal = (props) => {
+const Mine = (props) => {
     const { token } = props.login;
     const { empireId } = props.empire;
     const [mineBuilding, setMineBuilding] = useState({});
@@ -49,4 +47,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Modal);
+export default connect(mapStateToProps)(Mine);
