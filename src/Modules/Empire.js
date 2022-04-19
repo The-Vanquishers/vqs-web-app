@@ -23,6 +23,7 @@ import {
   buildingNames,
   buildingPosition
 } from "../variables";
+import AlertComponent from "../Components/AlertComponent";
 
 const showGrid = false;
 
@@ -84,7 +85,8 @@ function Empire(props) {
           }}
           justifyContent="center"
         >
-          {err}
+          {err && <AlertComponent type={"error"}
+            text={err} title={"Error"} />}
           <Grid
             item
             xs={6}
