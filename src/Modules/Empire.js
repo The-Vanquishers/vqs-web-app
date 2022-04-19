@@ -24,7 +24,7 @@ import {
   buildingPosition
 } from "../variables";
 import AlertComponent from "../Components/AlertComponent";
-import LoggingModal from "../Components/LoggingModal";
+import LoggingModal from "./LoggingModal";
 
 const showGrid = false;
 
@@ -45,7 +45,7 @@ function Empire(props) {
     const buildingId = buildingNameToId[buildingName];
     //return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
-      console.log('yes')
+      //console.log('yes')
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
@@ -69,8 +69,10 @@ function Empire(props) {
       setErr(props.empire.errMsg);
       return;
     }
-  }, [props, token]);
+  }, [props, token,showloggingModal]);
 
+  const loggingBuildingId = buildingNameToId['Logging'];
+  console.log(loggingBuildingId);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
