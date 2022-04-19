@@ -24,6 +24,7 @@ import {
   buildingPosition
 } from "../variables";
 import AlertComponent from "../Components/AlertComponent";
+import Mine from "../Modules/Mine";
 
 const showGrid = false;
 
@@ -33,7 +34,9 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [showMine , setShowMine] = useState(false);
 
+ 
 
   if (!token) {
     Navigate("/");
@@ -307,7 +310,7 @@ function Empire(props) {
                 cursor: "pointer"
               }}
               onClick={() => {
-                alert("Mine");
+                setShowMine(!showMine);
               }}
             ></Grid>
             <Grid
@@ -623,6 +626,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {showMine && <Mine/>}
     </div>
   );
 }
