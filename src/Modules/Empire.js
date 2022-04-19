@@ -24,6 +24,7 @@ import {
   buildingPosition
 } from "../variables";
 import AlertComponent from "../Components/AlertComponent";
+import LoggingModal from "../Components/LoggingModal";
 
 const showGrid = false;
 
@@ -33,6 +34,7 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [showloggingModal, setShowLoggingMoadl] = useState(false);
 
 
   if (!token) {
@@ -542,7 +544,7 @@ function Empire(props) {
                 cursor: 'pointer',
               }}
               onClick={() => {
-                alert("Logging");
+                setShowLoggingMoadl(!showloggingModal);
               }}
             ></Grid>
             <Grid
@@ -623,6 +625,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {showloggingModal && <LoggingModal/>}
     </div>
   );
 }
