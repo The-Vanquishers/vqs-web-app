@@ -259,6 +259,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.TOWN_HALL)}
               item
+              title={buildingNames.TOWN_HALL}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -276,6 +277,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.WATCH_TOWER)}
               item
+              title={buildingNames.WATCH_TOWER}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -293,6 +295,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.MINE)}
               item
+              title={buildingNames.MINE}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -331,6 +334,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.FARM)}
               item
+              title={buildingNames.FARM}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -348,6 +352,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.WAREHOUSE)}
               item
+              title={buildingNames.WAREHOUSE}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -374,6 +379,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.MARKET)}
               item
+              title={buildingNames.MARKET}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -411,6 +417,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.STABLE)}
               item
+              title={buildingNames.STABLE}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -438,6 +445,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.BARRACKS)}
               item
+              title={buildingNames.BARRACKS}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -456,6 +464,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.WORKSHOP)}
               item
+              title={buildingNames.WORKSHOP}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -502,6 +511,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.ROCK_PICKER)}
               item
+              title={buildingNames.ROCK_PICKER}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -520,6 +530,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.LOGGING)}
               item
+              title={buildingNames.LOGGING}
               xs={2}
               sx={{
                 borderColor: "gray",
