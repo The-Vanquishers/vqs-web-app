@@ -23,6 +23,7 @@ import {
   buildingNames,
   buildingPosition
 } from "../variables";
+import Firm from "./Firm";
 
 const showGrid = false;
 
@@ -32,6 +33,7 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [showFirmModal, setShowFirmModal] = useState(true);
 
 
   if (!token) {
@@ -339,7 +341,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Firm");
+                setShowFirmModal(!showFirmModal);
               }}
             ></Grid>
             {/* WAREHOUSE */}
@@ -610,6 +612,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {showFirmModal && <Firm/>} 
     </div>
   );
 }
