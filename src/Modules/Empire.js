@@ -23,7 +23,9 @@ import {
   buildingNames,
   buildingPosition
 } from "../variables";
-import Firm from "./Firm";
+import Farm from "./Farm";
+import AlertComponent from "../Components/AlertComponent";
+import ModalCompo from "../Components/ModalCompo";
 
 const showGrid = false;
 
@@ -33,7 +35,7 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
-  const [showFirmModal, setShowFirmModal] = useState(true);
+  const [showFirmModal, setShowFirmModal] = useState(false);
 
 
   if (!token) {
@@ -70,6 +72,7 @@ function Empire(props) {
     }
   }, [props, token]);
 
+  
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -86,7 +89,8 @@ function Empire(props) {
           }}
           justifyContent="center"
         >
-          {err}
+          {err && <AlertComponent type={"error"}
+            text={err} title={"Error"} />}
           <Grid
             item
             xs={6}
@@ -259,6 +263,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.TOWN_HALL)}
               item
+              title={buildingNames.TOWN_HALL}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -276,6 +281,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.WATCH_TOWER)}
               item
+              title={buildingNames.WATCH_TOWER}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -293,6 +299,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.MINE)}
               item
+              title={buildingNames.MINE}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -331,6 +338,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.FARM)}
               item
+              title={buildingNames.FARM}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -348,6 +356,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.WAREHOUSE)}
               item
+              title={buildingNames.WAREHOUSE}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -374,6 +383,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.MARKET)}
               item
+              title={buildingNames.MARKET}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -411,6 +421,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.STABLE)}
               item
+              title={buildingNames.STABLE}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -438,6 +449,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.BARRACKS)}
               item
+              title={buildingNames.BARRACKS}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -456,6 +468,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.WORKSHOP)}
               item
+              title={buildingNames.WORKSHOP}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -502,6 +515,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.ROCK_PICKER)}
               item
+              title={buildingNames.ROCK_PICKER}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -520,6 +534,7 @@ function Empire(props) {
             <Grid
               className={getGridItemClass(props.empire.buildings, buildingNames.LOGGING)}
               item
+              title={buildingNames.LOGGING}
               xs={2}
               sx={{
                 borderColor: "gray",
@@ -528,7 +543,7 @@ function Empire(props) {
                 backgroundImage: `url(${Buildings})`,
                 backgroundPosition: buildingPosition.LOGGING,
                 zoom: '1.25',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
               onClick={() => {
                 alert("Logging");
@@ -612,11 +627,10 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
-      {showFirmModal && <Firm/>} 
+      {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
     </div>
   );
 }
-
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),

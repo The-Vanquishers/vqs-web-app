@@ -11,7 +11,6 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import { resourceSets } from "../variables";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
-// import { CardHeader, CardContent, Card } from "@mui/material";
 import { buildingIdToName } from "../variables";
 
 
@@ -29,19 +28,19 @@ const style = {
   px: 3,
   py: 2,
 };
-const styles = (theme) => ({
-  modalStyle1: {
-    position: "absolute",
-    top: "10%",
-    left: "10%",
-    overflow: "scroll",
-    height: "100%",
-    display: "block",
-  },
-});
+
+// const styles = (theme) => ({
+//   modalStyle1: {
+//     position: "absolute",
+//     top: "10%",
+//     left: "10%",
+//     overflow: "scroll",
+//     height: "100%",
+//     display: "block",
+//   },
+// });
 const  msToTime= (time)=> {
-  let milliseconds = Math.floor((time % 1000) / 100),
-  seconds = Math.floor((time / 1000) % 60),
+  let seconds = Math.floor((time / 1000) % 60),
   minutes = Math.floor((time / (1000 * 60)) % 60),
   hours = Math.floor((time / (1000 * 60 * 60)) % 24);
 
@@ -49,7 +48,7 @@ const  msToTime= (time)=> {
   minutes = (minutes < 10) ? "0" + minutes : minutes;
   seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-  return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  return hours + ":" + minutes + ":" + seconds;
 }
 
 const resourceMapper = (id) => {
