@@ -630,7 +630,8 @@ function Empire(props) {
       </Grid>
       {showTownHallModal && <TownHall />}
       {toggleStableModal && <StableComponent
-        building={getBuildingDetails(buildingNames.STABLE)} />}
+        building={getBuildingDetails(buildingNames.STABLE)}
+        units={props.empire.units} />}
     </div>
   );
 }

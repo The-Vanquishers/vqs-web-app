@@ -1,13 +1,13 @@
-import { Box, Modal, Grid } from '@mui/material';
+import { Box, Modal, Grid, TableHead, TableRow, TableBody } from '@mui/material';
+import TableCell from '@material-ui/core/TableCell';
 import React, { useState } from 'react';
 import { Typography } from '@mui/material';
 import trans from "../Assets/trans.png"
 import Buildings from "../Assets/buildings.png";
 import { buildingPosition, unitSets } from "../variables";
 
-function StableComponent({ building }) {
+function StableComponent({ building, units }) {
 
-    console.log(building);
     const style = {
         position: "absolute",
         top: "50%",
@@ -22,6 +22,15 @@ function StableComponent({ building }) {
         px: 3,
         py: 2,
     };
+
+    const getAvailableUnits = (name) => {
+        var count = 0;
+        const selectedUnits = units.filter(e => e.unitId === unitSets[name]);
+        selectedUnits.forEach(element => {
+            count += element.quantity;
+        });
+        return count;
+    }
 
     const [open, setOpen] = useState(true);
     const handleClose = () => setOpen(!open);
@@ -58,6 +67,20 @@ function StableComponent({ building }) {
                             </Grid>
                         </Grid>
                     </Grid>
+
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Unit Name</TableCell>
+                            <TableCell>Quantity</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell component="th" scope="row">
+                                {unitSets}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
                 </Box>
             </Modal>
         </div >
