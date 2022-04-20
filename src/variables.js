@@ -90,6 +90,37 @@ const unitSets = {
   'Vanquisher': '624c1fc47d042172892edd9a'
 }
 
+const stableUnitNames = {
+  HEAVY_CAVALRY: "Heavy Cavalry",
+  CAVALRY: "Cavalry",
+  CAVALRY_ARCHER: 'Cavalry Archer',
+  HEAVY_CAVALRY_ARCHER: 'Heavy Cavalry Archer',
+}
+
+const stableTrainingCost = {
+  [stableUnitNames.HEAVY_CAVALRY]: {
+    Iron: 400,
+    Wood: 280,
+    Stone: 530
+  },
+  [stableUnitNames.CAVALRY]: {
+    Iron: 350,
+    Wood: 250,
+    Stone: 500
+  },
+  [stableUnitNames.CAVALRY_ARCHER]: {
+    Iron: 400,
+    Wood: 350,
+    Stone: 550
+  },
+  [stableUnitNames.HEAVY_CAVALRY_ARCHER]: {
+    Iron: 500,
+    Wood: 450,
+    Stone: 550
+  },
+}
+
+
 
 module.exports = {
   apiUrl,
@@ -100,5 +131,7 @@ module.exports = {
   buildingNames,
   ITEM_HIDDEN_CLASS,
   ITEM_VISIBLE_CLASS,
-  unitSets
+  unitSets,
+  stableUnitNames,
+  stableTrainingCost
 };
