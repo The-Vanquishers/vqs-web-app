@@ -51,6 +51,10 @@ function Empire(props) {
     return ITEM_HIDDEN_CLASS;
   }
 
+  const getBuildingDetails = (name) => {
+    return (props.empire.buildings.filter(e => e.buildingId === buildingNameToId[name]))[0];
+  }
+
   useEffect(() => {
     if (!props.empire.isFetching && !props.empire.isFetched) {
       if (props.empire.fetchingFailed) {
@@ -431,7 +435,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                setToggleStableModal(!toggleStableModal);
+                setToggleStableModal(prevState => !prevState);
               }}
             ></Grid>
             <Grid
@@ -625,7 +629,8 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
-      {toggleStableModal && <StableComponent />}
+      {toggleStableModal && <StableComponent
+        building={getBuildingDetails(buildingNames.STABLE)} />}
     </div>
   );
 }

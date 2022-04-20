@@ -76,6 +76,19 @@ const resourceSets = {
   Gold: "6233f80ae996f0998ee1ce7c",
 };
 
+const unitSets = {
+  'Spear Man': '6232bf7b79c7546bbfe20e14',
+  'Axe Man': '6232bf7b79c7546bbfe20e15',
+  'Sword Man': '6232bf7b79c7546bbfe20e16',
+  'Ram': '6232bf7b79c7546bbfe20e1b',
+  'Heavy Cavalry': '6232bf7b79c7546bbfe20e18',
+  'Cavalry': '6232bf7b79c7546bbfe20e17',
+  'Cavalry Archer': '6232bf7b79c7546bbfe20e19',
+  'Heavy Cavalry Archer': '6232bf7b79c7546bbfe20e1a',
+  'Catapult': '6232bf7b79c7546bbfe20e1c',
+  'Scouts': '6232bf7b79c7546bbfe20e1d',
+  'Vanquisher': '624c1fc47d042172892edd9a'
+}
 
 
 module.exports = {
@@ -87,4 +100,5 @@ module.exports = {
   buildingNames,
   ITEM_HIDDEN_CLASS,
   ITEM_VISIBLE_CLASS,
+  unitSets
 };
