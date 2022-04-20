@@ -98,6 +98,9 @@ const ModalComponent = (props) => {
               <Typography variant="h5" component="h6">
                 {props.name} (Level {props.level})
               </Typography>
+              <Typography variant="body">
+                This is town hall. It is heart of your empire from where you can upgrade all of your buildings.
+              </Typography>
             </Grid>
           </Grid>
           {props.belowBuildingsHeader && (

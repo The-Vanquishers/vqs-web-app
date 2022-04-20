@@ -8,11 +8,12 @@ import { loginReducer } from "../reducers/login";
 import { empireReducer } from '../reducers/empire';
 
 
+
+
 const TownHall = ({login,empire}) => {
 
   const Town_Hall = buildingNameToId['Town Hall'];
   const [buildings, setBuildings] = useState([{}]);
-  const [ok, setOk] = useState(false);
   const belowBuildingsHeader = ["Buildings", "Requirements", "Time", "Upgrade"];
   const gridSize = [2, 6, 2, 2];
   const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0].leve;
@@ -33,19 +34,16 @@ const TownHall = ({login,empire}) => {
         },
       ]);
     };
-
-    empire.buildings.map((item,indx) => {
-      fetchRequirements(item.buildingId)
-      if (indx === empire.buildings.length-1) {
-        setOk(true);
-      }
-    });
-
-  }, []);
+    for (let i in empire.buildings) {
+      fetchRequirements(empire.buildings[i].buildingId)
+      
+    }
+  
+  }, [empire.buildings,login.token,empire.empireId]);
 
   return (
     <>
-      {ok && (
+      
         <ModalComponent
           name="Town Hall"
           level={level}
@@ -56,7 +54,6 @@ const TownHall = ({login,empire}) => {
           empireName={empire.empireName}
           gridSize={gridSize}
         />
-      )}
     </>
   );
 }
