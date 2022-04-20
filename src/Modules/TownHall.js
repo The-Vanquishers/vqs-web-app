@@ -43,17 +43,16 @@ const TownHall = ({login,empire}) => {
 
   return (
     <>
-      
-        <ModalComponent
-          name="Town Hall"
-          level={level}
-          image={Buildings}
-          position="65% 16%"
-          belowBuildings={buildings}
-          belowBuildingsHeader={belowBuildingsHeader}
-          empireName={empire.empireName}
-          gridSize={gridSize}
-        />
+      <ModalComponent
+        name="Town Hall"
+        level={level}
+        image={Buildings}
+        position="65% 16%"
+        belowBuildings={buildings}
+        belowBuildingsHeader={belowBuildingsHeader}
+        empireName={empire.empireName}
+        gridSize={gridSize}
+      />
     </>
   );
 }

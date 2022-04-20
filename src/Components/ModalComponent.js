@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button, Grid } from "@mui/material";
-import trans from "../Assets/trans.png"
+import trans80 from "../Assets/trans80.png"
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
@@ -22,7 +22,7 @@ const style = {
   width: 700,
   color:"white", 
   // bgcolor: "#888888",
-  bg: `url(${trans})`,
+  bg: `url(${trans80})`,
   border: "2px solid #000",
   boxShadow: 2,
   px: 3,

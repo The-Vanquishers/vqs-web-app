@@ -76,7 +76,7 @@ const Farm = ({login,empire}) => {
     fetchRequirements();
 },[empire.empireId,farm,login.token])
 
-  console.log(requirements);
+  
   return (
     <>
       <Grid container spacing={2} sx={{ my: 3 }}>
@@ -106,19 +106,19 @@ const Farm = ({login,empire}) => {
       </Grid>
 
       <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <Typography variant="h6" component="h6">
             Farm (Level {level})
           </Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography variant="h6" component="h6">
-            Units per hour
+            Hourly Production
           </Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <Typography variant="h6" component="h6">
-            Units per hour at level {level + 1}
+            Hourly Production at level {level + 1}
           </Typography>
         </Grid>
       </Grid>
@@ -148,23 +148,7 @@ const Farm = ({login,empire}) => {
           </Typography>
         </Grid>
       </Grid> */}
-      <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={6}>
-          <Typography variant="h6" component="h6">
-            Requirements
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="h6" component="h6">
-            Time
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="h6" component="h6">
-            Upgrade
-          </Typography>
-        </Grid>
-      </Grid>
+      
       { Object.keys(requirements).length &&
         <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={2}>

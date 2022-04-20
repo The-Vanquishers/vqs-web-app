@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import trans from "../Assets/trans.png";
+import trans80 from "../Assets/trans80.png";
+import CancelIcon from '@mui/icons-material/Cancel';
+import IconButton from '@mui/material/IconButton';
+import { Grid } from '@mui/material';
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -10,7 +14,7 @@ const style = {
   width: 700,
   color: "white",
   // bgcolor: "#888888",
-  bg: `url(${trans})`,
+  bg: `url(${trans80})`,
   border: "2px solid #000",
   boxShadow: 2,
   px: 3,
@@ -26,6 +30,14 @@ const ModalCompo = (props) => {
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
+          < Grid container justifyContent="flex-end" >
+            <Grid itme >
+              <IconButton onClick={handleClose}>
+              <CancelIcon color="error"/>
+          </IconButton>
+            </Grid>
+          
+        </Grid>
           {props.children}
         </Box>
       </Modal>
