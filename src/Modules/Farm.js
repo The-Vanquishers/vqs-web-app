@@ -11,6 +11,7 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
+import Divider from '@mui/material/Divider';
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 
 const msToTime = (time) => {
@@ -22,7 +23,7 @@ const msToTime = (time) => {
   minutes = (minutes < 10) ? "0" + minutes : minutes;
   seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-  return hours + ":" + minutes + ":" + seconds;
+  return hours + ":" + minutes + ":" + seconds
 }
 
 const resourceMapper = (id) => {
@@ -79,7 +80,7 @@ const Farm = ({login,empire}) => {
   
   return (
     <>
-      <Grid container spacing={2} sx={{ my: 3 }}>
+      <Grid container spacing={2} sx={{ my: 2 }}>
         <Grid
           item
           xs={2}
@@ -95,7 +96,7 @@ const Farm = ({login,empire}) => {
             cursor: "pointer",
           }}
         ></Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <Typography variant="h5" component="h6">
             Farm (Level {level})
           </Typography>
@@ -106,49 +107,54 @@ const Farm = ({login,empire}) => {
       </Grid>
 
       <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Typography variant="h6" component="h6">
             Farm (Level {level})
           </Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography variant="h6" component="h6">
-            Hourly Production
+            Current Level
           </Typography>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={3}>
           <Typography variant="h6" component="h6">
-            Hourly Production at level {level + 1}
+            Next Level
           </Typography>
         </Grid>
       </Grid>
       <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={5}>
-          <Typography variant="body2">Base production</Typography>
+        <Grid item xs={6}>
+          <Typography variant="body2">Hourly production</Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography variant="body2">{ current}</Typography>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            < img
+              src = {FoodIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography >
+          </Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Typography variant="body2">
-            {oneLevelup}
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            < img
+              src = {FoodIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography >
           </Typography>
         </Grid>
       </Grid>
-      {/* <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={5}>
-          <Typography variant="body2">Current production</Typography>
-        </Grid>
-        <Grid item xs={3}>
-          <Typography variant="body2">{ current}</Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="body2">
-            {oneLevelup}
-          </Typography>
-        </Grid>
-      </Grid> */}
-      
+      <Divider/>
       { Object.keys(requirements).length &&
         <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={2}>

@@ -12,7 +12,9 @@ import GoldIcon from "../Assets/resources/gold.png";
 import { resourceSets } from "../variables";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 import { buildingIdToName } from "../variables";
-
+import CancelIcon from '@mui/icons-material/Cancel';
+import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
 
 const style = {
   position: "absolute",
@@ -20,25 +22,15 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  color:"white", 
+  color:"black", 
   // bgcolor: "#888888",
-  bg: `url(${trans80})`,
+  backgroundImage: `url(${trans80})`,
   border: "2px solid #000",
   boxShadow: 2,
   px: 3,
-  py: 2,
 };
 
-// const styles = (theme) => ({
-//   modalStyle1: {
-//     position: "absolute",
-//     top: "10%",
-//     left: "10%",
-//     overflow: "scroll",
-//     height: "100%",
-//     display: "block",
-//   },
-// });
+
 const  msToTime= (time)=> {
   let seconds = Math.floor((time / 1000) % 60),
   minutes = Math.floor((time / (1000 * 60)) % 60),
@@ -77,7 +69,13 @@ const ModalComponent = (props) => {
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          
+          < Grid container justifyContent="right" style={{position:"absolute",paddingRight:20,paddingTop:3}} >
+            <Grid item  >
+              <IconButton onClick={handleClose}>
+                <CancelIcon color="error"/>
+              </IconButton>
+            </Grid>
+        </Grid>
           <Grid container spacing={2} sx={{ my: 3 }}>
             <Grid
               item
@@ -103,6 +101,7 @@ const ModalComponent = (props) => {
               </Typography>
             </Grid>
           </Grid>
+          
           {props.belowBuildingsHeader && (
             <>
               <Grid container spacing={2} sx={{ my: 1 }}>
@@ -167,7 +166,9 @@ const ModalComponent = (props) => {
                             Level {item.currentLevel + 1}
                           </Button>
                         </Grid>
+                        <Divider />
                       </>
+                      
                     )}
                   </>
                 ))}

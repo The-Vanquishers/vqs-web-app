@@ -12,13 +12,12 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  color: "white",
+  color: "black",
   // bgcolor: "#888888",
-  bg: `url(${trans80})`,
+  backgroundImage: `url(${trans80})`,
   border: "2px solid #000",
   boxShadow: 2,
   px: 3,
-  py: 2,
 };
 
 
@@ -30,13 +29,12 @@ const ModalCompo = (props) => {
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          < Grid container justifyContent="flex-end" >
-            <Grid itme >
+          < Grid container justifyContent="right" style={{position:"absolute",paddingRight:20,paddingTop:3}} >
+            <Grid item  >
               <IconButton onClick={handleClose}>
-              <CancelIcon color="error"/>
-          </IconButton>
+                <CancelIcon color="error"/>
+              </IconButton>
             </Grid>
-          
         </Grid>
           {props.children}
         </Box>
