@@ -43,6 +43,15 @@ function StableComponent({ building, units }) {
     const [archerAmount, setArcherAmount] = useState(0);
     const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
 
+    const getTrainingUnits = () => {
+        const units = [];
+        if (cavalryAmount) { units.push({ unitId: unitSets[stableUnitNames.CAVALRY], quantity: cavalryAmount }) }
+        if (heavyCavalryAmount) { units.push({ unitId: unitSets[stableUnitNames.HEAVY_CAVALRY], quantity: heavyCavalryAmount }) }
+        if (archerAmount) { units.push({ unitId: unitSets[stableUnitNames.CAVALRY_ARCHER], quantity: archerAmount }) }
+        if (heavyArcherAmount) { units.push({ unitId: unitSets[stableUnitNames.HEAVY_CAVALRY_ARCHER], quantity: heavyArcherAmount }) }
+        return units;
+    }
+
 
     return (
         <div>
@@ -315,4 +324,5 @@ function StableComponent({ building, units }) {
     );
 }
 
+export const MemoizedStableComponent = React.memo(StableComponent);
 export default StableComponent;
