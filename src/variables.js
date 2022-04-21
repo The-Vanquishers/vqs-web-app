@@ -101,22 +101,26 @@ const stableTrainingCost = {
   [stableUnitNames.HEAVY_CAVALRY]: {
     Iron: 400,
     Wood: 280,
-    Stone: 530
+    Stone: 530,
+    time: 800
   },
   [stableUnitNames.CAVALRY]: {
     Iron: 350,
     Wood: 250,
-    Stone: 500
+    Stone: 500,
+    time: 750
   },
   [stableUnitNames.CAVALRY_ARCHER]: {
     Iron: 400,
     Wood: 350,
-    Stone: 550
+    Stone: 550,
+    time: 820
   },
   [stableUnitNames.HEAVY_CAVALRY_ARCHER]: {
     Iron: 500,
     Wood: 450,
-    Stone: 550
+    Stone: 550,
+    time: 880
   },
 }
 
