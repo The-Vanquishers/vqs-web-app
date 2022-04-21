@@ -9,7 +9,7 @@ import IronIcon from "../Assets/resources/iron.png";
 import ClockIcon from "../Assets/clock.png";
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
 
-function StableComponent({ building, units }) {
+function StableComponent({ building, units, onClose }) {
 
     const style = {
         position: "absolute",
@@ -36,7 +36,10 @@ function StableComponent({ building, units }) {
         return count;
     }
     const [open, setOpen] = useState(true);
-    const handleClose = () => setOpen(!open);
+    const handleClose = () => {
+        onClose();
+        setOpen(!open)
+    };
 
     const [cavalryAmount, setCavalryAmount] = useState(0);
     const [heavyCavalryAmount, setHeavyCavalryAmount] = useState(0);

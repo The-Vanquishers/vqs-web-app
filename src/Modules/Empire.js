@@ -631,7 +631,8 @@ function Empire(props) {
       {showTownHallModal && <TownHall />}
       {toggleStableModal && <MemoizedStableComponent
         building={getBuildingDetails(buildingNames.STABLE)}
-        units={props.empire.units} />}
+        units={props.empire.units}
+        onClose={() => setToggleStableModal(prevState => !prevState)} />}
     </div>
   );
 }
