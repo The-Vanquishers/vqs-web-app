@@ -6,6 +6,7 @@ import Buildings from "../Assets/buildings.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
+import ClockIcon from "../Assets/clock.png";
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
 
 function StableComponent({ building, units }) {
@@ -60,7 +61,6 @@ function StableComponent({ building, units }) {
                                 borderWidth: 1,
                                 backgroundImage: `url(${Buildings})`,
                                 backgroundPosition: buildingPosition.STABLE,
-                                cursor: "pointer",
                             }}
                         ></Grid>
                         <Grid item>
@@ -86,7 +86,7 @@ function StableComponent({ building, units }) {
                                 <strong> Available Units</strong>
                             </TableCell>
                             <TableCell align='center'>
-                                <strong>Unit Cost</strong>
+                                <strong>Unit Requirements</strong>
                             </TableCell>
                             <TableCell align='center'>
                                 <strong>Recruit Unit</strong>
@@ -119,6 +119,13 @@ function StableComponent({ building, units }) {
                                     <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                     <Typography variant='body1'>
                                         {stableTrainingCost[stableUnitNames.CAVALRY].Stone}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                    <Typography variant='body1'>
+                                        {new Date(stableTrainingCost[stableUnitNames.CAVALRY].time * 1000)
+                                            .toISOString().substr(14, 5)}
                                     </Typography>
                                 </TableCell>
                             </TableCell>
@@ -168,6 +175,13 @@ function StableComponent({ building, units }) {
                                         {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone}
                                     </Typography>
                                 </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                    <Typography variant='body1'>
+                                        {new Date(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].time * 1000)
+                                            .toISOString().substr(14, 5)}
+                                    </Typography>
+                                </TableCell>
                             </TableCell>
                             <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                 <TextField
@@ -215,6 +229,13 @@ function StableComponent({ building, units }) {
                                         {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone}
                                     </Typography>
                                 </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                    <Typography variant='body1'>
+                                        {new Date(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].time * 1000)
+                                            .toISOString().substr(14, 5)}
+                                    </Typography>
+                                </TableCell>
                             </TableCell>
                             <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                 <TextField
@@ -259,6 +280,13 @@ function StableComponent({ building, units }) {
                                     <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                     <Typography variant='body1'>
                                         {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                    <Typography variant='body1'>
+                                        {new Date(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].time * 1000)
+                                            .toISOString().substr(14, 5)}
                                     </Typography>
                                 </TableCell>
                             </TableCell>
