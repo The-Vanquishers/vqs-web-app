@@ -1,4 +1,7 @@
-import { Box, Modal, Grid, TableHead, TableRow, TableBody, TableCell, TextField } from '@mui/material';
+import {
+    Box, Modal, Grid, TableHead, TableRow, TableBody, TableCell, TextField,
+    Button, Icon
+} from '@mui/material';
 import React, { useState } from 'react';
 import { Typography } from '@mui/material';
 import trans from "../Assets/trans.png"
@@ -7,6 +10,7 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import ClockIcon from "../Assets/clock.png";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
 
 function StableComponent({ building, units, onClose }) {
@@ -25,6 +29,11 @@ function StableComponent({ building, units, onClose }) {
         px: 3,
         py: 2,
     };
+    const ButtonIcon = (
+        <Icon>
+            <img alt="edit" src={ClockIcon} />
+        </Icon>
+    );
 
 
     const getAvailableUnitsQuantity = (name) => {
@@ -321,6 +330,23 @@ function StableComponent({ building, units, onClose }) {
                             </TableCell>
                         </TableRow>
                     </TableBody>
+                    <div align="center">
+                        <Button
+                            startIcon={<GroupAddIcon />}
+                            size='large'
+                            sx={{
+                                bgcolor: "#A64B2A",
+                                margin: 2,
+                                color: '#e6e6e6',
+                                fontSize: 14,
+                                ':hover': {
+                                    bgcolor: '#8E3200'
+                                },
+                            }}
+                            onClick={() => console.log(getTrainingUnits())}>
+                            <strong>Train Units</strong>
+                        </Button>
+                    </div>
                 </Box>
             </Modal>
         </div >
