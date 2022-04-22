@@ -372,13 +372,22 @@ function Empire(props) {
                 alert("Warehouse");
               }}
             ></Grid>
+            {/* HOUSE */}
             <Grid
+              className={getGridItemClass(props.empire.buildings, buildingNames.HOUSE)}
               item
+              title={buildingNames.HOUSE}
               xs={2}
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
+                backgroundImage: `url(${Buildings})`,
+                backgroundPosition: buildingPosition.HOUSE,
+                cursor: 'pointer'
+              }}
+              onClick={() => {
+                alert("HOUSE");
               }}
             ></Grid>
             {/* MARKET */}

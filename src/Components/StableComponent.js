@@ -99,6 +99,7 @@ function StableComponent({ building, units, onClose }) {
                     </Grid>
 
                     <TableHead>
+                        
                         <TableRow>
                             <TableCell>
                                 <strong>Unit Name</strong>

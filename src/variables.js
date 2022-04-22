@@ -53,7 +53,7 @@ const buildingIdToName = {
 };
 
 const buildingPosition = {
-  HOUSE: "65% 16%",
+  HOUSE: "90% 16%",
   TOWN_HALL: "0% 0%",
   MINE: "68% 95%",
   LOGGING: "45% 82%",
