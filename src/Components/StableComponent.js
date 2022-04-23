@@ -1,7 +1,9 @@
 import {
     Box, Modal, Grid, TableHead, TableRow, TableBody, TableCell, TextField,
-    Button, Icon
+    Button
 } from '@mui/material';
+import { connect } from "react-redux";
+import { loginReducer } from "../reducers/login"
 import React, { useState } from 'react';
 import { Typography } from '@mui/material';
 import trans from "../Assets/trans.png"
@@ -12,8 +14,12 @@ import IronIcon from "../Assets/resources/iron.png";
 import ClockIcon from "../Assets/clock.png";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
+import { stableReducer } from '../reducers/stableReducer';
+import { trainRequest } from '../actions/stable';
 
-function StableComponent({ building, units, onClose }) {
+
+function StableComponent({ dispatch, login, building,
+    units, onClose, empireId }) {
 
     const style = {
         position: "absolute",
@@ -29,11 +35,6 @@ function StableComponent({ building, units, onClose }) {
         px: 3,
         py: 2,
     };
-    const ButtonIcon = (
-        <Icon>
-            <img alt="edit" src={ClockIcon} />
-        </Icon>
-    );
 
 
     const getAvailableUnitsQuantity = (name) => {
@@ -99,7 +100,7 @@ function StableComponent({ building, units, onClose }) {
                     </Grid>
 
                     <TableHead>
-                        
+
                         <TableRow>
                             <TableCell>
                                 <strong>Unit Name</strong>
@@ -344,7 +345,26 @@ function StableComponent({ building, units, onClose }) {
                                     bgcolor: '#8E3200'
                                 },
                             }}
-                            onClick={() => console.log(getTrainingUnits())}>
+                            onClick={() => {
+
+                                try {
+                                    dispatch(trainRequest({
+                                        empireId: empireId,
+                                        units: getTrainingUnits()
+                                    },
+                                        {
+                                            token: login.token,
+                                            'Content-Type': "application/json"
+                                        }
+                                    ))
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                                console.log({
+                                    empireId: empireId,
+                                    units: getTrainingUnits()
+                                })
+                            }}>
                             <strong>Train Units</strong>
                         </Button>
                     </div>
@@ -354,5 +374,11 @@ function StableComponent({ building, units, onClose }) {
     );
 }
 
-export const MemoizedStableComponent = React.memo(StableComponent);
-export default StableComponent;
+const mapStateToProps = state => {
+    return {
+        stable: stableReducer(state),
+        login: loginReducer(state)
+    }
+}
+
+export default connect(mapStateToProps)(StableComponent);

@@ -24,7 +24,7 @@ import {
   buildingPosition
 } from "../variables";
 import AlertComponent from "../Components/AlertComponent";
-import StableComponent, { MemoizedStableComponent } from "../Components/StableComponent";
+import StableComponent from "../Components/StableComponent";
 
 const showGrid = false;
 
@@ -638,9 +638,10 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
-      {toggleStableModal && <MemoizedStableComponent
+      {toggleStableModal && <StableComponent
         building={getBuildingDetails(buildingNames.STABLE)}
         units={props.empire.units}
+        empireId={props.empire.empireId}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
     </div>
   );
