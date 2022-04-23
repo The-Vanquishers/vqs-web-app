@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import { connect } from "react-redux";
 import { loginReducer } from "../reducers/login"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import trans from "../Assets/trans.png"
 import Buildings from "../Assets/buildings.png";
@@ -15,10 +15,10 @@ import ClockIcon from "../Assets/clock.png";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
 import { stableReducer } from '../reducers/stableReducer';
-import { trainRequest } from '../actions/stable';
+import { trainRequest, getTrainingQueue } from '../actions/stable';
 
 
-function StableComponent({ dispatch, login, building,
+function StableComponent({ dispatch, login, stable, building,
     units, onClose, empireId }) {
 
     const style = {
@@ -36,6 +36,10 @@ function StableComponent({ dispatch, login, building,
         py: 2,
     };
 
+    const getLocalDateTime = (timeDateStr) => {
+        let newDate = timeDateStr
+        new Date(newDate).toLocaleString().split(',');
+    }
 
     const getAvailableUnitsQuantity = (name) => {
         var count = 0;
@@ -64,6 +68,14 @@ function StableComponent({ dispatch, login, building,
         if (heavyArcherAmount) { units.push({ unitId: unitSets[stableUnitNames.HEAVY_CAVALRY_ARCHER], quantity: heavyArcherAmount }) }
         return units;
     }
+
+    useEffect(() => {
+        dispatch(getTrainingQueue({
+            token: login.token,
+            'Content-Type': "application/json"
+        }, empireId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
 
     return (
@@ -348,22 +360,22 @@ function StableComponent({ dispatch, login, building,
                             onClick={() => {
 
                                 try {
-                                    dispatch(trainRequest({
-                                        empireId: empireId,
-                                        units: getTrainingUnits()
-                                    },
-                                        {
-                                            token: login.token,
-                                            'Content-Type': "application/json"
-                                        }
-                                    ))
+                                    if (!stable.queueFetched) {
+                                        dispatch(trainRequest({
+                                            empireId: empireId,
+                                            units: getTrainingUnits()
+                                        },
+                                            {
+                                                token: login.token,
+                                                'Content-Type': "application/json"
+                                            }
+                                        ))
+                                    }
+                                    else { alert("Training queue is busy!") }
                                 } catch (error) {
                                     console.log(error);
                                 }
-                                console.log({
-                                    empireId: empireId,
-                                    units: getTrainingUnits()
-                                })
+
                             }}>
                             <strong>Train Units</strong>
                         </Button>

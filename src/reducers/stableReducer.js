@@ -30,6 +30,7 @@ const stable = (state = initialState, action) => {
                 trainingTime: action.timeRequired,
                 errMsgTraining: null,
                 trainingFailed: false,
+                queueFetched: true
             }
         }
         case TRAINING_FAILED_TO_START: {
@@ -54,7 +55,8 @@ const stable = (state = initialState, action) => {
             return {
                 ...state,
                 queueFetched: false,
-                errMsgQueue: action.errMsgQueue
+                errMsgQueue: action.errMsgQueue,
+                queue: null
             }
         }
 

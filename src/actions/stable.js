@@ -26,8 +26,9 @@ exports.trainRequest = (body, headers) => dispatch => {
 
 
 
-exports.getTrainingQueue = (headers) => dispatch => {
-    axios.get(`${apiUrl}/queue`, { headers: headers })
+exports.getTrainingQueue = (headers, empireId) => dispatch => {
+    axios.get(`${apiUrl}/train/queue/${empireId}`,
+     { headers: headers })
         .then(res => {
             dispatch({
                 type: this.TRAINING_QUEUE_FETCHED,
