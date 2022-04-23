@@ -1,6 +1,6 @@
 import {
     Box, Modal, Grid, TableHead, TableRow, TableBody, TableCell, TextField,
-    Button
+    Button, Table
 } from '@mui/material';
 import { connect } from "react-redux";
 import { loginReducer } from "../reducers/login"
@@ -37,8 +37,10 @@ function StableComponent({ dispatch, login, stable, building,
     };
 
     const getLocalDateTime = (timeDateStr) => {
-        let newDate = timeDateStr
-        new Date(newDate).toLocaleString().split(',');
+        return {
+            date: new Date(timeDateStr).toLocaleString().split(',')[0],
+            time: new Date(timeDateStr).toLocaleString().split(',')[1]
+        }
     }
 
     const getAvailableUnitsQuantity = (name) => {
@@ -75,7 +77,7 @@ function StableComponent({ dispatch, login, stable, building,
             'Content-Type': "application/json"
         }, empireId))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [stable.queueFetched])
 
 
     return (
@@ -111,239 +113,290 @@ function StableComponent({ dispatch, login, stable, building,
                         </Grid>
                     </Grid>
 
-                    <TableHead>
+                    {/* Training Queue */}
+                    {(stable.queue !== null) &&
+                        <Box>
+                            <Typography variant="h6" align='center' color={'#8E3200'}>
+                                <strong>Training Queue </strong>
+                            </Typography>
+                            < Table >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>
+                                            <strong>Unit Name</strong>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <strong>Quantity</strong>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <strong>Started At</strong>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <strong>Complete At</strong>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {Object.keys(unitSets).find(k => unitSets[k] === stable.queue.unitId)}
+                                        </TableCell>
+                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {stable.queue.quantity}
+                                        </TableCell>
+                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {getLocalDateTime(stable.queue.currentTime).time}
+                                            <br />
+                                            {"(" + getLocalDateTime(stable.queue.currentTime).date + ")"}
+                                        </TableCell>
+                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {getLocalDateTime(stable.queue.endTime).time}
+                                            <br />
+                                            {"(" + getLocalDateTime(stable.queue.endTime).date + ")"}
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Box>}
 
-                        <TableRow>
-                            <TableCell>
-                                <strong>Unit Name</strong>
-                            </TableCell>
-                            <TableCell align='center'>
-                                <strong> Available Units</strong>
-                            </TableCell>
-                            <TableCell align='center'>
-                                <strong>Unit Requirements</strong>
-                            </TableCell>
-                            <TableCell align='center'>
-                                <strong>Recruit Unit</strong>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow >
-                            <TableCell component="th" scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                {stableUnitNames.CAVALRY}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                {getAvailableUnitsQuantity(stableUnitNames.CAVALRY)}
-                            </TableCell>
-                            <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
-                                    <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.CAVALRY].Wood}
-                                    </Typography>
+                    <Typography variant="h6" align='center' color={'#8E3200'}>
+                        <strong>Train Units </strong>
+                    </Typography>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <strong>Unit Name</strong>
                                 </TableCell>
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.CAVALRY].Iron}
-                                    </Typography>
+                                <TableCell align='center'>
+                                    <strong> Available Units</strong>
                                 </TableCell>
+                                <TableCell align='center'>
+                                    <strong>Unit Requirements</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong>Recruit Unit</strong>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {stableUnitNames.CAVALRY}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {getAvailableUnitsQuantity(stableUnitNames.CAVALRY)}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY].Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY].Iron}
+                                        </Typography>
+                                    </TableCell>
 
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.CAVALRY].Stone}
-                                    </Typography>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY].Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(stableTrainingCost[stableUnitNames.CAVALRY].time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {new Date(stableTrainingCost[stableUnitNames.CAVALRY].time * 1000)
-                                            .toISOString().substr(14, 5)}
-                                    </Typography>
+                                    <TextField
+                                        inputProps={{
+                                            style: {
+                                                height: 40,
+                                                width: 50,
+                                                padding: '0 14px',
+                                            },
+                                        }}
+                                        type="number"
+                                        value={cavalryAmount}
+                                        onChange={(e) => {
+                                            if (e.target.value >= 0 && e.target.value <= 10)
+                                                setCavalryAmount(parseInt(e.target.value))
+                                        }}
+                                    />
                                 </TableCell>
-                            </TableCell>
-                            <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TextField
-                                    inputProps={{
-                                        style: {
-                                            height: 40,
-                                            width: 50,
-                                            padding: '0 14px',
-                                        },
-                                    }}
-                                    type="number"
-                                    value={cavalryAmount}
-                                    onChange={(e) => {
-                                        if (e.target.value >= 0 && e.target.value <= 10)
-                                            setCavalryAmount(parseInt(e.target.value))
-                                    }}
-                                />
-                            </TableCell>
-                        </TableRow>
+                            </TableRow>
 
-                        <TableRow>
-                            <TableCell component="th" scope="row" >
-                                {stableUnitNames.CAVALRY_ARCHER}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align='center'>
-                                {getAvailableUnitsQuantity(stableUnitNames.CAVALRY_ARCHER)}
-                            </TableCell>
-                            <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
-                                    <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood}
-                                    </Typography>
+                            <TableRow>
+                                <TableCell scope="row" >
+                                    {stableUnitNames.CAVALRY_ARCHER}
                                 </TableCell>
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron}
-                                    </Typography>
+                                <TableCell scope="row" align='center'>
+                                    {getAvailableUnitsQuantity(stableUnitNames.CAVALRY_ARCHER)}
                                 </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron}
+                                        </Typography>
+                                    </TableCell>
 
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone}
-                                    </Typography>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {new Date(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].time * 1000)
-                                            .toISOString().substr(14, 5)}
-                                    </Typography>
+                                    <TextField
+                                        inputProps={{
+                                            style: {
+                                                height: 40,
+                                                width: 50,
+                                                padding: '0 14px',
+                                            },
+                                        }}
+                                        type="number"
+                                        value={archerAmount}
+                                        onChange={(e) => {
+                                            if (e.target.value >= 0 && e.target.value <= 10)
+                                                setArcherAmount(parseInt(e.target.value))
+                                        }}
+                                    />
                                 </TableCell>
-                            </TableCell>
-                            <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TextField
-                                    inputProps={{
-                                        style: {
-                                            height: 40,
-                                            width: 50,
-                                            padding: '0 14px',
-                                        },
-                                    }}
-                                    type="number"
-                                    value={archerAmount}
-                                    onChange={(e) => {
-                                        if (e.target.value >= 0 && e.target.value <= 10)
-                                            setArcherAmount(parseInt(e.target.value))
-                                    }}
-                                />
-                            </TableCell>
-                        </TableRow>
+                            </TableRow>
 
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                {stableUnitNames.HEAVY_CAVALRY}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align='center'>
-                                {getAvailableUnitsQuantity(stableUnitNames.HEAVY_CAVALRY)}
-                            </TableCell>
-                            <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
-                                    <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood}
-                                    </Typography>
+                            <TableRow>
+                                <TableCell component="th" scope="row">
+                                    {stableUnitNames.HEAVY_CAVALRY}
                                 </TableCell>
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron}
-                                    </Typography>
+                                <TableCell component="th" scope="row" align='center'>
+                                    {getAvailableUnitsQuantity(stableUnitNames.HEAVY_CAVALRY)}
                                 </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron}
+                                        </Typography>
+                                    </TableCell>
 
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone}
-                                    </Typography>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {new Date(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].time * 1000)
-                                            .toISOString().substr(14, 5)}
-                                    </Typography>
+                                    <TextField
+                                        inputProps={{
+                                            style: {
+                                                height: 40,
+                                                width: 50,
+                                                padding: '0 14px',
+                                            },
+                                        }}
+                                        type="number"
+                                        value={heavyCavalryAmount}
+                                        onChange={(e) => {
+                                            if (e.target.value >= 0 && e.target.value <= 10)
+                                                setHeavyCavalryAmount(parseInt(e.target.value))
+                                        }}
+                                    />
                                 </TableCell>
-                            </TableCell>
-                            <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TextField
-                                    inputProps={{
-                                        style: {
-                                            height: 40,
-                                            width: 50,
-                                            padding: '0 14px',
-                                        },
-                                    }}
-                                    type="number"
-                                    value={heavyCavalryAmount}
-                                    onChange={(e) => {
-                                        if (e.target.value >= 0 && e.target.value <= 10)
-                                            setHeavyCavalryAmount(parseInt(e.target.value))
-                                    }}
-                                />
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell component="th" scope="row">
-                                {stableUnitNames.HEAVY_CAVALRY_ARCHER}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align='center'>
-                                {getAvailableUnitsQuantity(stableUnitNames.HEAVY_CAVALRY_ARCHER)}
-                            </TableCell>
-                            <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
-                                    <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood}
-                                    </Typography>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell component="th" scope="row">
+                                    {stableUnitNames.HEAVY_CAVALRY_ARCHER}
                                 </TableCell>
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron}
-                                    </Typography>
+                                <TableCell component="th" scope="row" align='center'>
+                                    {getAvailableUnitsQuantity(stableUnitNames.HEAVY_CAVALRY_ARCHER)}
                                 </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron}
+                                        </Typography>
+                                    </TableCell>
 
-                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                    <Typography variant='body1'>
-                                        {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone}
-                                    </Typography>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
-                                    <Typography variant='body1'>
-                                        {new Date(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].time * 1000)
-                                            .toISOString().substr(14, 5)}
-                                    </Typography>
+                                    <TextField
+                                        inputProps={{
+                                            style: {
+                                                height: 40,
+                                                width: 50,
+                                                padding: '0 14px',
+                                            },
+                                        }}
+                                        type="number"
+                                        value={heavyArcherAmount}
+                                        onChange={(e) => {
+                                            if (e.target.value >= 0 && e.target.value <= 10)
+                                                setHeavyArcherAmount(parseInt(e.target.value))
+                                        }}
+                                    />
                                 </TableCell>
-                            </TableCell>
-                            <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                <TextField
-                                    inputProps={{
-                                        style: {
-                                            height: 40,
-                                            width: 50,
-                                            padding: '0 14px',
-                                        },
-                                    }}
-                                    type="number"
-                                    value={heavyArcherAmount}
-                                    onChange={(e) => {
-                                        if (e.target.value >= 0 && e.target.value <= 10)
-                                            setHeavyArcherAmount(parseInt(e.target.value))
-                                    }}
-                                />
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+
                     <div align="center">
                         <Button
                             startIcon={<GroupAddIcon />}
@@ -380,8 +433,8 @@ function StableComponent({ dispatch, login, stable, building,
                             <strong>Train Units</strong>
                         </Button>
                     </div>
-                </Box>
-            </Modal>
+                </Box >
+            </Modal >
         </div >
     );
 }
