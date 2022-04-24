@@ -426,7 +426,7 @@ function StableComponent({ dispatch, login, stable, building,
                                     }
                                     else { alert("Training queue is busy!") }
                                 } catch (error) {
-                                    console.log(error);
+                                     console.log(error);
                                 }
 
                             }}>
