@@ -18,7 +18,8 @@ exports.logging = (token,empireId) => dispatch => {
         level: data.data.level,
         hp: data.data.HP,
         hourlyProduction: data.data.hourlyProduction,
-        constructionTime: data.data.constructionTime
+        constructionTime: data.data.constructionTime,
+        constructionCost: data.data.constructionCost
       });
     })
     .catch(() => {
