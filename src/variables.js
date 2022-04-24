@@ -54,7 +54,7 @@ const buildingIdToName = {
 
 const buildingPosition = {
   HOUSE: "90% 16%",
-  TOWN_HALL: "0% 0%",
+  TOWN_HALL: "65% 16%",
   MINE: "68% 95%",
   LOGGING: "45% 82%",
   ROCK_PICKER: "42% 36%",

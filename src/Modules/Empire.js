@@ -23,8 +23,10 @@ import {
   buildingNames,
   buildingPosition
 } from "../variables";
+import Farm from "./Farm";
 import AlertComponent from "../Components/AlertComponent";
 import StableComponent from "../Components/StableComponent";
+import ModalCompo from "../Components/ModalCompo";
 
 const showGrid = false;
 
@@ -36,6 +38,7 @@ function Empire(props) {
   const [showTownHallModal, setShowTownHallModal] = useState(false);
   const [toggleStableModal, setToggleStableModal] = useState(false);
 
+  const [showFirmModal, setShowFirmModal] = useState(false);
 
 
   if (!token) {
@@ -75,6 +78,7 @@ function Empire(props) {
     }
   }, [props, token]);
 
+  
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -351,7 +355,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Firm");
+                setShowFirmModal(!showFirmModal);
               }}
             ></Grid>
             {/* WAREHOUSE */}
@@ -643,10 +647,10 @@ function Empire(props) {
         units={props.empire.units}
         empireId={props.empire.empireId}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
+      {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
     </div>
   );
 }
-
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),
