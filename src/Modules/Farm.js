@@ -42,28 +42,27 @@ const resourceMapper = (id) => {
       break;
   }
 }
- 
-const Mine = ({login,empire}) => {
+
+const Farm = ({login,empire}) => {
   const [oneLevelup, setOnelevelUp] = useState(0);
   const [current, setCurrent] = useState(0);
   const [requirements, setRequirements] = useState({});
 
-  const mineId = buildingNameToId["Mine"];
-  const level = empire.buildings.filter((item) => item.buildingId === mineId)[0].leve;
-  console.log(level);
+  const farm = buildingNameToId["Farm"];
+  const level = empire.buildings.filter((item) => item.buildingId === farm)[0].leve;
 
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {
-      const { data } = await axios.get(`${apiUrl}/building/${mineId}/${lvl}`);
+      const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
       lvl === level ? setCurrent(data) : setOnelevelUp(data);
     }
     fetchHourProduction(level);
     fetchHourProduction(level+1);
-  }, [level,mineId])
+  }, [level,farm])
 
   useEffect(() => {
     const fetchRequirements = async () => {
-      const { data } = await axios.get(`${apiUrl}/buildings/${mineId}`, {
+      const { data } = await axios.get(`${apiUrl}/buildings/${farm}`, {
         headers: { token: login.token, empireId: empire.empireId },
       });
       setRequirements(
@@ -76,12 +75,12 @@ const Mine = ({login,empire}) => {
       );
     }
     fetchRequirements();
-},[empire.empireId,mineId,login.token])
+},[empire.empireId,farm,login.token])
 
   
   return (
     <>
-      <Grid container spacing={2} styel ={{backgroundColor:"#eacda3"}} sx={{ my: 2 }}>
+      <Grid container spacing={2} sx={{ my: 2 }}>
         <Grid
           item
           xs={2}
@@ -93,25 +92,24 @@ const Mine = ({login,empire}) => {
             borderStyle: "solid",
             borderWidth: 1,
             backgroundImage: `url(${Buildings})`,
-            backgroundPosition: `${buildingPosition.MINE}`,
+            backgroundPosition: `${buildingPosition.FARM}`,
             cursor: "pointer",
           }}
         ></Grid>
         <Grid item xs={8}>
           <Typography variant="h5" component="h6">
-            Mine (Level {level})
+            Farm (Level {level})
           </Typography>
-          <Typography variant="body2">
-            This is mine that's produce Gold.
+          <Typography variant="body">
+            This is farm that's produce food.
           </Typography>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} style ={{backgroundColor:"#d6ae7b",paddingBottom:"10px"}} sx={{ my: 1 }}>
-        
+      <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
           <Typography variant="h6" component="h6">
-            Mine (Level {level})
+            Farm (Level {level})
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -125,7 +123,6 @@ const Mine = ({login,empire}) => {
           </Typography>
         </Grid>
       </Grid>
-      
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
           <Typography variant="body2">Hourly production</Typography>
@@ -137,7 +134,7 @@ const Mine = ({login,empire}) => {
             flexWrap: "wrap",
             }}>
             < img
-              src = {GoldIcon}
+              src = {FoodIcon}
               alt = ""
               style = {{width: "20px"}}
             /> <Typography sx={{mx:2}}> {current}</Typography >
@@ -150,7 +147,7 @@ const Mine = ({login,empire}) => {
             flexWrap: "wrap",
             }}>
             < img
-              src = {GoldIcon}
+              src = {FoodIcon}
               alt = ""
               style = {{width: "20px"}}
           /> <Typography sx={{mx:2}}> {oneLevelup}</Typography >
@@ -213,4 +210,4 @@ const mapStateToProps = (state) => {
     empire: empireReducer(state),
   };
 };
-export default connect(mapStateToProps) (Mine);
+export default connect(mapStateToProps) (Farm);
