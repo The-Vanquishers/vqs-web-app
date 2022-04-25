@@ -24,6 +24,13 @@ import {
   buildingNames,
   buildingPosition
 } from "../variables";
+import Farm from "./Farm";
+import AlertComponent from "../Components/AlertComponent";
+import Logging from "./Logging";
+import Mine from "../Modules/Mine";
+import StableComponent from "../Components/StableComponent";
+import ModalCompo from "../Components/ModalCompo";
+import WareHouse from "../Modules/WareHouse";
 
 const showGrid = false;
 
@@ -33,6 +40,12 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [showloggingModal, setShowLoggingMoadl] = useState(false);
+  const [showMine, setShowMine] = useState(false);
+  const [toggleStableModal, setToggleStableModal] = useState(false);
+
+  const [showFirmModal, setShowFirmModal] = useState(false);
+  const [showWareHouseModal, setShowWareHouseModal] = useState(false);
 
   if (!token) {
     Navigate("/");
@@ -42,10 +55,15 @@ function Empire(props) {
     const buildingId = buildingNameToId[buildingName];
     //return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
-      console.log("yes");
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
+  };
+
+  const getBuildingDetails = name => {
+    return props.empire.buildings.filter(
+      e => e.buildingId === buildingNameToId[name]
+    )[0];
   };
 
   useEffect(() => {
@@ -66,8 +84,7 @@ function Empire(props) {
       setErr(props.empire.errMsg);
       return;
     }
-  }, [props, token]);
-
+  }, [props, token, showloggingModal]);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -84,7 +101,7 @@ function Empire(props) {
           }}
           justifyContent="center"
         >
-          {err}
+          {err && <AlertComponent type={"error"} text={err} title={"Error"} />}
           <Grid
             item
             xs={6}
@@ -204,7 +221,6 @@ function Empire(props) {
               borderStyle: "solid"
             }}
           >
-            {/* empty */}
             <Grid container>
               <Grid
                 item
@@ -261,7 +277,6 @@ function Empire(props) {
                 }}
               ></Grid>
             </Grid>
-            {/* empty, empty, townhall, watchtower, mine */}
             <Grid container>
               <Grid
                 item
@@ -288,8 +303,8 @@ function Empire(props) {
                   buildingNames.TOWN_HALL
                 )}
                 item
+                title={buildingNames.TOWN_HALL}
                 xs={2}
-                title=""
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
@@ -309,13 +324,14 @@ function Empire(props) {
                   buildingNames.WATCH_TOWER
                 )}
                 item
+                title={buildingNames.WATCH_TOWER}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.WATCH_TOWER,
+                  backgroundPosition: `65% 16%`,
                   cursor: "pointer"
                 }}
                 onClick={() => {
@@ -329,6 +345,7 @@ function Empire(props) {
                   buildingNames.MINE
                 )}
                 item
+                title={buildingNames.MINE}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -336,11 +353,11 @@ function Empire(props) {
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
                   backgroundPosition: buildingPosition.MINE,
-
+                  zoom: 1.5,
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Mine");
+                  setShowMine(!showMine);
                 }}
               ></Grid>
               <Grid
@@ -353,7 +370,6 @@ function Empire(props) {
                 }}
               ></Grid>
             </Grid>
-            {/* empty */}
             <Grid container>
               <Grid
                 item
@@ -371,6 +387,7 @@ function Empire(props) {
                   buildingNames.FARM
                 )}
                 item
+                title={buildingNames.FARM}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -381,7 +398,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Firm");
+                  setShowFirmModal(!showFirmModal);
                 }}
               ></Grid>
               {/* WAREHOUSE */}
@@ -391,6 +408,7 @@ function Empire(props) {
                   buildingNames.WAREHOUSE
                 )}
                 item
+                title={buildingNames.WAREHOUSE}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -401,16 +419,28 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Warehouse");
+                  setShowWareHouseModal(!showWareHouseModal);
                 }}
               ></Grid>
+              {/* HOUSE */}
               <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.HOUSE
+                )}
                 item
+                title={buildingNames.HOUSE}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.HOUSE,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  alert("HOUSE");
                 }}
               ></Grid>
               {/* MARKET */}
@@ -420,6 +450,7 @@ function Empire(props) {
                   buildingNames.MARKET
                 )}
                 item
+                title={buildingNames.MARKET}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -427,8 +458,7 @@ function Empire(props) {
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
                   backgroundPosition: buildingPosition.MARKET,
-                  cursor: "pointer",
-                  zoom: 0.8
+                  cursor: "pointer"
                 }}
                 onClick={() => {
                   alert("Market");
@@ -444,7 +474,6 @@ function Empire(props) {
                 }}
               ></Grid>
             </Grid>
-            {/* empty */}
             <Grid container>
               <Grid
                 item
@@ -462,6 +491,7 @@ function Empire(props) {
                   buildingNames.STABLE
                 )}
                 item
+                title={buildingNames.STABLE}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -473,7 +503,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Stable");
+                  setToggleStableModal(prevState => !prevState);
                 }}
               ></Grid>
               <Grid
@@ -492,6 +522,7 @@ function Empire(props) {
                   buildingNames.BARRACKS
                 )}
                 item
+                title={buildingNames.BARRACKS}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -513,6 +544,7 @@ function Empire(props) {
                   buildingNames.WORKSHOP
                 )}
                 item
+                title={buildingNames.WORKSHOP}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -536,7 +568,6 @@ function Empire(props) {
                 }}
               ></Grid>
             </Grid>
-            {/* empty */}
             <Grid container>
               <Grid
                 item
@@ -563,6 +594,7 @@ function Empire(props) {
                   buildingNames.ROCK_PICKER
                 )}
                 item
+                title={buildingNames.ROCK_PICKER}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -584,6 +616,7 @@ function Empire(props) {
                   buildingNames.LOGGING
                 )}
                 item
+                title={buildingNames.LOGGING}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -595,7 +628,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Logging");
+                  setShowLoggingMoadl(!showloggingModal);
                 }}
               ></Grid>
               <Grid
@@ -617,7 +650,6 @@ function Empire(props) {
                 }}
               ></Grid>
             </Grid>
-            {/* empty */}
             <Grid container>
               <Grid
                 item
@@ -670,36 +702,48 @@ function Empire(props) {
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid",
-                  textAlign: "right",
-                  flexGrow: "revert"
+                  borderStyle: "solid"
                 }}
-              >
-                <img
-                  src={MapIcon}
-                  alt="map"
-                  title="World map"
-                  onClick={() => {
-                    Navigate("/map");
-                  }}
-                  style={{
-                    width: "80px",
-                    position: "fixed",
-                    bottom: 0,
-                    marginLeft: "-80px",
-                    cursor: "pointer"
-                  }}
-                />
-              </Grid>
+              ></Grid>
             </Grid>
           </Grid>
         )}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {showloggingModal && (
+        <ModalCompo>
+          {" "}
+          <Logging />{" "}
+        </ModalCompo>
+      )}
+      {showMine && (
+        <ModalCompo>
+          <Mine />
+        </ModalCompo>
+      )}
+      {toggleStableModal && (
+        <StableComponent
+          building={getBuildingDetails(buildingNames.STABLE)}
+          units={props.empire.units}
+          empireId={props.empire.empireId}
+          onClose={() => setToggleStableModal(prevState => !prevState)}
+        />
+      )}
+      {showFirmModal && (
+        <ModalCompo>
+          {" "}
+          <Farm />{" "}
+        </ModalCompo>
+      )}
+      {showWareHouseModal && (
+        <ModalCompo>
+          {" "}
+          <WareHouse />{" "}
+        </ModalCompo>
+      )}
     </div>
   );
 }
-
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),

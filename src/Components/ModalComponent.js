@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button, Grid } from "@mui/material";
-import trans from "../Assets/trans.png";
+import trans80 from "../Assets/trans80.png";
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
@@ -11,8 +11,10 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import { resourceSets } from "../variables";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
-// import { CardHeader, CardContent, Card } from "@mui/material";
 import { buildingIdToName } from "../variables";
+import CancelIcon from "@mui/icons-material/Cancel";
+import IconButton from "@mui/material/IconButton";
+import Divider from "@mui/material/Divider";
 
 const style = {
   position: "absolute",
@@ -20,27 +22,16 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  color: "white",
+  color: "black",
   // bgcolor: "#888888",
-  bg: `url(${trans})`,
+  backgroundImage: `url(${trans80})`,
   border: "2px solid #000",
   boxShadow: 2,
-  px: 3,
-  py: 2
+  px: 3
 };
-// const styles = (theme) => ({
-//   modalStyle1: {
-//     position: "absolute",
-//     top: "10%",
-//     left: "10%",
-//     overflow: "scroll",
-//     height: "100%",
-//     display: "block",
-//   },
-// });
+
 const msToTime = time => {
-  let milliseconds = Math.floor((time % 1000) / 100),
-    seconds = Math.floor((time / 1000) % 60),
+  let seconds = Math.floor((time / 1000) % 60),
     minutes = Math.floor((time / (1000 * 60)) % 60),
     hours = Math.floor((time / (1000 * 60 * 60)) % 24);
 
@@ -48,7 +39,7 @@ const msToTime = time => {
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  return hours + ":" + minutes + ":" + seconds;
 };
 
 const resourceMapper = id => {
@@ -76,6 +67,17 @@ const ModalComponent = props => {
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
+          <Grid
+            container
+            justifyContent="right"
+            style={{ position: "absolute", paddingRight: 20, paddingTop: 3 }}
+          >
+            <Grid item>
+              <IconButton onClick={handleClose}>
+                <CancelIcon color="error" />
+              </IconButton>
+            </Grid>
+          </Grid>
           <Grid container spacing={2} sx={{ my: 3 }}>
             <Grid
               item
@@ -96,8 +98,13 @@ const ModalComponent = props => {
               <Typography variant="h5" component="h6">
                 {props.name} (Level {props.level})
               </Typography>
+              <Typography variant="body">
+                This is town hall. It is heart of your empire from where you can
+                upgrade all of your buildings.
+              </Typography>
             </Grid>
           </Grid>
+
           {props.belowBuildingsHeader && (
             <>
               <Grid container spacing={2} sx={{ my: 1 }}>
@@ -168,6 +175,7 @@ const ModalComponent = props => {
                             Level {item.currentLevel + 1}
                           </Button>
                         </Grid>
+                        <Divider />
                       </>
                     )}
                   </>
