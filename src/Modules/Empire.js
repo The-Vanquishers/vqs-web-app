@@ -28,6 +28,7 @@ import AlertComponent from "../Components/AlertComponent";
 import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
+import WareHouse from "../Modules/WareHouse"
 
 const showGrid = false;
 
@@ -41,6 +42,7 @@ function Empire(props) {
   const [toggleStableModal, setToggleStableModal] = useState(false);
 
   const [showFirmModal, setShowFirmModal] = useState(false);
+  const [showWareHouseModal, setShowWareHouseModal] = useState(false);
 
  
 
@@ -376,7 +378,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Warehouse");
+                setShowWareHouseModal(!showWareHouseModal);
               }}
             ></Grid>
             {/* HOUSE */}
@@ -652,6 +654,7 @@ function Empire(props) {
         empireId={props.empire.empireId}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
+      {showWareHouseModal && <ModalCompo > <WareHouse/> </ModalCompo> } 
     </div>
   );
 }

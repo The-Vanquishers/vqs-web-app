@@ -19,7 +19,7 @@ exports.getEmpireDetails = token => dispatch => {
         resources[resource.resourceId.resource.toLowerCase()] =
           resource.quantity;
       }
-      console.log(data.data);
+      // console.log(data.data);
       dispatch({
         type: this.FETCHED_EMPIRE,
         resources,

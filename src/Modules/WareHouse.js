@@ -43,26 +43,26 @@ const resourceMapper = (id) => {
   }
 }
 
-const Farm = ({login,empire}) => {
+const WareHouse = ({login,empire}) => {
   const [oneLevelup, setOnelevelUp] = useState(0);
   const [current, setCurrent] = useState(0);
   const [requirements, setRequirements] = useState({});
 
-  const farm = buildingNameToId["Farm"];
-  const level = empire.buildings.filter((item) => item.buildingId === farm)[0].leve;
+  const wareHouse = buildingNameToId["Warehouse"];
+  const level = empire.buildings.filter((item) => item.buildingId === wareHouse)[0].leve;
 
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {
-      const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
-      lvl === level ? setCurrent(data.hourlyProduction) : setOnelevelUp(data.hourlyProduction);
+      const { data } = await axios.get(`${apiUrl}/building/${wareHouse}/${lvl}`);
+      lvl === level ? setCurrent(data.capacity) : setOnelevelUp(data.capacity);
     }
     fetchHourProduction(level);
     fetchHourProduction(level+1);
-  }, [level,farm])
+  }, [level,wareHouse])
 
   useEffect(() => {
     const fetchRequirements = async () => {
-      const { data } = await axios.get(`${apiUrl}/buildings/${farm}`, {
+      const { data } = await axios.get(`${apiUrl}/buildings/${wareHouse}`, {
         headers: { token: login.token, empireId: empire.empireId },
       });
       setRequirements(
@@ -75,7 +75,7 @@ const Farm = ({login,empire}) => {
       );
     }
     fetchRequirements();
-},[empire.empireId,farm,login.token])
+},[empire.empireId,wareHouse,login.token])
 
   return (
     <>
@@ -91,16 +91,16 @@ const Farm = ({login,empire}) => {
             borderStyle: "solid",
             borderWidth: 1,
             backgroundImage: `url(${Buildings})`,
-            backgroundPosition: `${buildingPosition.FARM}`,
+            backgroundPosition: `${buildingPosition.WAREHOUSE}`,
             cursor: "pointer",
           }}
         ></Grid>
         <Grid item xs={8}>
           <Typography variant="h5" component="h6">
-            Farm (Level {level})
+            WareHouse (Level {level})
           </Typography>
           <Typography variant="body">
-            This is farm that's produce food.
+            This is wareHouse where all the resources are stored.
           </Typography>
         </Grid>
       </Grid>
@@ -108,12 +108,12 @@ const Farm = ({login,empire}) => {
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
           <Typography variant="h6" component="h6">
-            Farm (Level {level})
+            WareHouse (Level {level})
           </Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography variant="h6" component="h6">
-            Current Level
+            Max Capacity
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -124,7 +124,7 @@ const Farm = ({login,empire}) => {
       </Grid>
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
-          <Typography variant="body2">Hourly production</Typography>
+          <Typography variant="body2">Food</Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography variant="body2" style={{
@@ -153,6 +153,133 @@ const Farm = ({login,empire}) => {
           </Typography>
         </Grid>
       </Grid>
+
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Wood</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {WoodIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {WoodIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Stone</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {StoneIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {StoneIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Iron</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {IronIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {IronIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Gold</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {GoldIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {GoldIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+      
       <Divider/>
       { Object.keys(requirements).length &&
         <Grid container spacing={2} sx={{ my: 1 }}>
@@ -209,4 +336,4 @@ const mapStateToProps = (state) => {
     empire: empireReducer(state),
   };
 };
-export default connect(mapStateToProps) (Farm);
+export default connect(mapStateToProps) (WareHouse);
