@@ -25,6 +25,7 @@ import {
 } from "../variables";
 import Farm from "./Farm";
 import AlertComponent from "../Components/AlertComponent";
+import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
 import WareHouse from "../Modules/WareHouse"
@@ -37,11 +38,13 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [showMine , setShowMine] = useState(false);
   const [toggleStableModal, setToggleStableModal] = useState(false);
 
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
 
+ 
 
   if (!token) {
     Navigate("/");
@@ -319,7 +322,7 @@ function Empire(props) {
                 cursor: "pointer"
               }}
               onClick={() => {
-                alert("Mine");
+                setShowMine(!showMine);
               }}
             ></Grid>
             <Grid
@@ -644,6 +647,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {showMine && <ModalCompo><Mine/></ModalCompo> }
       {toggleStableModal && <StableComponent
         building={getBuildingDetails(buildingNames.STABLE)}
         units={props.empire.units}
