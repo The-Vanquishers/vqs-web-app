@@ -1,9 +1,9 @@
 const axios = require("axios");
 const { apiUrl, buildingNameToId } = require("../variables");
-const loggingBuildingId = buildingNameToId['Logging'];
+const warehouseId = buildingNameToId['Warehouse'];
 
-exports.FETCHING_LOGGING = "FETCHING_LOGGING";
-exports.FETCHED_LOGGING = "FETCHED_LOGGING";
+exports.FETCHING_WAREHOUSE = "FETCHING_WAREHOUS";
+exports.FETCHED_WAREHOUS = "FETCHED_WAREHOUS";
 exports.FETCHING_FAILED = "FETCHING_FAILED";
 
 exports.logging = (token,empireId) => dispatch => {
@@ -11,18 +11,15 @@ exports.logging = (token,empireId) => dispatch => {
     type: this.FETCHING_LOGGING
   });
   return axios
-    .get(`${apiUrl}/buildings/${loggingBuildingId}`, { headers: { token: token ,empireid:empireId }})
+    .get(`${apiUrl}/building/${wareHouse}/${lvl}`)
     .then(data => {
-      const loggingData = {
+      dispatch({
+        type: this.FETCHED_LOGGING,
         level: data.data.level,
         hp: data.data.HP,
         hourlyProduction: data.data.hourlyProduction,
         constructionTime: data.data.constructionTime,
         constructionCost: data.data.constructionCost
-      }
-      dispatch({
-        type: this.FETCHED_LOGGING,
-        loggingData
       });
     })
     .catch(() => {
