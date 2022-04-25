@@ -16,7 +16,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
 import { stableReducer } from '../reducers/stableReducer';
 import { trainRequest, getTrainingQueue } from '../actions/stable';
-
+import Countdown from "react-countdown";
 
 function StableComponent({ dispatch, login, stable, building,
     units, onClose, empireId }) {
@@ -129,10 +129,7 @@ function StableComponent({ dispatch, login, stable, building,
                                             <strong>Quantity</strong>
                                         </TableCell>
                                         <TableCell align='center'>
-                                            <strong>Started At</strong>
-                                        </TableCell>
-                                        <TableCell align='center'>
-                                            <strong>Complete At</strong>
+                                            <strong>Time Remaining</strong>
                                         </TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -145,14 +142,10 @@ function StableComponent({ dispatch, login, stable, building,
                                             {stable.queue.quantity}
                                         </TableCell>
                                         <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                            {getLocalDateTime(stable.queue.currentTime).time}
-                                            <br />
-                                            {"(" + getLocalDateTime(stable.queue.currentTime).date + ")"}
-                                        </TableCell>
-                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                            {getLocalDateTime(stable.queue.endTime).time}
-                                            <br />
-                                            {"(" + getLocalDateTime(stable.queue.endTime).date + ")"}
+                                            
+                                            <Countdown date={new Date(stable.queue.endTime).getTime()}>
+                                                {"Completed"}
+                                            </Countdown>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -426,7 +419,7 @@ function StableComponent({ dispatch, login, stable, building,
                                     }
                                     else { alert("Training queue is busy!") }
                                 } catch (error) {
-                                     console.log(error);
+                                    console.log(error);
                                 }
 
                             }}>
