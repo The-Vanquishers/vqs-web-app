@@ -26,6 +26,7 @@ import {
 import Farm from "./Farm";
 import AlertComponent from "../Components/AlertComponent";
 import ModalCompo from "../Components/ModalCompo";
+import WareHouse from "../Modules/WareHouse"
 
 const showGrid = false;
 
@@ -36,6 +37,7 @@ function Empire(props) {
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
   const [showFirmModal, setShowFirmModal] = useState(false);
+  const [showWareHouseModal, setShowWareHouseModal] = useState(false);
 
 
   if (!token) {
@@ -46,7 +48,7 @@ function Empire(props) {
     const buildingId = buildingNameToId[buildingName];
     //return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
-      console.log('yes')
+     
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
@@ -367,7 +369,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Warehouse");
+                setShowWareHouseModal(!showWareHouseModal);
               }}
             ></Grid>
             <Grid
@@ -628,6 +630,7 @@ function Empire(props) {
       </Grid>
       {showTownHallModal && <TownHall />}
       {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
+      {showWareHouseModal && <ModalCompo > <WareHouse/> </ModalCompo> } 
     </div>
   );
 }

@@ -43,26 +43,26 @@ const resourceMapper = (id) => {
   }
 }
 
-const Farm = ({login,empire}) => {
+const WareHouse = ({login,empire}) => {
   const [oneLevelup, setOnelevelUp] = useState(0);
   const [current, setCurrent] = useState(0);
   const [requirements, setRequirements] = useState({});
 
-  const farm = buildingNameToId["Farm"];
-  const level = empire.buildings.filter((item) => item.buildingId === farm)[0].leve;
+  const wareHouse = buildingNameToId["Warehouse"];
+  const level = empire.buildings.filter((item) => item.buildingId === wareHouse)[0].leve;
 
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {
-      const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
+      const { data } = await axios.get(`${apiUrl}/building/${wareHouse}/${lvl}`);
       lvl === level ? setCurrent(data) : setOnelevelUp(data);
     }
     fetchHourProduction(level);
     fetchHourProduction(level+1);
-  }, [level,farm])
+  }, [level,wareHouse])
 
   useEffect(() => {
     const fetchRequirements = async () => {
-      const { data } = await axios.get(`${apiUrl}/buildings/${farm}`, {
+      const { data } = await axios.get(`${apiUrl}/buildings/${wareHouse}`, {
         headers: { token: login.token, empireId: empire.empireId },
       });
       setRequirements(
@@ -75,9 +75,9 @@ const Farm = ({login,empire}) => {
       );
     }
     fetchRequirements();
-},[empire.empireId,farm,login.token])
+},[empire.empireId,wareHouse,login.token])
 
-  
+
   return (
     <>
       <Grid container spacing={2} sx={{ my: 2 }}>
@@ -92,7 +92,7 @@ const Farm = ({login,empire}) => {
             borderStyle: "solid",
             borderWidth: 1,
             backgroundImage: `url(${Buildings})`,
-            backgroundPosition: `${buildingPosition.FARM}`,
+            backgroundPosition: `${buildingPosition.WAREHOUSE}`,
             cursor: "pointer",
           }}
         ></Grid>
@@ -210,4 +210,4 @@ const mapStateToProps = (state) => {
     empire: empireReducer(state),
   };
 };
-export default connect(mapStateToProps) (Farm);
+export default connect(mapStateToProps) (WareHouse);
