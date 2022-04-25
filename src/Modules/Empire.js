@@ -31,6 +31,7 @@ import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
 import WareHouse from "../Modules/WareHouse";
+import RockPicker from './RockPicker';
 
 const showGrid = false;
 
@@ -46,6 +47,8 @@ function Empire(props) {
 
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
+  const [showRockPicker, setShowRockPicker] = useState(false);
+
 
   if (!token) {
     Navigate("/");
@@ -278,6 +281,8 @@ function Empire(props) {
                   borderStyle: "solid"
                 }}
               ></Grid>
+
+              {/* Rock Picker */}
               <Grid
                 className={getGridItemClass(
                   props.empire.buildings,
@@ -295,7 +300,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Rock picker");
+                  setShowRockPicker(!showRockPicker);
                 }}
               ></Grid>
             </Grid>
@@ -764,6 +769,11 @@ function Empire(props) {
         <ModalCompo>
           {" "}
           <WareHouse />{" "}
+        </ModalCompo>
+      )}
+      {showRockPicker && (
+        <ModalCompo>
+          <RockPicker />
         </ModalCompo>
       )}
     </div>
