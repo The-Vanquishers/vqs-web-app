@@ -20,7 +20,7 @@ import { trainRequest, getTrainingQueue } from '../actions/stable';
 import Countdown from "react-countdown";
 
 function StableComponent({ dispatch, login, stable, building,
-    units, onClose, empireId }) {
+    units, onClose, empireId, resources }) {
 
     const style = {
         position: "absolute",
@@ -36,6 +36,11 @@ function StableComponent({ dispatch, login, stable, building,
         px: 3,
         py: 2,
     };
+    const [cavalryAmount, setCavalryAmount] = useState(0);
+    const [heavyCavalryAmount, setHeavyCavalryAmount] = useState(0);
+    const [archerAmount, setArcherAmount] = useState(0);
+    const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
+    const [haveEnoughResource, setEnoughResource] = useState(true);
 
     const getAvailableUnitsQuantity = (name) => {
         var count = 0;
@@ -51,10 +56,18 @@ function StableComponent({ dispatch, login, stable, building,
         setOpen(!open)
     };
 
-    const [cavalryAmount, setCavalryAmount] = useState(0);
-    const [heavyCavalryAmount, setHeavyCavalryAmount] = useState(0);
-    const [archerAmount, setArcherAmount] = useState(0);
-    const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
+    const checkResourceAvailability = (currResource, reqResourceUnit, quantity) => {
+        if (currResource >= reqResourceUnit * quantity) {
+            //setEnoughResource(true);
+            return 'enoughResource';
+        }
+        else {
+            //setEnoughResource(false);
+            return 'notEnoughResource';
+        }
+    }
+
+
 
     const getTrainingUnits = () => {
         const units = [];
@@ -184,22 +197,37 @@ function StableComponent({ dispatch, login, stable, building,
                                         </Typography>
                                     </TableCell>
 
-                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.wood,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY].Wood,
+                                                    cavalryAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY].Wood}
                                         </Typography>
                                     </TableCell>
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.iron,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY].Iron,
+                                                    cavalryAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY].Iron}
                                         </Typography>
                                     </TableCell>
 
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.stone,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY].Stone,
+                                                    cavalryAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY].Stone}
                                         </Typography>
                                     </TableCell>
@@ -248,20 +276,35 @@ function StableComponent({ dispatch, login, stable, building,
 
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.wood,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood,
+                                                    archerAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood}
                                         </Typography>
                                     </TableCell>
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.iron,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron,
+                                                    archerAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron}
                                         </Typography>
                                     </TableCell>
 
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.stone,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone,
+                                                    archerAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone}
                                         </Typography>
                                     </TableCell>
@@ -303,27 +346,42 @@ function StableComponent({ dispatch, login, stable, building,
 
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
-                                        <Typography variant='body1' align='center'>
+                                        <Typography variant='body1' align='center' >
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].housingRequirement}
                                         </Typography>
                                     </TableCell>
 
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.wood,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood,
+                                                    heavyCavalryAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood}
                                         </Typography>
                                     </TableCell>
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.iron,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron,
+                                                    heavyCavalryAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron}
                                         </Typography>
                                     </TableCell>
 
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.stone,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone,
+                                                    heavyCavalryAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone}
                                         </Typography>
                                     </TableCell>
@@ -371,20 +429,35 @@ function StableComponent({ dispatch, login, stable, building,
 
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.wood,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood,
+                                                    heavyArcherAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood}
                                         </Typography>
                                     </TableCell>
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.iron,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron,
+                                                    heavyArcherAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron}
                                         </Typography>
                                     </TableCell>
 
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
-                                        <Typography variant='body1'>
+                                        <Typography variant='body1'
+                                            className={
+                                                checkResourceAvailability(resources.stone,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone,
+                                                    heavyArcherAmount)
+                                            }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone}
                                         </Typography>
                                     </TableCell>
@@ -431,20 +504,24 @@ function StableComponent({ dispatch, login, stable, building,
                                 },
                             }}
                             onClick={() => {
-
                                 try {
-                                    if (!stable.queueFetched) {
-                                        dispatch(trainRequest({
-                                            empireId: empireId,
-                                            units: getTrainingUnits()
-                                        },
-                                            {
-                                                token: login.token,
-                                                'Content-Type': "application/json"
-                                            }
-                                        ))
+                                    if (!haveEnoughResource) {
+                                        alert("Not enough resources available to train units");
                                     }
-                                    else { alert("Training queue is busy!") }
+                                    else {
+                                        if (!stable.queueFetched) {
+                                            dispatch(trainRequest({
+                                                empireId: empireId,
+                                                units: getTrainingUnits()
+                                            },
+                                                {
+                                                    token: login.token,
+                                                    'Content-Type': "application/json"
+                                                }
+                                            ))
+                                        }
+                                        else { alert("Training queue is busy!") }
+                                    }
                                 } catch (error) {
                                     console.log(error);
                                 }

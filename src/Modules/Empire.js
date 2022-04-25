@@ -78,7 +78,7 @@ function Empire(props) {
     }
   }, [props, token]);
 
-  
+
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -646,8 +646,9 @@ function Empire(props) {
         building={getBuildingDetails(buildingNames.STABLE)}
         units={props.empire.units}
         empireId={props.empire.empireId}
+        resources={props.empire.resources}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
-      {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
+      {showFirmModal && <ModalCompo > <Farm /> </ModalCompo>}
     </div>
   );
 }
