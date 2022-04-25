@@ -223,12 +223,23 @@ function Empire(props) {
           >
             <Grid container>
               <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.FARM
+                )}
                 item
+                title={buildingNames.FARM}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.FARM,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  setShowFirmModal(!showFirmModal);
                 }}
               ></Grid>
               <Grid
@@ -268,12 +279,23 @@ function Empire(props) {
                 }}
               ></Grid>
               <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.ROCK_PICKER
+                )}
                 item
+                title={buildingNames.ROCK_PICKER}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.ROCK_PICKER,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  alert("Rock picker");
                 }}
               ></Grid>
             </Grid>
@@ -294,6 +316,28 @@ function Empire(props) {
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
                   borderStyle: "solid"
+                }}
+              ></Grid>
+
+              {/* RESEARCH CENTER */}
+              <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.RESEARCH_CENTER
+                )}
+                item
+                title={buildingNames.TOWN_HALL}
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.RESEARCH_CENTER,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  setShowTownHallModal(!showTownHallModal);
                 }}
               ></Grid>
               {/* TOWN HALL */}
@@ -317,49 +361,29 @@ function Empire(props) {
                   setShowTownHallModal(!showTownHallModal);
                 }}
               ></Grid>
-              {/* WATCH TOWER */}
+
+              {/* COURAGE FARM */}
               <Grid
                 className={getGridItemClass(
                   props.empire.buildings,
-                  buildingNames.WATCH_TOWER
+                  buildingNames.COURAGE_FARM
                 )}
                 item
-                title={buildingNames.WATCH_TOWER}
+                title={buildingNames.COURAGE_FARM}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: `65% 16%`,
+                  backgroundPosition: buildingPosition.COURAGE_FARM,
                   cursor: "pointer"
                 }}
                 onClick={() => {
                   setShowTownHallModal(!showTownHallModal);
                 }}
               ></Grid>
-              {/* MINE */}
-              <Grid
-                className={getGridItemClass(
-                  props.empire.buildings,
-                  buildingNames.MINE
-                )}
-                item
-                title={buildingNames.MINE}
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid",
-                  backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.MINE,
-                  zoom: 1.5,
-                  cursor: "pointer"
-                }}
-                onClick={() => {
-                  setShowMine(!showMine);
-                }}
-              ></Grid>
+
               <Grid
                 item
                 xs={2}
@@ -380,88 +404,25 @@ function Empire(props) {
                   borderStyle: "solid"
                 }}
               ></Grid>
-              {/* FIRM */}
+              {/* BARRACKS */}
               <Grid
                 className={getGridItemClass(
                   props.empire.buildings,
-                  buildingNames.FARM
+                  buildingNames.BARRACKS
                 )}
                 item
-                title={buildingNames.FARM}
+                title={buildingNames.BARRACKS}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.FARM,
+                  backgroundPosition: buildingPosition.BARRACKS,
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  setShowFirmModal(!showFirmModal);
-                }}
-              ></Grid>
-              {/* WAREHOUSE */}
-              <Grid
-                className={getGridItemClass(
-                  props.empire.buildings,
-                  buildingNames.WAREHOUSE
-                )}
-                item
-                title={buildingNames.WAREHOUSE}
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid",
-                  backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.WAREHOUSE,
-                  cursor: "pointer"
-                }}
-                onClick={() => {
-                  setShowWareHouseModal(!showWareHouseModal);
-                }}
-              ></Grid>
-              {/* HOUSE */}
-              <Grid
-                className={getGridItemClass(
-                  props.empire.buildings,
-                  buildingNames.HOUSE
-                )}
-                item
-                title={buildingNames.HOUSE}
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid",
-                  backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.HOUSE,
-                  cursor: "pointer"
-                }}
-                onClick={() => {
-                  alert("HOUSE");
-                }}
-              ></Grid>
-              {/* MARKET */}
-              <Grid
-                className={getGridItemClass(
-                  props.empire.buildings,
-                  buildingNames.MARKET
-                )}
-                item
-                title={buildingNames.MARKET}
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid",
-                  backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.MARKET,
-                  cursor: "pointer"
-                }}
-                onClick={() => {
-                  alert("Market");
+                  alert("Barracks");
                 }}
               ></Grid>
               <Grid
@@ -471,6 +432,46 @@ function Empire(props) {
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
                   borderStyle: "solid"
+                }}
+              ></Grid>
+              <Grid
+                item
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid"
+                }}
+              ></Grid>
+              <Grid
+                item
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid"
+                }}
+              ></Grid>
+
+              {/* WATCH TOWER */}
+              <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.WATCH_TOWER
+                )}
+                item
+                title={buildingNames.WATCH_TOWER}
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.WATCH_TOWER,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  setShowTownHallModal(!showTownHallModal);
                 }}
               ></Grid>
             </Grid>
@@ -499,11 +500,20 @@ function Empire(props) {
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
                   backgroundPosition: buildingPosition.STABLE,
-                  zoom: 1.18,
                   cursor: "pointer"
                 }}
                 onClick={() => {
                   setToggleStableModal(prevState => !prevState);
+                }}
+              ></Grid>
+
+              <Grid
+                item
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid"
                 }}
               ></Grid>
               <Grid
@@ -515,26 +525,55 @@ function Empire(props) {
                   borderStyle: "solid"
                 }}
               ></Grid>
-              {/* BARRACKS */}
+              <Grid
+                item
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid"
+                }}
+              ></Grid>
+
+              {/* MARKET */}
               <Grid
                 className={getGridItemClass(
                   props.empire.buildings,
-                  buildingNames.BARRACKS
+                  buildingNames.MARKET
                 )}
                 item
-                title={buildingNames.BARRACKS}
+                title={buildingNames.MARKET}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.BARRACKS,
-                  zoom: 1.35,
+                  backgroundPosition: buildingPosition.MARKET,
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Barracks");
+                  alert("Market");
+                }}
+              ></Grid>
+            </Grid>
+            <Grid container>
+              <Grid
+                item
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid"
+                }}
+              ></Grid>
+              <Grid
+                item
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid"
                 }}
               ></Grid>
               {/* SIEGE WORKSHOP */}
@@ -558,6 +597,50 @@ function Empire(props) {
                   alert("Siege Workshop");
                 }}
               ></Grid>
+
+              {/* WAREHOUSE */}
+              <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.WAREHOUSE
+                )}
+                item
+                title={buildingNames.WAREHOUSE}
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.WAREHOUSE,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  setShowWareHouseModal(!showWareHouseModal);
+                }}
+              ></Grid>
+
+              {/* HOUSE */}
+              <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.HOUSE
+                )}
+                item
+                title={buildingNames.HOUSE}
+                xs={2}
+                sx={{
+                  borderColor: "gray",
+                  borderWidth: showGrid ? 1 : 0,
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.HOUSE,
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  alert("HOUSE");
+                }}
+              ></Grid>
               <Grid
                 item
                 xs={2}
@@ -569,47 +652,6 @@ function Empire(props) {
               ></Grid>
             </Grid>
             <Grid container>
-              <Grid
-                item
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
-                }}
-              ></Grid>
-              <Grid
-                item
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
-                }}
-              ></Grid>
-              {/* ROCK PICKER */}
-              <Grid
-                className={getGridItemClass(
-                  props.empire.buildings,
-                  buildingNames.ROCK_PICKER
-                )}
-                item
-                title={buildingNames.ROCK_PICKER}
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid",
-                  backgroundImage: `url(${Buildings})`,
-                  backgroundPosition: buildingPosition.ROCK_PICKER,
-                  zoom: "1.28",
-                  cursor: "pointer"
-                }}
-                onClick={() => {
-                  alert("Rock picker");
-                }}
-              ></Grid>
-              {/* Logging */}
               <Grid
                 className={getGridItemClass(
                   props.empire.buildings,
@@ -624,7 +666,7 @@ function Empire(props) {
                   borderStyle: "solid",
                   backgroundImage: `url(${Buildings})`,
                   backgroundPosition: buildingPosition.LOGGING,
-                  zoom: "1.25",
+                  // zoom: "1.25",
                   cursor: "pointer"
                 }}
                 onClick={() => {
@@ -649,8 +691,6 @@ function Empire(props) {
                   borderStyle: "solid"
                 }}
               ></Grid>
-            </Grid>
-            <Grid container>
               <Grid
                 item
                 xs={2}
@@ -669,40 +709,25 @@ function Empire(props) {
                   borderStyle: "solid"
                 }}
               ></Grid>
+              {/* MINE */}
               <Grid
+                className={getGridItemClass(
+                  props.empire.buildings,
+                  buildingNames.MINE
+                )}
                 item
+                title={buildingNames.MINE}
                 xs={2}
                 sx={{
                   borderColor: "gray",
                   borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
+                  borderStyle: "solid",
+                  backgroundImage: `url(${Buildings})`,
+                  backgroundPosition: buildingPosition.MINE,
+                  cursor: "pointer"
                 }}
-              ></Grid>
-              <Grid
-                item
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
-                }}
-              ></Grid>
-              <Grid
-                item
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
-                }}
-              ></Grid>
-              <Grid
-                item
-                xs={2}
-                sx={{
-                  borderColor: "gray",
-                  borderWidth: showGrid ? 1 : 0,
-                  borderStyle: "solid"
+                onClick={() => {
+                  setShowMine(!showMine);
                 }}
               ></Grid>
             </Grid>

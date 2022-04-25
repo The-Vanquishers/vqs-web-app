@@ -33,7 +33,8 @@ const buildingNames = {
   MARKET: "Market",
   WAREHOUSE: "Warehouse",
   FARM: "Farm",
-  WORKSHOP: "Siege Workshop"
+  WORKSHOP: "Siege Workshop",
+  COURAGE_FARM: "Courage Farm"
 };
 const buildingIdToName = {
   "623173e1f10faea791509fb3": "Town Hall",
@@ -53,7 +54,7 @@ const buildingIdToName = {
 };
 
 const buildingPosition = {
-  HOUSE: "68% 5%",
+  HOUSE: "68% 6%",
   TOWN_HALL: "1% 13%",
   MINE: "96% 12%",
   LOGGING: "40% 3%",
@@ -63,7 +64,7 @@ const buildingPosition = {
   WATCH_TOWER: "95% 30%",
   RESEARCH_CENTER: "96% 56%",
   MARKET: "96% 68%",
-  WAREHOUSE: "56% 19%",
+  WAREHOUSE: "55% 22%",
   FARM: "81% 4%",
   WORKSHOP: "95% 21%",
   COURAGE_FARM: "96% 76%"
