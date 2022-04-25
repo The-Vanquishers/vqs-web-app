@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { loginReducer } from "../reducers/login";
-import { empireReducer } from "../reducers/empire";
 import { connect } from "react-redux";
+import { logging } from "../actions/logging";
+import { empireReducer } from "../reducers/empire";
+import { loggingReducer } from "../reducers/logging";
+import { loginReducer } from "../reducers/login";
+import Buildings from "../Assets/buildings.png";
 import {
+  apiUrl,
   buildingNameToId,
   buildingPosition,
-  apiUrl,
   resourceSets
 } from "../variables";
 import { Grid, Typography, Button } from "@mui/material";
-import Buildings from "../Assets/buildings.png";
 import axios from "axios";
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
@@ -19,6 +21,7 @@ import GoldIcon from "../Assets/resources/gold.png";
 import Divider from "@mui/material/Divider";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 
+//For calculating remaining time as H:M:S format
 const msToTime = time => {
   let seconds = Math.floor((time / 1000) % 60),
     minutes = Math.floor((time / (1000 * 60)) % 60),
@@ -31,6 +34,7 @@ const msToTime = time => {
   return hours + ":" + minutes + ":" + seconds;
 };
 
+//Resource mapper for getting icons
 const resourceMapper = id => {
   switch (id) {
     case resourceSets.Food:
@@ -48,42 +52,47 @@ const resourceMapper = id => {
   }
 };
 
-const Farm = ({ login, empire }) => {
-  const [oneLevelup, setOnelevelUp] = useState(0);
-  const [current, setCurrent] = useState(0);
+const Logging = props => {
+  const { token } = props.login;
+  const { empireId } = props.empire;
   const [requirements, setRequirements] = useState({});
-  console.log("Buildings", empire.buildings);
-  const farm = buildingNameToId["Farm"];
-  const level = empire.buildings.filter(item => item.buildingId === farm)[0]
-    .level;
+  const [oneLevelup, setOnelevelUp] = useState(0);
+
+  const loggingId = buildingNameToId["Logging"];
+
+  useEffect(() => {
+    if (!props.logging.isFetching && !props.logging.isFetched) {
+      props.dispatch(logging(token, empireId));
+      return;
+    }
+    if (props.logging.isFetched) {
+      const {
+        level,
+        hourlyProduction,
+        hp,
+        constructionCost,
+        constructionTime
+      } = props.logging.loggingData;
+      setRequirements({
+        level: level,
+        hourlyProduction: hourlyProduction,
+        hp: hp,
+        constructionCost: constructionCost,
+        constructionTime: constructionTime
+      });
+    }
+  }, [props, token, empireId]);
 
   useEffect(() => {
     const fetchHourlyProduction = async lvl => {
-      const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
-      console.log("Hourly Production", data);
-      lvl === level
-        ? setCurrent(data.hourlyProduction)
-        : setOnelevelUp(data.hourlyProduction);
+      const { data } = await axios.get(
+        `${apiUrl}/building/${loggingId}/${lvl}`
+      );
+      //console.log(data);
+      setOnelevelUp(data);
     };
-    fetchHourlyProduction(level);
-    fetchHourlyProduction(level + 1);
-  }, [level, farm]);
-
-  useEffect(() => {
-    const fetchRequirements = async () => {
-      const { data } = await axios.get(`${apiUrl}/buildings/${farm}`, {
-        headers: { token: login.token, empireId: empire.empireId }
-      });
-      console.log("Requirements", data);
-      setRequirements({
-        buildingId: data.buildingId,
-        constructionCost: data.constructionCost,
-        constructionTime: data.constructionTime,
-        currentLevel: data.level
-      });
-    };
-    fetchRequirements();
-  }, [empire.empireId, farm, login.token]);
+    fetchHourlyProduction(requirements.level + 1);
+  }, [requirements.level, loggingId]);
 
   return (
     <>
@@ -99,16 +108,19 @@ const Farm = ({ login, empire }) => {
             borderStyle: "solid",
             borderWidth: 1,
             backgroundImage: `url(${Buildings})`,
-            backgroundPosition: `${buildingPosition.FARM}`,
+            backgroundPosition: `${buildingPosition.LOGGING}`,
             cursor: "pointer"
           }}
         ></Grid>
         <Grid item xs={8}>
           <Typography variant="h5" component="h6">
-            Farm (Level {level})
+            Logging (Level {requirements.level})
           </Typography>
-          <Typography variant="body">
-            Farm produces Food. Higher farm level indecates higher hourly food production.
+          <Typography variant="body2">
+            Outside of your village in the dark forests your lumberjacks cut
+            massive trees to produce wood in the logging, which is needed for
+            buildings and weapons. The higher its level the more wood is
+            produced.
           </Typography>
         </Grid>
       </Grid>
@@ -116,7 +128,7 @@ const Farm = ({ login, empire }) => {
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
           <Typography variant="h6" component="h6">
-            Farm (Level {level})
+            Logging (Level {requirements.level})
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -143,8 +155,11 @@ const Farm = ({ login, empire }) => {
               flexWrap: "wrap"
             }}
           >
-            <img src={FoodIcon} alt="" style={{ width: "20px" }} />{" "}
-            <Typography sx={{ mx: 2 }}> {current}</Typography>
+            <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
+            <Typography sx={{ mx: 2 }}>
+              {" "}
+              {requirements.hourlyProduction}
+            </Typography>
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -156,8 +171,8 @@ const Farm = ({ login, empire }) => {
               flexWrap: "wrap"
             }}
           >
-            <img src={FoodIcon} alt="" style={{ width: "20px" }} />{" "}
-            <Typography sx={{ mx: 2 }}> {oneLevelup}</Typography>
+            <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
+            <Typography sx={{ mx: 2 }}> {oneLevelup.hourlyProduction}</Typography>
           </Typography>
         </Grid>
       </Grid>
@@ -202,7 +217,7 @@ const Farm = ({ login, empire }) => {
           </Grid>
           <Grid item xs={2}>
             <Button variant="outlined" color="inherit">
-              Level {level + 1}
+              Level {requirements.level + 1}
             </Button>
           </Grid>
         </Grid>
@@ -210,10 +225,13 @@ const Farm = ({ login, empire }) => {
     </>
   );
 };
+
 const mapStateToProps = state => {
   return {
+    logging: loggingReducer(state),
     login: loginReducer(state),
     empire: empireReducer(state)
   };
 };
-export default connect(mapStateToProps)(Farm);
+
+export default connect(mapStateToProps)(Logging);

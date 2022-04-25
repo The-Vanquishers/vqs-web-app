@@ -29,7 +29,7 @@ const ModalCompo = (props) => {
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          < Grid container justifyContent="right" style={{position:"absolute",paddingRight:20,paddingTop:3}} >
+          <Grid container justifyContent="right" style={{position:"absolute",paddingRight:20,paddingTop:3}} >
             <Grid item  >
               <IconButton onClick={handleClose}>
                 <CancelIcon color="error"/>
