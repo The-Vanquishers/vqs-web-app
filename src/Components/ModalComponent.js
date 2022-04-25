@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button, Grid } from "@mui/material";
-import trans from "../Assets/trans.png"
+import trans from "../Assets/trans.png";
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
@@ -14,45 +14,44 @@ import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 // import { CardHeader, CardContent, Card } from "@mui/material";
 import { buildingIdToName } from "../variables";
 
-
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  color:"white", 
+  color: "white",
   // bgcolor: "#888888",
   bg: `url(${trans})`,
   border: "2px solid #000",
   boxShadow: 2,
   px: 3,
-  py: 2,
+  py: 2
 };
-const styles = (theme) => ({
-  modalStyle1: {
-    position: "absolute",
-    top: "10%",
-    left: "10%",
-    overflow: "scroll",
-    height: "100%",
-    display: "block",
-  },
-});
-const  msToTime= (time)=> {
+// const styles = (theme) => ({
+//   modalStyle1: {
+//     position: "absolute",
+//     top: "10%",
+//     left: "10%",
+//     overflow: "scroll",
+//     height: "100%",
+//     display: "block",
+//   },
+// });
+const msToTime = time => {
   let milliseconds = Math.floor((time % 1000) / 100),
-  seconds = Math.floor((time / 1000) % 60),
-  minutes = Math.floor((time / (1000 * 60)) % 60),
-  hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+    seconds = Math.floor((time / 1000) % 60),
+    minutes = Math.floor((time / (1000 * 60)) % 60),
+    hours = Math.floor((time / (1000 * 60 * 60)) % 24);
 
-  hours = (hours < 10) ? "0" + hours : hours;
-  minutes = (minutes < 10) ? "0" + minutes : minutes;
-  seconds = (seconds < 10) ? "0" + seconds : seconds;
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
 
   return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-}
+};
 
-const resourceMapper = (id) => {
+const resourceMapper = id => {
   switch (id) {
     case resourceSets.Food:
       return FoodIcon;
@@ -67,24 +66,22 @@ const resourceMapper = (id) => {
     default:
       break;
   }
-}
+};
 
-const ModalComponent = (props) => {
+const ModalComponent = props => {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => setOpen(false);
 
-  
   return (
     <div>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          
           <Grid container spacing={2} sx={{ my: 3 }}>
             <Grid
               item
               xs={2}
               style={{
-                height: "100px",
+                height: "100px"
               }}
               sx={{
                 borderColor: "gray",
@@ -92,7 +89,7 @@ const ModalComponent = (props) => {
                 borderWidth: 1,
                 backgroundImage: `url(${props.image})`,
                 backgroundPosition: `${props.position}`,
-                cursor: "pointer",
+                cursor: "pointer"
               }}
             ></Grid>
             <Grid item xs={9}>
@@ -110,37 +107,43 @@ const ModalComponent = (props) => {
                   </Grid>
                 ))}
               </Grid>
-              
+
               <Grid container spacing={2} sx={{ my: 1 }}>
                 {props.belowBuildings.map((item, indx) => (
-                  
-                  <>  
+                  <>
                     {indx > 0 && (
-                      
                       <>
-                        <Grid item xs={2} key={item.buildingId+indx+"22"}>
+                        <Grid item xs={2} key={item.buildingId + indx + "22"}>
                           {buildingIdToName[item.buildingId]} <br />
                           level: {item.currentLevel}
                         </Grid>
-                        <Grid item xs={2} key={item.buildingId + "5"}>
+                        <Grid item xs={2} key={item.buildingId + "5" + indx}>
                           <img
-                            src={resourceMapper(item.constructionCost[0].resourceId)}
+                            src={resourceMapper(
+                              item.constructionCost
+                                ? item.constructionCost[0].resourceId
+                                : null
+                            )}
                             alt=""
                             style={{ width: "20px" }}
                           />
                           {item.constructionCost[1].quantity}
                         </Grid>
-                        <Grid item xs={2} key={item.buildingId + "6"}>
+                        <Grid item xs={2} key={item.buildingId + "6" + indx}>
                           <img
-                            src={resourceMapper(item.constructionCost[1].resourceId)}
+                            src={resourceMapper(
+                              item.constructionCost[1].resourceId
+                            )}
                             alt=""
                             style={{ width: "20px" }}
                           />
                           {item.constructionCost[1].quantity}
                         </Grid>
-                        <Grid item xs={2} key={item.buildingId + "2"}>
+                        <Grid item xs={2} key={item.buildingId + "2" + indx}>
                           <img
-                            src={resourceMapper(item.constructionCost[2].resourceId)}
+                            src={resourceMapper(
+                              item.constructionCost[2].resourceId
+                            )}
                             alt=""
                             style={{ width: "20px" }}
                           />
@@ -149,18 +152,18 @@ const ModalComponent = (props) => {
                         <Grid
                           item
                           xs={2}
-                          key={item.buildingId + "4"}
+                          key={item.buildingId + "4" + indx}
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            flexWrap: "wrap",
+                            flexWrap: "wrap"
                           }}
                         >
                           <AccessAlarmsIcon sx={{ mx: 1 }} />
-                        
+
                           {msToTime(item.constructionTime)}
                         </Grid>
-                        <Grid item xs={2} key={item.buildingId + "111"}>
+                        <Grid item xs={2} key={item.buildingId + "111" + indx}>
                           <Button variant="outlined" color="inherit">
                             Level {item.currentLevel + 1}
                           </Button>
