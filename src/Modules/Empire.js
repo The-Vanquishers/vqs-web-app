@@ -26,7 +26,10 @@ import {
 import Farm from "./Farm";
 import AlertComponent from "../Components/AlertComponent";
 import Logging from "./Logging";
+import Mine from "../Modules/Mine";
+import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
+import WareHouse from "../Modules/WareHouse"
 
 const showGrid = false;
 
@@ -37,8 +40,13 @@ function Empire(props) {
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
   const [showloggingModal, setShowLoggingMoadl] = useState(false);
-  const [showFirmModal, setShowFirmModal] = useState(false);
+  const [showMine , setShowMine] = useState(false);
+  const [toggleStableModal, setToggleStableModal] = useState(false);
 
+  const [showFirmModal, setShowFirmModal] = useState(false);
+  const [showWareHouseModal, setShowWareHouseModal] = useState(false);
+
+ 
 
   if (!token) {
     Navigate("/");
@@ -52,6 +60,10 @@ function Empire(props) {
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
+  }
+
+  const getBuildingDetails = (name) => {
+    return (props.empire.buildings.filter(e => e.buildingId === buildingNameToId[name]))[0];
   }
 
   useEffect(() => {
@@ -311,7 +323,7 @@ function Empire(props) {
                 cursor: "pointer"
               }}
               onClick={() => {
-                alert("Mine");
+                setShowMine(!showMine);
               }}
             ></Grid>
             <Grid
@@ -367,16 +379,25 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Warehouse");
+                setShowWareHouseModal(!showWareHouseModal);
               }}
             ></Grid>
+            {/* HOUSE */}
             <Grid
+              className={getGridItemClass(props.empire.buildings, buildingNames.HOUSE)}
               item
+              title={buildingNames.HOUSE}
               xs={2}
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
+                backgroundImage: `url(${Buildings})`,
+                backgroundPosition: buildingPosition.HOUSE,
+                cursor: 'pointer'
+              }}
+              onClick={() => {
+                alert("HOUSE");
               }}
             ></Grid>
             {/* MARKET */}
@@ -433,7 +454,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Stable");
+                setToggleStableModal(prevState => !prevState);
               }}
             ></Grid>
             <Grid
@@ -628,7 +649,14 @@ function Empire(props) {
       </Grid>
       {showTownHallModal && <TownHall />}
       {showloggingModal && <ModalCompo> <Logging/> </ModalCompo> }
+      {showMine && <ModalCompo><Mine/></ModalCompo> }
+      {toggleStableModal && <StableComponent
+        building={getBuildingDetails(buildingNames.STABLE)}
+        units={props.empire.units}
+        empireId={props.empire.empireId}
+        onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
+      {showWareHouseModal && <ModalCompo > <WareHouse/> </ModalCompo> } 
     </div>
   );
 }

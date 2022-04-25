@@ -53,7 +53,7 @@ const buildingIdToName = {
 };
 
 const buildingPosition = {
-  HOUSE: "0% 0%",
+  HOUSE: "90% 16%",
   TOWN_HALL: "65% 16%",
   MINE: "68% 95%",
   LOGGING: "45% 82%",
@@ -76,6 +76,54 @@ const resourceSets = {
   Gold: "6233f80ae996f0998ee1ce7c",
 };
 
+const unitSets = {
+  'Spear Man': '6232bf7b79c7546bbfe20e14',
+  'Axe Man': '6232bf7b79c7546bbfe20e15',
+  'Sword Man': '6232bf7b79c7546bbfe20e16',
+  'Ram': '6232bf7b79c7546bbfe20e1b',
+  'Heavy Cavalry': '6232bf7b79c7546bbfe20e18',
+  'Cavalry': '6232bf7b79c7546bbfe20e17',
+  'Cavalry Archer': '6232bf7b79c7546bbfe20e19',
+  'Heavy Cavalry Archer': '6232bf7b79c7546bbfe20e1a',
+  'Catapult': '6232bf7b79c7546bbfe20e1c',
+  'Scouts': '6232bf7b79c7546bbfe20e1d',
+  'Vanquisher': '624c1fc47d042172892edd9a'
+}
+
+const stableUnitNames = {
+  HEAVY_CAVALRY: "Heavy Cavalry",
+  CAVALRY: "Cavalry",
+  CAVALRY_ARCHER: 'Cavalry Archer',
+  HEAVY_CAVALRY_ARCHER: 'Heavy Cavalry Archer',
+}
+
+const stableTrainingCost = {
+  [stableUnitNames.HEAVY_CAVALRY]: {
+    Iron: 400,
+    Wood: 280,
+    Stone: 530,
+    time: 800
+  },
+  [stableUnitNames.CAVALRY]: {
+    Iron: 350,
+    Wood: 250,
+    Stone: 500,
+    time: 750
+  },
+  [stableUnitNames.CAVALRY_ARCHER]: {
+    Iron: 400,
+    Wood: 350,
+    Stone: 550,
+    time: 820
+  },
+  [stableUnitNames.HEAVY_CAVALRY_ARCHER]: {
+    Iron: 500,
+    Wood: 450,
+    Stone: 550,
+    time: 880
+  },
+}
+
 
 
 module.exports = {
@@ -87,4 +135,7 @@ module.exports = {
   buildingNames,
   ITEM_HIDDEN_CLASS,
   ITEM_VISIBLE_CLASS,
+  unitSets,
+  stableUnitNames,
+  stableTrainingCost
 };
