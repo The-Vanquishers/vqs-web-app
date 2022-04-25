@@ -50,7 +50,7 @@ const Mine = ({login,empire}) => {
 
   const mineId = buildingNameToId["Mine"];
   const level = empire.buildings.filter((item) => item.buildingId === mineId)[0].leve;
-  console.log(level);
+  //console.log(level);
 
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {
@@ -140,7 +140,7 @@ const Mine = ({login,empire}) => {
               src = {GoldIcon}
               alt = ""
               style = {{width: "20px"}}
-            /> <Typography sx={{mx:2}}> {current}</Typography >
+            /> <Typography sx={{mx:2}}> {current.hourlyProduction}</Typography >
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -153,7 +153,7 @@ const Mine = ({login,empire}) => {
               src = {GoldIcon}
               alt = ""
               style = {{width: "20px"}}
-          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography >
+          /> <Typography sx={{mx:2}}> {oneLevelup.hourlyProduction}</Typography >
           </Typography>
         </Grid>
       </Grid>

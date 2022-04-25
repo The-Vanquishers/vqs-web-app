@@ -66,12 +66,19 @@ const Logging = props => {
       return;
     }
     if (props.logging.isFetched) {
+      const {
+        level,
+        hourlyProduction,
+        hp,
+        constructionCost,
+        constructionTime
+      } = props.logging.loggingData;
       setRequirements({
-        level: props.logging.level,
-        hourlyProduction: props.logging.hourlyProduction,
-        hp: props.logging.hp,
-        constructionCost: props.logging.constructionCost,
-        constructionTime: props.logging.constructionTime
+        level: level,
+        hourlyProduction: hourlyProduction,
+        hp: hp,
+        constructionCost: constructionCost,
+        constructionTime: constructionTime
       });
     }
   }, [props, token, empireId]);
@@ -81,6 +88,7 @@ const Logging = props => {
       const { data } = await axios.get(
         `${apiUrl}/building/${loggingId}/${lvl}`
       );
+      //console.log(data);
       setOnelevelUp(data);
     };
     fetchHourlyProduction(requirements.level + 1);
@@ -164,7 +172,7 @@ const Logging = props => {
             }}
           >
             <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
-            <Typography sx={{ mx: 2 }}> {oneLevelup}</Typography>
+            <Typography sx={{ mx: 2 }}> {oneLevelup.hourlyProduction}</Typography>
           </Typography>
         </Grid>
       </Grid>
