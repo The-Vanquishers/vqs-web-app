@@ -36,13 +36,6 @@ function StableComponent({ dispatch, login, stable, building,
         py: 2,
     };
 
-    const getLocalDateTime = (timeDateStr) => {
-        return {
-            date: new Date(timeDateStr).toLocaleString().split(',')[0],
-            time: new Date(timeDateStr).toLocaleString().split(',')[1]
-        }
-    }
-
     const getAvailableUnitsQuantity = (name) => {
         var count = 0;
         const selectedUnits = units.filter(e => e.unitId === unitSets[name]);
@@ -142,9 +135,10 @@ function StableComponent({ dispatch, login, stable, building,
                                             {stable.queue.quantity}
                                         </TableCell>
                                         <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                            
-                                            <Countdown date={new Date(stable.queue.endTime).getTime()}>
-                                                {"Completed"}
+
+                                            <Countdown daysInHours={true}
+                                                date={new Date(stable.queue.endTime).getTime()}>
+                                                <span id='completed'><strong>Completed</strong></span>
                                             </Countdown>
                                         </TableCell>
                                     </TableRow>
