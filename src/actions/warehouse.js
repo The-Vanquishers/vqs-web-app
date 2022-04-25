@@ -5,7 +5,7 @@ exports.FETCHING_WAREHOUSE = "FETCHING_EWAREHOUSE";
 exports.FETCHED_WAREHOUSE = "FETCHED_WAREHOUSE";
 exports.FETCHING_FAILED = "FETCHING_FAILED";
 
-exports.getEmpireDetails = (wareHouse,lvl) => dispatch => {
+exports.warehouse = (wareHouse,lvl) => dispatch => {
   dispatch({
     type: this.FETCHING_WAREHOUSE
   });

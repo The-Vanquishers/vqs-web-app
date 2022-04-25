@@ -30,6 +30,8 @@ import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
 import WareHouse from "../Modules/WareHouse"
+import { warehouseReducer } from "../reducers/warehouse";
+import { warehouse } from "../actions/warehouse";
 
 const showGrid = false;
 
@@ -45,7 +47,7 @@ function Empire(props) {
 
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
-
+  const [warehouseCapacity, setWarehouseCapacity] = useState({});
  
 
   if (!token) {
@@ -85,6 +87,22 @@ function Empire(props) {
       return;
     }
   }, [props, token,showloggingModal]);
+
+  const wareHouseId = buildingNameToId["Warehouse"];
+  //const warehouseLevel = props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve;
+
+  // useEffect(() => {
+  //   if (!props.warehouse.isFetching && !props.warehouse.isFetched) {
+  //     props.dispatch(warehouse(wareHouseId, warehouseLevel));
+  //     return;
+  //   }
+  //   if (props.warehouse.isFetched) {
+  //     setWarehouseCapacity({
+  //       capacity: props.warehouse.warehouseDetails.capacity
+  //     })
+  //   }
+  // },[props,wareHouseId,warehouseLevel]);
+  // console.log(warehouseCapacity);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -663,7 +681,8 @@ function Empire(props) {
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),
-    login: loginReducer(state)
+    login: loginReducer(state),
+    warehouse: warehouseReducer(state)
   };
 };
 export default connect(mapStateToProps)(Empire);
