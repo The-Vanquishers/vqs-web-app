@@ -21,6 +21,7 @@ exports.trainRequest = (body, headers) => dispatch => {
                 type: this.TRAINING_FAILED_TO_START,
                 errMsg: error.response.data
             })
+            alert(error.response.data);
         })
 }
 
@@ -28,7 +29,7 @@ exports.trainRequest = (body, headers) => dispatch => {
 
 exports.getTrainingQueue = (headers, empireId) => dispatch => {
     axios.get(`${apiUrl}/train/queue/${empireId}`,
-     { headers: headers })
+        { headers: headers })
         .then(res => {
             dispatch({
                 type: this.TRAINING_QUEUE_FETCHED,
