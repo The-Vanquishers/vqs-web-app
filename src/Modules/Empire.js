@@ -48,7 +48,7 @@ function Empire(props) {
 
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
-  const [warehouseDetails, setWarehouseDetails] = useState();
+  const [warehouseCapacity, setWarehouseCapacity] = useState(0);
   const [warehouseLevel, setWarehouseLevel] = useState(null);
   const wareHouseId = buildingNameToId["Warehouse"];
  
@@ -84,7 +84,7 @@ function Empire(props) {
     }
     if (props.empire.isFetched) {
       setResource(props.empire.resources);
-      setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve)
+      setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve);
       return;
     }
     if (props.empire.fetchingFailed) {
@@ -95,19 +95,16 @@ function Empire(props) {
 
 
   useEffect(() => {
-    if (!props.warehouse.isFetching && !props.warehouse.isFetched) {
+    if (props.empire.isFetched && !props.warehouse.isFetched) {
       props.dispatch(warehouse(wareHouseId, warehouseLevel));
       return;
     }
     if (props.warehouse.isFetched) {
-      setWarehouseDetails(props.warehouse.wareHouseDetails);
+      setWarehouseCapacity(props.warehouse.capacity);
+      return;
     }
-    console.log(warehouseDetails);
-  },[props,wareHouseId,warehouseLevel,warehouseDetails]);
-  if(props.warehouse.isFetched){
-    
-  }
-  
+  },[wareHouseId,warehouseLevel,props]);
+  console.log(warehouseCapacity);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -183,8 +180,12 @@ function Empire(props) {
                     alt=""
                     title="food"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowFirmModal(!showFirmModal);
+                    }}
                   />{" "}
-                  {resource.food}
+                  {warehouseCapacity > resource.food ? resource.food : <span style={{ color: "red"}}>{resource.food}</span>}
+                  
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -192,8 +193,11 @@ function Empire(props) {
                     alt=""
                     title="wood"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowLoggingMoadl(!showloggingModal);
+                    }}
                   />{" "}
-                  {resource.wood}
+                  {warehouseCapacity > resource.wood ? resource.wood : <span style={{ color: "red"}}>{resource.wood}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -202,7 +206,7 @@ function Empire(props) {
                     title="iron"
                     style={{ width: "20px" }}
                   />{" "}
-                  {resource.iron}
+                  {warehouseCapacity > resource.iron ? resource.iron : <span style={{ color: "red"}}>{resource.iron}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -211,7 +215,7 @@ function Empire(props) {
                     title="stone"
                     style={{ width: "20px" }}
                   />{" "}
-                  {resource.stone}
+                  {warehouseCapacity > resource.stone ? resource.stone : <span style={{ color: "red"}}>{resource.stone}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -219,8 +223,11 @@ function Empire(props) {
                     alt=""
                     title="gold"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowMine(!showMine);
+                    }}
                   />{" "}
-                  {resource.gold}
+                  {warehouseCapacity > resource.gold ? resource.gold : <span style={{ color: "red"}}>{resource.gold}</span>}
                 </div>
               </div>
             </Grid>

@@ -14,7 +14,7 @@ exports.warehouse = (wareHouse,lvl) => dispatch => {
     .then(data => {
       dispatch({
         type: this.FETCHED_WAREHOUSE,
-        wareHouseDetails: data.data
+        capacity: data.data.capacity
       });
     })
     .catch(() => {

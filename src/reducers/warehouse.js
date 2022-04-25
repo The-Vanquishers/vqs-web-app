@@ -37,7 +37,7 @@ import {
     }
   };
   
-  export const warehouseReducer = state => state.logging;
+  export const warehouseReducer = state => state.warehouse;
   
   export default warehouse;
   
