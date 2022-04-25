@@ -54,7 +54,7 @@ const Farm = ({login,empire}) => {
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {
       const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
-      lvl === level ? setCurrent(data) : setOnelevelUp(data);
+      lvl === level ? setCurrent(data.hourlyProduction) : setOnelevelUp(data.hourlyProduction);
     }
     fetchHourProduction(level);
     fetchHourProduction(level+1);
@@ -77,7 +77,6 @@ const Farm = ({login,empire}) => {
     fetchRequirements();
 },[empire.empireId,farm,login.token])
 
-  
   return (
     <>
       <Grid container spacing={2} sx={{ my: 2 }}>
@@ -133,7 +132,7 @@ const Farm = ({login,empire}) => {
             alignItems: "center",
             flexWrap: "wrap",
             }}>
-            < img
+            <img
               src = {FoodIcon}
               alt = ""
               style = {{width: "20px"}}
@@ -146,7 +145,7 @@ const Farm = ({login,empire}) => {
             alignItems: "center",
             flexWrap: "wrap",
             }}>
-            < img
+            <img
               src = {FoodIcon}
               alt = ""
               style = {{width: "20px"}}
@@ -158,7 +157,7 @@ const Farm = ({login,empire}) => {
       { Object.keys(requirements).length &&
         <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={2}>
-          < img
+          <img
           src = {resourceMapper(requirements.constructionCost[0].resourceId)}
           alt = ""
           style = {{width: "20px"}}
@@ -166,7 +165,7 @@ const Farm = ({login,empire}) => {
           { requirements.constructionCost[0].quantity}
         </Grid>
         <Grid item xs={2}>
-          < img
+          <img
           src = {resourceMapper(requirements.constructionCost[1].resourceId)}
           alt = ""
           style = {{width: "20px"}}
@@ -174,14 +173,14 @@ const Farm = ({login,empire}) => {
           { requirements.constructionCost[1].quantity}
         </Grid>
         <Grid item xs={2}>
-          < img
+          <img
           src = {resourceMapper(requirements.constructionCost[2].resourceId)}
           alt = ""
           style = {{width: "20px"}}
           />
           { requirements.constructionCost[2].quantity}
         </Grid>
-        < Grid item
+        <Grid item
             xs={4}
             style={{
             display: "flex",

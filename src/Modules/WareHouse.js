@@ -54,7 +54,7 @@ const WareHouse = ({login,empire}) => {
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {
       const { data } = await axios.get(`${apiUrl}/building/${wareHouse}/${lvl}`);
-      lvl === level ? setCurrent(data) : setOnelevelUp(data);
+      lvl === level ? setCurrent(data.capacity) : setOnelevelUp(data.capacity);
     }
     fetchHourProduction(level);
     fetchHourProduction(level+1);
@@ -77,7 +77,6 @@ const WareHouse = ({login,empire}) => {
     fetchRequirements();
 },[empire.empireId,wareHouse,login.token])
 
-
   return (
     <>
       <Grid container spacing={2} sx={{ my: 2 }}>
@@ -98,10 +97,10 @@ const WareHouse = ({login,empire}) => {
         ></Grid>
         <Grid item xs={8}>
           <Typography variant="h5" component="h6">
-            Farm (Level {level})
+            WareHouse (Level {level})
           </Typography>
           <Typography variant="body">
-            This is farm that's produce food.
+            This is wareHouse where all the resources are stored.
           </Typography>
         </Grid>
       </Grid>
@@ -109,12 +108,12 @@ const WareHouse = ({login,empire}) => {
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
           <Typography variant="h6" component="h6">
-            Farm (Level {level})
+            WareHouse (Level {level})
           </Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography variant="h6" component="h6">
-            Current Level
+            Max Capacity
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -125,7 +124,7 @@ const WareHouse = ({login,empire}) => {
       </Grid>
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={6}>
-          <Typography variant="body2">Hourly production</Typography>
+          <Typography variant="body2">Food</Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography variant="body2" style={{
@@ -133,7 +132,7 @@ const WareHouse = ({login,empire}) => {
             alignItems: "center",
             flexWrap: "wrap",
             }}>
-            < img
+            <img
               src = {FoodIcon}
               alt = ""
               style = {{width: "20px"}}
@@ -146,7 +145,7 @@ const WareHouse = ({login,empire}) => {
             alignItems: "center",
             flexWrap: "wrap",
             }}>
-            < img
+            <img
               src = {FoodIcon}
               alt = ""
               style = {{width: "20px"}}
@@ -154,11 +153,138 @@ const WareHouse = ({login,empire}) => {
           </Typography>
         </Grid>
       </Grid>
+
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Wood</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {WoodIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {WoodIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Stone</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {StoneIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {StoneIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Iron</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {IronIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {IronIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={6}>
+          <Typography variant="body2">Gold</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {GoldIcon}
+              alt = ""
+              style = {{width: "20px"}}
+            /> <Typography sx={{mx:2}}> {current}</Typography>
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography variant="body2" style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            }}>
+            <img
+              src = {GoldIcon}
+              alt = ""
+              style = {{width: "20px"}}
+          /> <Typography sx={{mx:2}}> {oneLevelup}</Typography>
+          </Typography>
+        </Grid>
+      </Grid>
+      
       <Divider/>
       { Object.keys(requirements).length &&
         <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={2}>
-          < img
+          <img
           src = {resourceMapper(requirements.constructionCost[0].resourceId)}
           alt = ""
           style = {{width: "20px"}}
@@ -166,7 +292,7 @@ const WareHouse = ({login,empire}) => {
           { requirements.constructionCost[0].quantity}
         </Grid>
         <Grid item xs={2}>
-          < img
+          <img
           src = {resourceMapper(requirements.constructionCost[1].resourceId)}
           alt = ""
           style = {{width: "20px"}}
@@ -174,14 +300,14 @@ const WareHouse = ({login,empire}) => {
           { requirements.constructionCost[1].quantity}
         </Grid>
         <Grid item xs={2}>
-          < img
+          <img
           src = {resourceMapper(requirements.constructionCost[2].resourceId)}
           alt = ""
           style = {{width: "20px"}}
           />
           { requirements.constructionCost[2].quantity}
         </Grid>
-        < Grid item
+        <Grid item
             xs={4}
             style={{
             display: "flex",

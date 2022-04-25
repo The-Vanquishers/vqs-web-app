@@ -25,6 +25,7 @@ import {
 } from "../variables";
 import Farm from "./Farm";
 import AlertComponent from "../Components/AlertComponent";
+import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
 import WareHouse from "../Modules/WareHouse"
 
@@ -36,6 +37,8 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [toggleStableModal, setToggleStableModal] = useState(false);
+
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
 
@@ -48,10 +51,13 @@ function Empire(props) {
     const buildingId = buildingNameToId[buildingName];
     //return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
-     
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
+  }
+
+  const getBuildingDetails = (name) => {
+    return (props.empire.buildings.filter(e => e.buildingId === buildingNameToId[name]))[0];
   }
 
   useEffect(() => {
@@ -372,13 +378,22 @@ function Empire(props) {
                 setShowWareHouseModal(!showWareHouseModal);
               }}
             ></Grid>
+            {/* HOUSE */}
             <Grid
+              className={getGridItemClass(props.empire.buildings, buildingNames.HOUSE)}
               item
+              title={buildingNames.HOUSE}
               xs={2}
               sx={{
                 borderColor: "gray",
                 borderWidth: showGrid ? 1 : 0,
                 borderStyle: "solid",
+                backgroundImage: `url(${Buildings})`,
+                backgroundPosition: buildingPosition.HOUSE,
+                cursor: 'pointer'
+              }}
+              onClick={() => {
+                alert("HOUSE");
               }}
             ></Grid>
             {/* MARKET */}
@@ -435,7 +450,7 @@ function Empire(props) {
                 cursor: 'pointer'
               }}
               onClick={() => {
-                alert("Stable");
+                setToggleStableModal(prevState => !prevState);
               }}
             ></Grid>
             <Grid
@@ -629,6 +644,11 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {toggleStableModal && <StableComponent
+        building={getBuildingDetails(buildingNames.STABLE)}
+        units={props.empire.units}
+        empireId={props.empire.empireId}
+        onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
       {showWareHouseModal && <ModalCompo > <WareHouse/> </ModalCompo> } 
     </div>
