@@ -11,6 +11,7 @@ import Buildings from "../Assets/buildings.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
+import ManIcon from "../Assets/resources/man.png";
 import ClockIcon from "../Assets/clock.png";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
@@ -175,6 +176,14 @@ function StableComponent({ dispatch, login, stable, building,
                                     {getAvailableUnitsQuantity(stableUnitNames.CAVALRY)}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
+                                        <Typography variant='body1' align='center'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY].housingRequirement}
+                                        </Typography>
+                                    </TableCell>
+
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'>
@@ -229,6 +238,14 @@ function StableComponent({ dispatch, login, stable, building,
                                     {getAvailableUnitsQuantity(stableUnitNames.CAVALRY_ARCHER)}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
+                                        <Typography variant='body1' align='center'>
+                                            {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].housingRequirement}
+                                        </Typography>
+                                    </TableCell>
+
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'>
@@ -283,6 +300,14 @@ function StableComponent({ dispatch, login, stable, building,
                                     {getAvailableUnitsQuantity(stableUnitNames.HEAVY_CAVALRY)}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
+                                        <Typography variant='body1' align='center'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].housingRequirement}
+                                        </Typography>
+                                    </TableCell>
+
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'>
@@ -336,6 +361,14 @@ function StableComponent({ dispatch, login, stable, building,
                                     {getAvailableUnitsQuantity(stableUnitNames.HEAVY_CAVALRY_ARCHER)}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
+                                        <Typography variant='body1' align='center'>
+                                            {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].housingRequirement}
+                                        </Typography>
+                                    </TableCell>
+
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'>
