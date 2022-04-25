@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { apiUrl } = require("../variables");
 
-exports.FETCHING_WAREHOUSE = "FETCHING_EWAREHOUSE";
+exports.FETCHING_WAREHOUSE = "FETCHING_WAREHOUSE";
 exports.FETCHED_WAREHOUSE = "FETCHED_WAREHOUSE";
 exports.FETCHING_FAILED = "FETCHING_FAILED";
 

@@ -13,13 +13,16 @@ exports.logging = (token,empireId) => dispatch => {
   return axios
     .get(`${apiUrl}/buildings/${loggingBuildingId}`, { headers: { token: token ,empireid:empireId }})
     .then(data => {
-      dispatch({
-        type: this.FETCHED_LOGGING,
+      const loggingData = {
         level: data.data.level,
         hp: data.data.HP,
         hourlyProduction: data.data.hourlyProduction,
         constructionTime: data.data.constructionTime,
         constructionCost: data.data.constructionCost
+      }
+      dispatch({
+        type: this.FETCHED_LOGGING,
+        loggingData
       });
     })
     .catch(() => {
