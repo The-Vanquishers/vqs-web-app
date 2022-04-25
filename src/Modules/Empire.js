@@ -25,6 +25,7 @@ import {
 } from "../variables";
 import Farm from "./Farm";
 import AlertComponent from "../Components/AlertComponent";
+import Logging from "./Logging";
 import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
@@ -38,6 +39,7 @@ function Empire(props) {
   const [resource, setResource] = useState([]);
   const [err, setErr] = useState(null);
   const [showTownHallModal, setShowTownHallModal] = useState(false);
+  const [showloggingModal, setShowLoggingMoadl] = useState(false);
   const [showMine , setShowMine] = useState(false);
   const [toggleStableModal, setToggleStableModal] = useState(false);
 
@@ -54,6 +56,7 @@ function Empire(props) {
     const buildingId = buildingNameToId[buildingName];
     //return ITEM_VISIBLE_CLASS; //to render all buildings
     if (buildingList.filter(e => e.buildingId === buildingId).length > 0) {
+      //console.log('yes')
       return ITEM_VISIBLE_CLASS;
     }
     return ITEM_HIDDEN_CLASS;
@@ -81,9 +84,7 @@ function Empire(props) {
       setErr(props.empire.errMsg);
       return;
     }
-  }, [props, token]);
-
-  
+  }, [props, token,showloggingModal]);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -566,7 +567,7 @@ function Empire(props) {
                 cursor: 'pointer',
               }}
               onClick={() => {
-                alert("Logging");
+                setShowLoggingMoadl(!showloggingModal);
               }}
             ></Grid>
             <Grid
@@ -647,6 +648,7 @@ function Empire(props) {
         </Grid>}
       </Grid>
       {showTownHallModal && <TownHall />}
+      {showloggingModal && <ModalCompo> <Logging/> </ModalCompo> }
       {showMine && <ModalCompo><Mine/></ModalCompo> }
       {toggleStableModal && <StableComponent
         building={getBuildingDetails(buildingNames.STABLE)}
