@@ -30,6 +30,7 @@ import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
 import WareHouse from "../Modules/WareHouse"
+import Test from "./Test";
 
 const showGrid = false;
 
@@ -647,7 +648,8 @@ function Empire(props) {
           </Grid>
         </Grid>}
       </Grid>
-      {showTownHallModal && <TownHall />}
+      {/* {showTownHallModal && <TownHall />} */}
+      {showTownHallModal && <ModalCompo><Test/> </ModalCompo>}
       {showloggingModal && <ModalCompo> <Logging/> </ModalCompo> }
       {showMine && <ModalCompo><Mine/></ModalCompo> }
       {toggleStableModal && <StableComponent
@@ -656,10 +658,12 @@ function Empire(props) {
         empireId={props.empire.empireId}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && <ModalCompo > <Farm/> </ModalCompo> } 
-      {showWareHouseModal && <ModalCompo > <WareHouse/> </ModalCompo> } 
+      {showWareHouseModal && <ModalCompo > <WareHouse /> </ModalCompo>}
+      
     </div>
   );
 }
+
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),
