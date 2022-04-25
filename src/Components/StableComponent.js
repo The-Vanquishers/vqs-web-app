@@ -40,7 +40,6 @@ function StableComponent({ dispatch, login, stable, building,
     const [heavyCavalryAmount, setHeavyCavalryAmount] = useState(0);
     const [archerAmount, setArcherAmount] = useState(0);
     const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
-    const [haveEnoughResource, setEnoughResource] = useState(true);
 
     const getAvailableUnitsQuantity = (name) => {
         var count = 0;
@@ -58,11 +57,9 @@ function StableComponent({ dispatch, login, stable, building,
 
     const checkResourceAvailability = (currResource, reqResourceUnit, quantity) => {
         if (currResource >= reqResourceUnit * quantity) {
-            //setEnoughResource(true);
             return 'enoughResource';
         }
         else {
-            //setEnoughResource(false);
             return 'notEnoughResource';
         }
     }
@@ -505,33 +502,28 @@ function StableComponent({ dispatch, login, stable, building,
                             }}
                             onClick={() => {
                                 try {
-                                    if (!haveEnoughResource) {
-                                        alert("Not enough resources available to train units");
+                                    if (!stable.queueFetched) {
+                                        dispatch(trainRequest({
+                                            empireId: empireId,
+                                            units: getTrainingUnits()
+                                        },
+                                            {
+                                                token: login.token,
+                                                'Content-Type': "application/json"
+                                            }
+                                        ))
                                     }
-                                    else {
-                                        if (!stable.queueFetched) {
-                                            dispatch(trainRequest({
-                                                empireId: empireId,
-                                                units: getTrainingUnits()
-                                            },
-                                                {
-                                                    token: login.token,
-                                                    'Content-Type': "application/json"
-                                                }
-                                            ))
-                                        }
-                                        else { alert("Training queue is busy!") }
-                                    }
+                                    else { alert("Training queue is busy!") }
                                 } catch (error) {
-                                    console.log(error);
+                            console.log(error);
                                 }
 
                             }}>
-                            <strong>Train Units</strong>
-                        </Button>
-                    </div>
-                </Box >
-            </Modal >
+                        <strong>Train Units</strong>
+                    </Button>
+                </div>
+            </Box >
+        </Modal >
         </div >
     );
 }
