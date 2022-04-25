@@ -3,7 +3,7 @@ import { loginReducer } from "../reducers/login";
 import { empireReducer } from "../reducers/empire";
 import { connect } from 'react-redux';
 import { buildingNameToId, buildingPosition, apiUrl, resourceSets } from "../variables";
-import { Grid, Typography, Box, Button } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 import Buildings from "../Assets/buildings.png";
 import axios from 'axios';
 import FoodIcon from "../Assets/resources/food.png";
@@ -138,7 +138,7 @@ const RockPicker = ({ login, empire }) => {
                         flexWrap: "wrap",
                     }}>
                         < img
-                            src={GoldIcon}
+                            src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
                         /> <Typography sx={{ mx: 2 }}> {current.hourlyProduction}</Typography >
@@ -151,7 +151,7 @@ const RockPicker = ({ login, empire }) => {
                         flexWrap: "wrap",
                     }}>
                         < img
-                            src={GoldIcon}
+                            src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
                         /> <Typography sx={{ mx: 2 }}> {oneLevelup.hourlyProduction}</Typography >
