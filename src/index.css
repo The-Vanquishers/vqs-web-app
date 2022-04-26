@@ -66,3 +66,12 @@ body,
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #332517 !important;
 }
+.rockpicker{
+  user-select: none;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    font-size: 1.5rem;
+    color: #d32f2f;
+
+}
