@@ -32,6 +32,8 @@ import StableComponent from "../Components/StableComponent";
 import ModalCompo from "../Components/ModalCompo";
 import WareHouse from "../Modules/WareHouse";
 import RockPicker from './RockPicker';
+import { warehouseReducer } from "../reducers/warehouse";
+import { warehouse } from "../actions/warehouse";
 
 const showGrid = false;
 
@@ -48,7 +50,9 @@ function Empire(props) {
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
   const [showRockPicker, setShowRockPicker] = useState(false);
-
+  const [warehouseCapacity, setWarehouseCapacity] = useState(0);
+  const [warehouseLevel, setWarehouseLevel] = useState(null);
+  const wareHouseId = buildingNameToId["Warehouse"];
 
   if (!token) {
     Navigate("/");
@@ -81,13 +85,27 @@ function Empire(props) {
     }
     if (props.empire.isFetched) {
       setResource(props.empire.resources);
+      setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve);
       return;
     }
     if (props.empire.fetchingFailed) {
       setErr(props.empire.errMsg);
       return;
     }
-  }, [props, token, showloggingModal]);
+  }, [props, token,showloggingModal,wareHouseId]);
+
+
+  useEffect(() => {
+    if (props.empire.isFetched && !props.warehouse.isFetched) {
+      props.dispatch(warehouse(wareHouseId, warehouseLevel));
+      return;
+    }
+    if (props.warehouse.isFetched) {
+      setWarehouseCapacity(props.warehouse.capacity);
+      return;
+    }
+  },[wareHouseId,warehouseLevel,props]);
+  console.log(warehouseCapacity);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -163,8 +181,12 @@ function Empire(props) {
                     alt=""
                     title="food"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowFirmModal(!showFirmModal);
+                    }}
                   />{" "}
-                  {resource.food}
+                  {warehouseCapacity > resource.food ? resource.food : <span style={{ color: "red"}}>{resource.food}</span>}
+                  
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -172,8 +194,11 @@ function Empire(props) {
                     alt=""
                     title="wood"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowLoggingMoadl(!showloggingModal);
+                    }}
                   />{" "}
-                  {resource.wood}
+                  {warehouseCapacity > resource.wood ? resource.wood : <span style={{ color: "red"}}>{resource.wood}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -182,7 +207,7 @@ function Empire(props) {
                     title="iron"
                     style={{ width: "20px" }}
                   />{" "}
-                  {resource.iron}
+                  {warehouseCapacity > resource.iron ? resource.iron : <span style={{ color: "red"}}>{resource.iron}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -191,7 +216,7 @@ function Empire(props) {
                     title="stone"
                     style={{ width: "20px" }}
                   />{" "}
-                  {resource.stone}
+                  {warehouseCapacity > resource.stone ? resource.stone : <span style={{ color: "red"}}>{resource.stone}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -199,8 +224,11 @@ function Empire(props) {
                     alt=""
                     title="gold"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowMine(!showMine);
+                    }}
                   />{" "}
-                  {resource.gold}
+                  {warehouseCapacity > resource.gold ? resource.gold : <span style={{ color: "red"}}>{resource.gold}</span>}
                 </div>
               </div>
             </Grid>
@@ -782,7 +810,8 @@ function Empire(props) {
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),
-    login: loginReducer(state)
+    login: loginReducer(state),
+    warehouse: warehouseReducer(state)
   };
 };
 export default connect(mapStateToProps)(Empire);
