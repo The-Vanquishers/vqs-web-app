@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { logging } from '../actions/logging';
-import { empireReducer } from '../reducers/empire';
-import { loggingReducer } from '../reducers/logging';
-import { loginReducer } from '../reducers/login';
+import { logging } from "../actions/logging";
+import { empireReducer } from "../reducers/empire";
+import { loggingReducer } from "../reducers/logging";
+import { loginReducer } from "../reducers/login";
 import Buildings from "../Assets/buildings.png";
-import { apiUrl, buildingNameToId, buildingPosition, resourceSets } from '../variables';
+import {
+  apiUrl,
+  buildingNameToId,
+  buildingPosition,
+  resourceSets
+} from "../variables";
 import { Grid, Typography, Button } from "@mui/material";
-import axios from 'axios';
+import axios from "axios";
 import FoodIcon from "../Assets/resources/food.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 
-
 //For calculating remaining time as H:M:S format
-const msToTime = (time) => {
+const msToTime = time => {
   let seconds = Math.floor((time / 1000) % 60),
     minutes = Math.floor((time / (1000 * 60)) % 60),
     hours = Math.floor((time / (1000 * 60 * 60)) % 24);
 
-  hours = (hours < 10) ? "0" + hours : hours;
-  minutes = (minutes < 10) ? "0" + minutes : minutes;
-  seconds = (seconds < 10) ? "0" + seconds : seconds;
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  return hours + ":" + minutes + ":" + seconds
-}
+  return hours + ":" + minutes + ":" + seconds;
+};
 
 //Resource mapper for getting icons
-const resourceMapper = (id) => {
+const resourceMapper = id => {
   switch (id) {
     case resourceSets.Food:
       return FoodIcon;
@@ -46,9 +50,9 @@ const resourceMapper = (id) => {
     default:
       break;
   }
-}
+};
 
-const Logging = (props) => {
+const Logging = props => {
   const { token } = props.login;
   const { empireId } = props.empire;
   const [requirements, setRequirements] = useState({});
@@ -56,30 +60,39 @@ const Logging = (props) => {
 
   const loggingId = buildingNameToId["Logging"];
 
-
   useEffect(() => {
     if (!props.logging.isFetching && !props.logging.isFetched) {
       props.dispatch(logging(token, empireId));
       return;
     }
     if (props.logging.isFetched) {
+      const {
+        level,
+        hourlyProduction,
+        hp,
+        constructionCost,
+        constructionTime
+      } = props.logging.loggingData;
       setRequirements({
-        level: props.logging.level,
-        hourlyProduction: props.logging.hourlyProduction,
-        hp: props.logging.hp,
-        constructionCost: props.logging.constructionCost,
-        constructionTime: props.logging.constructionTime
-      })
+        level: level,
+        hourlyProduction: hourlyProduction,
+        hp: hp,
+        constructionCost: constructionCost,
+        constructionTime: constructionTime
+      });
     }
   }, [props, token, empireId]);
 
   useEffect(() => {
-    const fetchHourlyProduction = async (lvl) => {
-      const { data } = await axios.get(`${apiUrl}/building/${loggingId}/${lvl}`);
+    const fetchHourlyProduction = async lvl => {
+      const { data } = await axios.get(
+        `${apiUrl}/building/${loggingId}/${lvl}`
+      );
+      //console.log(data);
       setOnelevelUp(data);
-    }
+    };
     fetchHourlyProduction(requirements.level + 1);
-  }, [requirements.level, loggingId])
+  }, [requirements.level, loggingId]);
 
   return (
     <>
@@ -88,7 +101,7 @@ const Logging = (props) => {
           item
           xs={2}
           style={{
-            height: "100px",
+            height: "100px"
           }}
           sx={{
             borderColor: "gray",
@@ -96,7 +109,7 @@ const Logging = (props) => {
             borderWidth: 1,
             backgroundImage: `url(${Buildings})`,
             backgroundPosition: `${buildingPosition.LOGGING}`,
-            cursor: "pointer",
+            cursor: "pointer"
           }}
         ></Grid>
         <Grid item xs={8}>
@@ -104,7 +117,10 @@ const Logging = (props) => {
             Logging (Level {requirements.level})
           </Typography>
           <Typography variant="body2">
-            Outside of your village in the dark forests your lumberjacks cut massive trees to produce wood in the logging, which is needed for buildings and weapons. The higher its level the more wood is produced.
+            Outside of your village in the dark forests your lumberjacks cut
+            massive trees to produce wood in the logging, which is needed for
+            buildings and weapons. The higher its level the more wood is
+            produced.
           </Typography>
         </Grid>
       </Grid>
@@ -131,37 +147,40 @@ const Logging = (props) => {
           <Typography variant="body2">Hourly production</Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography variant="body2" style={{
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}>
-            < img
-              src={WoodIcon}
-              alt=""
-              style={{ width: "20px" }}
-            /> <Typography sx={{ mx: 2 }}> {requirements.hourlyProduction}</Typography >
+          <Typography
+            variant="body2"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap"
+            }}
+          >
+            <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
+            <Typography sx={{ mx: 2 }}>
+              {" "}
+              {requirements.hourlyProduction}
+            </Typography>
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography variant="body2" style={{
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}>
-            < img
-              src={WoodIcon}
-              alt=""
-              style={{ width: "20px" }}
-            /> <Typography sx={{ mx: 2 }}> {oneLevelup}</Typography >
+          <Typography
+            variant="body2"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap"
+            }}
+          >
+            <img src={WoodIcon} alt="" style={{ width: "20px" }} />{" "}
+            <Typography sx={{ mx: 2 }}> {oneLevelup.hourlyProduction}</Typography>
           </Typography>
         </Grid>
       </Grid>
       <Divider />
-      {Object.keys(requirements).length &&
+      {Object.keys(requirements).length && (
         <Grid container spacing={2} sx={{ my: 1 }}>
           <Grid item xs={2}>
-            < img
+            <img
               src={resourceMapper(requirements.constructionCost[0].resourceId)}
               alt=""
               style={{ width: "20px" }}
@@ -169,7 +188,7 @@ const Logging = (props) => {
             {requirements.constructionCost[0].quantity}
           </Grid>
           <Grid item xs={2}>
-            < img
+            <img
               src={resourceMapper(requirements.constructionCost[1].resourceId)}
               alt=""
               style={{ width: "20px" }}
@@ -177,19 +196,20 @@ const Logging = (props) => {
             {requirements.constructionCost[1].quantity}
           </Grid>
           <Grid item xs={2}>
-            < img
+            <img
               src={resourceMapper(requirements.constructionCost[2].resourceId)}
               alt=""
               style={{ width: "20px" }}
             />
             {requirements.constructionCost[2].quantity}
           </Grid>
-          < Grid item
+          <Grid
+            item
             xs={4}
             style={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
+              flexWrap: "wrap"
             }}
           >
             <AccessAlarmsIcon sx={{ mx: 1 }} />
@@ -201,9 +221,7 @@ const Logging = (props) => {
             </Button>
           </Grid>
         </Grid>
-      }
-
-
+      )}
     </>
   );
 };
@@ -213,7 +231,7 @@ const mapStateToProps = state => {
     logging: loggingReducer(state),
     login: loginReducer(state),
     empire: empireReducer(state)
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Logging);

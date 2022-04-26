@@ -46,13 +46,32 @@ const resourceMapper = (id) => {
 const Test = ({login,empire}) => {
   const [oneLevelup, setOnelevelUp] = useState(0);
   const [current, setCurrent] = useState(0);
-  const [requirements, setRequirements] = useState({});
+  const [buildings, setBuildings] = useState([{}]);
 
   const Town_Hall = buildingNameToId['Town Hall'];
   const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0].leve;
 
+  useEffect(() => {
+    const fetchRequirements = async id => {
+      const { data } = await axios.get(`${apiUrl}/buildings/${id}`, {
+        headers: { token: login.token, empireId: empire.empireId }
+      });
+      setBuildings(oldArray => [
+        ...oldArray,
+        {
+          buildingId: data.buildingId,
+          constructionCost: data.constructionCost,
+          constructionTime: data.constructionTime,
+          currentLevel: data.level
+        }
+      ]);
+    };
+    for (let i in empire.buildings) {
+      fetchRequirements(empire.buildings[i].buildingId);
+    }
+  }, [empire.buildings, login.token, empire.empireId]);
 
-
+  console.log(buildings);
   return (
     <>
       <Grid container spacing={2} sx={{ my: 2 }}>
@@ -82,19 +101,24 @@ const Test = ({login,empire}) => {
       </Grid>
 
       <Grid container spacing={2} sx={{ my: 1 }}>
+        <Grid item xs={2}>
+          <Typography variant="h6" component="h6">
+            Buildings
+          </Typography>
+        </Grid>
         <Grid item xs={6}>
           <Typography variant="h6" component="h6">
-            Farm (Level {level})
+            Requirements
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <Typography variant="h6" component="h6">
-            Current Level
+            Time 
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <Typography variant="h6" component="h6">
-            Next Level
+            Upgrade
           </Typography>
         </Grid>
       </Grid>
