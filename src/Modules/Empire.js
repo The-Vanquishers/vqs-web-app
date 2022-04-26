@@ -779,14 +779,12 @@ function Empire(props) {
           <Mine />
         </ModalCompo>
       )}
-      {toggleStableModal && (
-        <StableComponent
-          building={getBuildingDetails(buildingNames.STABLE)}
-          units={props.empire.units}
-          empireId={props.empire.empireId}
-          onClose={() => setToggleStableModal(prevState => !prevState)}
-        />
-      )}
+      {toggleStableModal && <StableComponent
+        building={getBuildingDetails(buildingNames.STABLE)}
+        units={props.empire.units}
+        empireId={props.empire.empireId}
+        resources={props.empire.resources}
+        onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && (
         <ModalCompo>
           {" "}
