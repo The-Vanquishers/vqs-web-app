@@ -11,6 +11,8 @@ import Buildings from "../Assets/buildings.png";
 import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
+import CancelIcon from "@mui/icons-material/Cancel";
+import IconButton from "@mui/material/IconButton";
 import ManIcon from "../Assets/resources/man.png";
 import ClockIcon from "../Assets/clock.png";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -88,6 +90,17 @@ function StableComponent({ dispatch, login, stable, building,
         <div>
             <Modal open={open} onClose={handleClose} >
                 <Box sx={style}>
+                    <Grid
+                        container
+                        justifyContent="right"
+                        style={{ position: "absolute", paddingRight: 25, paddingTop: 1 }}
+                    >
+                        <Grid item>
+                            <IconButton onClick={handleClose}>
+                                <CancelIcon color="error" />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
                     <Grid container spacing={2} sx={{ my: 3 }}>
                         <Grid
                             item
@@ -116,6 +129,8 @@ function StableComponent({ dispatch, login, stable, building,
                             </Grid>
                         </Grid>
                     </Grid>
+
+
 
                     {/* Training Queue */}
                     {(stable.queue !== null) &&
@@ -515,15 +530,15 @@ function StableComponent({ dispatch, login, stable, building,
                                     }
                                     else { alert("Training queue is busy!") }
                                 } catch (error) {
-                            console.log(error);
+                                    console.log(error);
                                 }
 
                             }}>
-                        <strong>Train Units</strong>
-                    </Button>
-                </div>
-            </Box >
-        </Modal >
+                            <strong>Train Units</strong>
+                        </Button>
+                    </div>
+                </Box >
+            </Modal >
         </div >
     );
 }
