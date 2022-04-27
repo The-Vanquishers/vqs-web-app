@@ -315,7 +315,8 @@ function StableComponent({ dispatch, login, stable, building,
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center' sx={{ cursor: "pointer" }}>
+                                    <Typography align='center' sx={{ cursor: "pointer" }}
+                                        onClick={() => setCavalryAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY]))}>
                                         {getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY])}
                                     </Typography>
                                 </TableCell>
@@ -398,7 +399,8 @@ function StableComponent({ dispatch, login, stable, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center'>
+                                    <Typography align='center' sx={{ cursor: 'pointer' }}
+                                        onClick={() => setArcherAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER]))}>
                                         {getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER])}
                                     </Typography>
                                 </TableCell>
@@ -480,7 +482,8 @@ function StableComponent({ dispatch, login, stable, building,
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center'>
+                                    <Typography align='center' sx={{ cursor: 'pointer' }}
+                                        onClick={() => setHeavyCavalryAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY]))}>
                                         {getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY])}
                                     </Typography>
                                 </TableCell>
@@ -562,7 +565,8 @@ function StableComponent({ dispatch, login, stable, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center'>
+                                    <Typography align='center' sx={{ cursor: 'pointer' }}
+                                        onClick={() => setHeavyArcherAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER]))}>
                                         {getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER])}
                                     </Typography>
                                 </TableCell>
