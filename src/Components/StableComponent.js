@@ -315,7 +315,7 @@ function StableComponent({ dispatch, login, stable, building,
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center'>
+                                    <Typography align='center' sx={{ cursor: "pointer" }}>
                                         {getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY])}
                                     </Typography>
                                 </TableCell>
