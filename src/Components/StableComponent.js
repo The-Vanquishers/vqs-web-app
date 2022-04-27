@@ -44,47 +44,7 @@ function StableComponent({ dispatch, login, stable, building,
     const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
     const [resourceDemand, setResourceDemand] = useState({ wood: 0, iron: 0, stone: 0 });
 
-    const resourceDemandHandler = () => {
-        const wood = (stableTrainingCost[stableUnitNames.CAVALRY].Wood * cavalryAmount) +
-            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood * heavyCavalryAmount) +
-            (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood * archerAmount) +
-            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood * heavyArcherAmount);
-        const iron = (stableTrainingCost[stableUnitNames.CAVALRY].Iron * cavalryAmount) +
-            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron * heavyCavalryAmount) +
-            (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron * archerAmount) +
-            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron * heavyArcherAmount);
-        const stone = (stableTrainingCost[stableUnitNames.CAVALRY].Stone * cavalryAmount) +
-            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone * heavyCavalryAmount) +
-            (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone * archerAmount) +
-            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone * heavyArcherAmount);
 
-        const resource = {
-            wood: wood,
-            iron: iron,
-            stone: stone
-        }
-        setResourceDemand(resource);
-    }
-
-    const getMinimumUnit = (unitCost) => {
-        let withWood = 0;
-        if ((resources.wood - resourceDemand.wood) > 0) {
-            withWood = Math.floor((resources.wood - resourceDemand.wood) / unitCost.Wood)
-        }
-
-        let withIron = 0;
-        if ((resources.iron - resourceDemand.iron) > 0) {
-            withIron = Math.floor((resources.iron - resourceDemand.iron) / unitCost.Iron)
-        }
-
-        let withStone = 0;
-        if ((resources.stone - resourceDemand.stone) > 0) {
-            withStone = Math.floor((resources.stone - resourceDemand.stone) / unitCost.Stone)
-        }
-
-        return Math.min(withWood, (Math.min(withIron, withStone)));
-
-    }
 
     const getAvailableUnitsQuantity = (name) => {
         var count = 0;
@@ -127,6 +87,61 @@ function StableComponent({ dispatch, login, stable, building,
         }, empireId))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stable.queueFetched])
+
+    const resourceDemandHandler = () => {
+        const wood = (stableTrainingCost[stableUnitNames.CAVALRY].Wood * cavalryAmount) +
+            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood * heavyCavalryAmount) +
+            (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood * archerAmount) +
+            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood * heavyArcherAmount);
+        const iron = (stableTrainingCost[stableUnitNames.CAVALRY].Iron * cavalryAmount) +
+            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron * heavyCavalryAmount) +
+            (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron * archerAmount) +
+            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron * heavyArcherAmount);
+        const stone = (stableTrainingCost[stableUnitNames.CAVALRY].Stone * cavalryAmount) +
+            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone * heavyCavalryAmount) +
+            (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone * archerAmount) +
+            (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone * heavyArcherAmount);
+
+        const resource = {
+            wood: wood,
+            iron: iron,
+            stone: stone
+        }
+        console.log(resource)
+        setResourceDemand(resource);
+    }
+
+    const getMinimumUnit = (unitCost) => {
+        let withWood = 0;
+        if ((resources.wood - resourceDemand.wood) > 0) {
+            withWood = Math.floor((resources.wood - resourceDemand.wood) / unitCost.Wood)
+        }
+
+        let withIron = 0;
+        if ((resources.iron - resourceDemand.iron) > 0) {
+            withIron = Math.floor((resources.iron - resourceDemand.iron) / unitCost.Iron)
+        }
+
+        let withStone = 0;
+        if ((resources.stone - resourceDemand.stone) > 0) {
+            withStone = Math.floor((resources.stone - resourceDemand.stone) / unitCost.Stone)
+        }
+
+        return Math.min(withWood, (Math.min(withIron, withStone)));
+
+    }
+
+    const [egUnits, setEgUnits] = useState({ CV: 0, HA: 0, AR: 0, HC: 0 })
+
+    useEffect(() => {
+        const cv = getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY]);
+        const ha = getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER]);
+        const ar = getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER]);
+        const hc = getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY]);
+
+        setEgUnits({ CV: cv, HA: ha, AR: ar, HC: hc })
+
+    }, [resourceDemand])
 
 
     return (
@@ -309,15 +324,18 @@ function StableComponent({ dispatch, login, stable, building,
                                         type="number"
                                         value={cavalryAmount}
                                         onChange={(e) => {
-                                            if (e.target.value >= 0 && e.target.value <= 10)
-                                                setCavalryAmount(parseInt(e.target.value))
+                                            const value = parseInt(e.target.value)
+                                            if (value >= 0 && value <= 10) {
+                                                setCavalryAmount(value);
+                                                resourceDemandHandler();
+                                            }
                                         }}
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                     <Typography align='center' sx={{ cursor: "pointer" }}
-                                        onClick={() => setCavalryAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY]))}>
-                                        {getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY])}
+                                    >
+                                        {egUnits.CV}
                                     </Typography>
                                 </TableCell>
                             </TableRow>
@@ -392,16 +410,20 @@ function StableComponent({ dispatch, login, stable, building,
                                         type="number"
                                         value={archerAmount}
                                         onChange={(e) => {
-                                            if (e.target.value >= 0 && e.target.value <= 10)
-                                                setArcherAmount(parseInt(e.target.value))
+                                            const value = parseInt(e.target.value);
+
+                                            if (value >= 0 && value <= 10) {
+                                                setArcherAmount(value);
+                                                resourceDemandHandler();
+                                            }
                                         }}
                                     />
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                     <Typography align='center' sx={{ cursor: 'pointer' }}
-                                        onClick={() => setArcherAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER]))}>
-                                        {getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER])}
+                                        onClick={() => setArcherAmount(egUnits.AR)}>
+                                        {egUnits.AR}
                                     </Typography>
                                 </TableCell>
                             </TableRow>
@@ -476,15 +498,17 @@ function StableComponent({ dispatch, login, stable, building,
                                         type="number"
                                         value={heavyCavalryAmount}
                                         onChange={(e) => {
-                                            if (e.target.value >= 0 && e.target.value <= 10)
-                                                setHeavyCavalryAmount(parseInt(e.target.value))
+                                            if (e.target.value >= 0 && e.target.value <= 10) {
+                                                setHeavyCavalryAmount(parseInt(e.target.value));
+                                                resourceDemandHandler();
+                                            }
                                         }}
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                     <Typography align='center' sx={{ cursor: 'pointer' }}
-                                        onClick={() => setHeavyCavalryAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY]))}>
-                                        {getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY])}
+                                    >
+                                        {egUnits.HC}
                                     </Typography>
                                 </TableCell>
                             </TableRow>
@@ -558,16 +582,17 @@ function StableComponent({ dispatch, login, stable, building,
                                         type="number"
                                         value={heavyArcherAmount}
                                         onChange={(e) => {
-                                            if (e.target.value >= 0 && e.target.value <= 10)
-                                                setHeavyArcherAmount(parseInt(e.target.value))
+                                            if (e.target.value >= 0 && e.target.value <= 10) {
+                                                setHeavyArcherAmount(parseInt(e.target.value));
+                                                resourceDemandHandler();
+                                            }
                                         }}
                                     />
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center' sx={{ cursor: 'pointer' }}
-                                        onClick={() => setHeavyArcherAmount(getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER]))}>
-                                        {getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER])}
+                                    <Typography align='center' sx={{ cursor: 'pointer' }}>
+                                        {egUnits.HA}
                                     </Typography>
                                 </TableCell>
                             </TableRow>
