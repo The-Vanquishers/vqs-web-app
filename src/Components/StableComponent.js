@@ -111,6 +111,7 @@ function StableComponent({ dispatch, login, stable, building,
         setResourceDemand(resource);
     }
 
+
     const getMinimumUnit = (unitCost) => {
         let withWood = 0;
         if ((resources.wood - resourceDemand.wood) > 0) {
@@ -138,11 +139,14 @@ function StableComponent({ dispatch, login, stable, building,
         const ha = getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER]);
         const ar = getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER]);
         const hc = getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY]);
-
         setEgUnits({ CV: cv, HA: ha, AR: ar, HC: hc })
 
     }, [resourceDemand])
 
+
+    useEffect(() => {
+        resourceDemandHandler();
+    }, [cavalryAmount, archerAmount, heavyArcherAmount, heavyCavalryAmount])
 
     return (
         <div>
@@ -151,8 +155,7 @@ function StableComponent({ dispatch, login, stable, building,
                     <Grid
                         container
                         justifyContent="right"
-                        style={{ position: "absolute", paddingRight: 25, paddingTop: 1 }}
-                    >
+                        style={{ position: "absolute", paddingRight: 25, paddingTop: 1 }}>
                         <Grid item>
                             <IconButton onClick={handleClose}>
                                 <CancelIcon color="error" />
@@ -326,15 +329,15 @@ function StableComponent({ dispatch, login, stable, building,
                                         onChange={(e) => {
                                             const value = parseInt(e.target.value)
                                             if (value >= 0 && value <= 10) {
-                                                setCavalryAmount(value);
-                                                resourceDemandHandler();
+                                                setCavalryAmount(value)
+                                                //resourceDemandHandler();
                                             }
                                         }}
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                     <Typography align='center' sx={{ cursor: "pointer" }}
-                                    >
+                                        onClick={() => setCavalryAmount(egUnits.CV)}>
                                         {egUnits.CV}
                                     </Typography>
                                 </TableCell>
@@ -413,8 +416,8 @@ function StableComponent({ dispatch, login, stable, building,
                                             const value = parseInt(e.target.value);
 
                                             if (value >= 0 && value <= 10) {
-                                                setArcherAmount(value);
-                                                resourceDemandHandler();
+                                                setArcherAmount(value)
+                                                //resourceDemandHandler();
                                             }
                                         }}
                                     />
@@ -498,16 +501,17 @@ function StableComponent({ dispatch, login, stable, building,
                                         type="number"
                                         value={heavyCavalryAmount}
                                         onChange={(e) => {
-                                            if (e.target.value >= 0 && e.target.value <= 10) {
-                                                setHeavyCavalryAmount(parseInt(e.target.value));
-                                                resourceDemandHandler();
+                                            const value = parseInt(e.target.value);
+                                            if (value >= 0 && value <= 10) {
+                                                setHeavyCavalryAmount(value)
+                                                //resourceDemandHandler();
                                             }
                                         }}
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                     <Typography align='center' sx={{ cursor: 'pointer' }}
-                                    >
+                                        onClick={() => setHeavyCavalryAmount(egUnits.HC)}>
                                         {egUnits.HC}
                                     </Typography>
                                 </TableCell>
@@ -582,16 +586,18 @@ function StableComponent({ dispatch, login, stable, building,
                                         type="number"
                                         value={heavyArcherAmount}
                                         onChange={(e) => {
-                                            if (e.target.value >= 0 && e.target.value <= 10) {
-                                                setHeavyArcherAmount(parseInt(e.target.value));
-                                                resourceDemandHandler();
+                                            const value = parseInt(e.target.value);
+                                            if (value >= 0 && value <= 10) {
+                                                setHeavyArcherAmount(value)
+                                                // resourceDemandHandler();
                                             }
                                         }}
                                     />
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center' sx={{ cursor: 'pointer' }}>
+                                    <Typography align='center' sx={{ cursor: 'pointer' }}
+                                        onClick={() => setHeavyArcherAmount(egUnits.HA)}>
                                         {egUnits.HA}
                                     </Typography>
                                 </TableCell>
