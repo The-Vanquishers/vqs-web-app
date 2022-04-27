@@ -28,7 +28,7 @@ import AlertComponent from "../Components/AlertComponent";
 import Logging from "./Logging";
 import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
-import ModalCompo from "../Components/ModalCompo";
+import ModalComponent from "../Components/ModalComponent";
 import WareHouse from "../Modules/WareHouse";
 import RockPicker from './RockPicker';
 import { warehouseReducer } from "../reducers/warehouse";
@@ -107,7 +107,8 @@ function Empire(props) {
       setWarehouseCapacity(props.warehouse.capacity);
       return;
     }
-  },[wareHouseId,warehouseLevel,props]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[warehouseLevel]);
   
 
   return (
@@ -771,17 +772,17 @@ function Empire(props) {
           </Grid>
         )}
       </Grid>
-      {showTownHallModal && <ModalCompo> <TownHall/> </ModalCompo>}
+      {showTownHallModal && <ModalComponent> <TownHall/> </ModalComponent>}
       {showloggingModal && (
-        <ModalCompo>
+        <ModalComponent>
           {" "}
           <Logging />{" "}
-        </ModalCompo>
+        </ModalComponent>
       )}
       {showMine && (
-        <ModalCompo>
+        <ModalComponent>
           <Mine />
-        </ModalCompo>
+        </ModalComponent>
       )}
       {toggleStableModal && <StableComponent
         building={getBuildingDetails(buildingNames.STABLE)}
@@ -790,28 +791,28 @@ function Empire(props) {
         resources={props.empire.resources}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && (
-        <ModalCompo>
+        <ModalComponent>
           {" "}
           <Farm />{" "}
-        </ModalCompo>
+        </ModalComponent>
       )}
       {showWareHouseModal && (
-        <ModalCompo>
+        <ModalComponent>
           {" "}
           <WareHouse />{" "}
-        </ModalCompo>
+        </ModalComponent>
       )}
       {showRockPicker && (
-        <ModalCompo>
+        <ModalComponent>
           <RockPicker />
-        </ModalCompo>
+        </ModalComponent>
       )}
       
       {showBarrackModal &&(
-        <ModalCompo > 
+        <ModalComponent > 
           {" "}
           <Barrack/> {" "} 
-          </ModalCompo>
+          </ModalComponent>
         )}
     </div>
   );
