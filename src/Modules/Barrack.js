@@ -318,7 +318,7 @@ const Barrack = ({ login, empire, resources }) => {
 
             {
                 <Grid container spacing={0} sx={{ my: 0 }}>
-                    {unAvailableUnits.slice(0, 2).map((item, indx) => (
+                    {unAvailableUnits.map((item, indx) => (
                         <>
                             <Grid item xs={4} sx={{ my: 2, fontSize: 15 }}>
                                 {item.name}
