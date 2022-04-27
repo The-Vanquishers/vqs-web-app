@@ -27,25 +27,44 @@ const Barrack = ({ login, empire, resources }) => {
 
     const barrack = buildingNameToId['Barracks'];
     const [buildings, setBuildings] = useState([{}]);
-    const [unitOneAmount, setUnitOneAmount] = useState(0);
-    const [unitTwoAmount, setUnitTwoAmount] = useState(0);
-    const [unitThreeAmount, setUnitThreeAmount] = useState(0);
+    const [unitOneQty, setunitOneQty] = useState(0);
+    const [unitTwoQty, setunitTwoQty] = useState(0);
+    const [unitThreeQty, setunitThreeQty] = useState(0);
 
     const level = empire.buildings.filter((item) => item.buildingId === barrack)[0].level;
-    const checkResourceAvailability = (currResource, reqResourceUnit, quantity) => {
-        if (currResource >= reqResourceUnit * quantity) {
-            return 'enoughResource';
+    const checkResourceAvailability = (currResource, reqResourceUnit, unitOneQty , unitTwoQty, unitThreeQty) => {
+        if (currResource < reqResourceUnit * unitOneQty) {
+            return 'notEnoughResource';
+        }
+        if (currResource < reqResourceUnit * unitTwoQty) {
+            return 'notEnoughResource';
+        }
+        if (currResource < reqResourceUnit * unitThreeQty) {
+            return 'notEnoughResource';
         }
         else {
+            return 'enoughResource';
+        }
+    }
+
+    const checkHousingCapacity = (housingCapacity, unitOneQty , unitTwoQty, unitThreeQty) => {
+        if (housingCapacity <unitOneQty) {
             return 'notEnoughResource';
+        }
+        if (housingCapacity <unitTwoQty) {
+            return 'notEnoughResource';
+        }
+        if (housingCapacity <unitThreeQty) {
+            return 'notEnoughResource';
+        }
+        else {
+            return 'enoughResource';
         }
     }
     useEffect(() => {
-        console.log("xyzdkfjf =");
         availableUnits = [];
 
         const fetchRequirements = async () => {
-            console.log("abcdefg = ");
             const { data } = await axios.get(`${apiUrl}/unit`, {
                 headers: { token: login.token, empireId: empire.empireId },
             });
@@ -150,7 +169,10 @@ const Barrack = ({ login, empire, resources }) => {
                             <Grid item xs={4}>
                                 <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
                                     <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
-                                    <Typography variant='body1' align='center' sx={{ my: 0, fontSize: 12 }}>
+                                    <Typography variant='body1' align='center' sx={{ my: 0, fontSize: 12 }} className={
+                                        checkHousingCapacity(item.housingRequirement,
+                                            unitOneQty, unitTwoQty, unitThreeQty)
+                                    }>
                                         {item.housingRequirement}
                                     </Typography>
                                 </TableCell>
@@ -159,7 +181,7 @@ const Barrack = ({ login, empire, resources }) => {
                                     <Typography variant='body1' sx={{ my: 0, fontSize: 12 }} className={
                                         checkResourceAvailability(empire.resources.wood,
                                             item.RecuitingCost[0].quantity,
-                                            unitOneAmount)
+                                            unitOneQty , unitTwoQty, unitThreeQty)
                                     }>
                                         {item.RecuitingCost[0].quantity}
                                     </Typography>
@@ -169,7 +191,7 @@ const Barrack = ({ login, empire, resources }) => {
                                     <Typography variant='body1' sx={{ my: 0, fontSize: 12 }} className={
                                         checkResourceAvailability(empire.resources.iron,
                                             item.RecuitingCost[1].quantity,
-                                            unitOneAmount)
+                                            unitOneQty , unitTwoQty, unitThreeQty)
                                     }>
                                         {item.RecuitingCost[1].quantity}
                                     </Typography>
@@ -180,7 +202,7 @@ const Barrack = ({ login, empire, resources }) => {
                                     <Typography variant='body1' sx={{ my: 0, fontSize: 12 }} className={
                                         checkResourceAvailability(empire.resources.stone,
                                             item.RecuitingCost[2].quantity,
-                                            unitOneAmount)
+                                            unitOneQty , unitTwoQty, unitThreeQty)
                                     }>
                                         {item.RecuitingCost[2].quantity}
                                     </Typography>
@@ -210,10 +232,10 @@ const Barrack = ({ login, empire, resources }) => {
                                             },
                                         }}
                                         type="number"
-                                        value={unitOneAmount}
+                                        value={unitOneQty}
                                         onChange={(e) => {
                                             if (e.target.value >= 0 && e.target.value <= 100)
-                                                setUnitOneAmount(parseInt(e.target.value))
+                                                setunitOneQty(parseInt(e.target.value))
                                         }}
                                     />}
 
@@ -227,10 +249,10 @@ const Barrack = ({ login, empire, resources }) => {
                                             },
                                         }}
                                         type="number"
-                                        value={unitTwoAmount}
+                                        value={unitTwoQty}
                                         onChange={(e) => {
                                             if (e.target.value >= 0 && e.target.value <= 100)
-                                                setUnitTwoAmount(parseInt(e.target.value))
+                                                setunitTwoQty(parseInt(e.target.value))
                                         }}
                                     />}
 
@@ -244,10 +266,10 @@ const Barrack = ({ login, empire, resources }) => {
                                             },
                                         }}
                                         type="number"
-                                        value={unitThreeAmount}
+                                        value={unitThreeQty}
                                         onChange={(e) => {
                                             if (e.target.value >= 0 && e.target.value <= 100)
-                                                setUnitThreeAmount(parseInt(e.target.value))
+                                                setunitThreeQty(parseInt(e.target.value))
                                         }}
                                     />}
                             </Grid>
@@ -296,7 +318,7 @@ const Barrack = ({ login, empire, resources }) => {
 
             {
                 <Grid container spacing={0} sx={{ my: 0 }}>
-                    {unAvailableUnits.slice(0, 2).map((item, indx) => (
+                    {unAvailableUnits.map((item, indx) => (
                         <>
                             <Grid item xs={4} sx={{ my: 2, fontSize: 15 }}>
                                 {item.name}
