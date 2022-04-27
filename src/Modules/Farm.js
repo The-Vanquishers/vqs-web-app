@@ -60,7 +60,6 @@ const Farm = ({ login, empire }) => {
   useEffect(() => {
     const fetchHourlyProduction = async lvl => {
       const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
-      console.log("Hourly Production", data);
       lvl === level
         ? setCurrent(data.hourlyProduction)
         : setOnelevelUp(data.hourlyProduction);
