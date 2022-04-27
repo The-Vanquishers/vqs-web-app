@@ -34,7 +34,7 @@ import RockPicker from './RockPicker';
 import { warehouseReducer } from "../reducers/warehouse";
 import { warehouse } from "../actions/warehouse";
 import TownHall from "./TownHall";
-
+import Barrack from "./Barrack";
 const showGrid = false;
 
 function Empire(props) {
@@ -53,6 +53,7 @@ function Empire(props) {
   const [warehouseCapacity, setWarehouseCapacity] = useState(0);
   const [warehouseLevel, setWarehouseLevel] = useState(null);
   const wareHouseId = buildingNameToId["Warehouse"];
+  const [showBarrackModal, setShowBarrackModal] = useState(false);
 
   if (!token) {
     Navigate("/");
@@ -458,7 +459,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Barracks");
+                  setShowBarrackModal(!showBarrackModal);
                 }}
               ></Grid>
               <Grid
@@ -805,6 +806,13 @@ function Empire(props) {
           <RockPicker />
         </ModalCompo>
       )}
+      
+      {showBarrackModal &&(
+        <ModalCompo > 
+          {" "}
+          <Barrack/> {" "} 
+          </ModalCompo>
+        )}
     </div>
   );
 }
