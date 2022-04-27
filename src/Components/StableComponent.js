@@ -71,8 +71,8 @@ function StableComponent({ dispatch, login, stable, building,
         return count;
     }
 
-    const checkResourceAvailability = (currResource, reqResourceUnit, quantity) => {
-        if (currResource >= reqResourceUnit * quantity) {
+    const flagResource = (resDemand, reqResource, availableRes) => {
+        if (availableRes >= resDemand) {
             return 'enoughResource';
         }
         else {
@@ -144,11 +144,13 @@ function StableComponent({ dispatch, login, stable, building,
         const ar = getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER]);
         const hc = getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY]);
         setEgUnits({ CV: cv, HA: ha, AR: ar, HC: hc })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resourceDemand])
 
     //handling state callbacks
     useEffect(() => {
         resourceDemandHandler();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cavalryAmount, archerAmount, heavyArcherAmount, heavyCavalryAmount])
 
     return (
@@ -280,9 +282,8 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.wood,
-                                                    stableTrainingCost[stableUnitNames.CAVALRY].Wood,
-                                                    cavalryAmount)
+                                                flagResource(resourceDemand.wood,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY].Wood, resources.wood)
                                             }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY].Wood}
                                         </Typography>
@@ -291,9 +292,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.iron,
+                                                flagResource(resourceDemand.iron,
                                                     stableTrainingCost[stableUnitNames.CAVALRY].Iron,
-                                                    cavalryAmount)
+                                                    resources.iron)
                                             }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY].Iron}
                                         </Typography>
@@ -303,9 +304,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.stone,
+                                                flagResource(resourceDemand.stone,
                                                     stableTrainingCost[stableUnitNames.CAVALRY].Stone,
-                                                    cavalryAmount)
+                                                    resources.stone)
                                             }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY].Stone}
                                         </Typography>
@@ -333,7 +334,6 @@ function StableComponent({ dispatch, login, stable, building,
                                             const value = parseInt(e.target.value)
                                             if (value >= 0 && value <= 10) {
                                                 setCavalryAmount(value)
-                                                //resourceDemandHandler();
                                             }
                                         }}
                                     />
@@ -366,9 +366,8 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.wood,
-                                                    stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood,
-                                                    archerAmount)
+                                                flagResource(resourceDemand.wood,
+                                                    stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood, resources.wood)
                                             }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Wood}
                                         </Typography>
@@ -377,9 +376,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.iron,
+                                                flagResource(resourceDemand.iron,
                                                     stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron,
-                                                    archerAmount)
+                                                    resources.iron)
                                             }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Iron}
                                         </Typography>
@@ -389,9 +388,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.stone,
+                                                flagResource(resourceDemand.stone,
                                                     stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone,
-                                                    archerAmount)
+                                                    resources.stone)
                                             }>
                                             {stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone}
                                         </Typography>
@@ -419,8 +418,7 @@ function StableComponent({ dispatch, login, stable, building,
                                             const value = parseInt(e.target.value);
 
                                             if (value >= 0 && value <= 10) {
-                                                setArcherAmount(value)
-                                                //resourceDemandHandler();
+                                                setArcherAmount(value);
                                             }
                                         }}
                                     />
@@ -454,9 +452,8 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.wood,
-                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood,
-                                                    heavyCavalryAmount)
+                                                flagResource(resourceDemand.wood,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood, resources.wood)
                                             }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood}
                                         </Typography>
@@ -465,9 +462,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.iron,
+                                                flagResource(resourceDemand.iron,
                                                     stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron,
-                                                    heavyCavalryAmount)
+                                                    resources.iron)
                                             }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Iron}
                                         </Typography>
@@ -477,9 +474,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.stone,
+                                                flagResource(resourceDemand.stone,
                                                     stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone,
-                                                    heavyCavalryAmount)
+                                                    resources.stone)
                                             }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone}
                                         </Typography>
@@ -507,7 +504,6 @@ function StableComponent({ dispatch, login, stable, building,
                                             const value = parseInt(e.target.value);
                                             if (value >= 0 && value <= 10) {
                                                 setHeavyCavalryAmount(value)
-                                                //resourceDemandHandler();
                                             }
                                         }}
                                     />
@@ -539,9 +535,8 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.wood,
-                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood,
-                                                    heavyArcherAmount)
+                                                flagResource(resourceDemand.wood,
+                                                    stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood, resources.wood)
                                             }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Wood}
                                         </Typography>
@@ -550,9 +545,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.iron,
+                                                flagResource(resourceDemand.iron,
                                                     stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron,
-                                                    heavyArcherAmount)
+                                                    resources.iron)
                                             }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Iron}
                                         </Typography>
@@ -562,9 +557,9 @@ function StableComponent({ dispatch, login, stable, building,
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
                                             className={
-                                                checkResourceAvailability(resources.stone,
+                                                flagResource(resourceDemand.stone,
                                                     stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone,
-                                                    heavyArcherAmount)
+                                                    resources.stone)
                                             }>
                                             {stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone}
                                         </Typography>
@@ -592,7 +587,6 @@ function StableComponent({ dispatch, login, stable, building,
                                             const value = parseInt(e.target.value);
                                             if (value >= 0 && value <= 10) {
                                                 setHeavyArcherAmount(value)
-                                                // resourceDemandHandler();
                                             }
                                         }}
                                     />
@@ -639,7 +633,6 @@ function StableComponent({ dispatch, login, stable, building,
                                 } catch (error) {
                                     console.log(error);
                                 }
-
                             }}>
                             <strong>Train Units</strong>
                         </Button>
