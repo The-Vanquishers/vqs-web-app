@@ -1,31 +1,26 @@
 const axios = require("axios");
-const { apiUrl, buildingNameToId } = require("../variables");
-const warehouseId = buildingNameToId['Warehouse'];
+const { apiUrl } = require("../variables");
 
-exports.FETCHING_WAREHOUSE = "FETCHING_WAREHOUS";
-exports.FETCHED_WAREHOUS = "FETCHED_WAREHOUS";
+exports.FETCHING_WAREHOUSE = "FETCHING_WAREHOUSE";
+exports.FETCHED_WAREHOUSE = "FETCHED_WAREHOUSE";
 exports.FETCHING_FAILED = "FETCHING_FAILED";
 
-exports.logging = (token,empireId) => dispatch => {
+exports.warehouse = (wareHouse,lvl) => dispatch => {
   dispatch({
-    type: this.FETCHING_LOGGING
+    type: this.FETCHING_WAREHOUSE
   });
   return axios
     .get(`${apiUrl}/building/${wareHouse}/${lvl}`)
     .then(data => {
       dispatch({
-        type: this.FETCHED_LOGGING,
-        level: data.data.level,
-        hp: data.data.HP,
-        hourlyProduction: data.data.hourlyProduction,
-        constructionTime: data.data.constructionTime,
-        constructionCost: data.data.constructionCost
+        type: this.FETCHED_WAREHOUSE,
+        capacity: data.data.capacity
       });
     })
     .catch(() => {
       dispatch({
         type: this.FETCHING_FAILED,
-        errMsg: "Error fetching building details"
+        errMsg: "Error fetching warehouse capacity"
       });
     });
 };

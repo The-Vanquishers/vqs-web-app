@@ -36,6 +36,10 @@ const buildingNames = {
   WORKSHOP: "Siege Workshop",
   COURAGE_FARM: "Courage Farm"
 };
+const buildingSets = ["623173e1f10faea791509fb3", "62318861b51742f20a95513e", "62318895b51742f20a955140", "623188b7b51742f20a955142", "623188e4b51742f20a955144", "62318919b51742f20a955147",
+  "62318931b51742f20a955149", "62318945b51742f20a95514b", "62318965b51742f20a95514d", "62318982b51742f20a95514f", "6231899db51742f20a955152", "623189b9b51742f20a955154",
+  "623189dab51742f20a955156", "6232a83b79c7546bbfe20d58", "624855f0824e3e47905e0685"];
+
 const buildingIdToName = {
   "623173e1f10faea791509fb3": "Town Hall",
   "62318861b51742f20a95513e": "House",
@@ -50,7 +54,8 @@ const buildingIdToName = {
   "623189dab51742f20a955156": "Market",
   "6232a83b79c7546bbfe20d58": "Warehouse",
   "6231899db51742f20a955152": "Walls",
-  "62318965b51742f20a95514d": "Siege Workshop"
+  "62318965b51742f20a95514d": "Siege Workshop",
+  "624855f0824e3e47905e0685": "Courage Farm"
 };
 
 const buildingPosition = {
@@ -128,6 +133,7 @@ const stableTrainingCost = {
 
 module.exports = {
   apiUrl,
+  buildingSets,
   buildingIdToName,
   buildingPosition,
   buildingNameToId,
