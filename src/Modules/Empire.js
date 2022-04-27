@@ -12,6 +12,7 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
+import WorkShopComponent from "../Components/WorkshopComponent";
 // import MapIcon from "../Assets/map.png";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
@@ -46,7 +47,7 @@ function Empire(props) {
   const [showloggingModal, setShowLoggingMoadl] = useState(false);
   const [showMine, setShowMine] = useState(false);
   const [toggleStableModal, setToggleStableModal] = useState(false);
-
+  const [toggleWorkShopModal, setToggleWorkShopModal] = useState(false);
   const [showFirmModal, setShowFirmModal] = useState(false);
   const [showWareHouseModal, setShowWareHouseModal] = useState(false);
   const [showRockPicker, setShowRockPicker] = useState(false);
@@ -94,9 +95,9 @@ function Empire(props) {
       setErr(props.empire.errMsg);
       return;
     }
-  }, [props, token,showloggingModal,wareHouseId]);
+  }, [props, token, showloggingModal, wareHouseId]);
 
-  
+
 
   useEffect(() => {
     if (props.empire.isFetched && !props.warehouse.isFetched) {
@@ -107,9 +108,9 @@ function Empire(props) {
       setWarehouseCapacity(props.warehouse.capacity);
       return;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[warehouseLevel]);
-  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [warehouseLevel]);
+
 
   return (
     <div>
@@ -190,8 +191,8 @@ function Empire(props) {
                       setShowFirmModal(!showFirmModal);
                     }}
                   />{" "}
-                  {warehouseCapacity > resource.food ? resource.food : <span style={{ color: "red"}}>{resource.food}</span>}
-                  
+                  {warehouseCapacity > resource.food ? resource.food : <span style={{ color: "red" }}>{resource.food}</span>}
+
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -203,7 +204,7 @@ function Empire(props) {
                       setShowLoggingMoadl(!showloggingModal);
                     }}
                   />{" "}
-                  {warehouseCapacity > resource.wood ? resource.wood : <span style={{ color: "red"}}>{resource.wood}</span>}
+                  {warehouseCapacity > resource.wood ? resource.wood : <span style={{ color: "red" }}>{resource.wood}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -212,7 +213,7 @@ function Empire(props) {
                     title="iron"
                     style={{ width: "20px" }}
                   />{" "}
-                  {warehouseCapacity > resource.iron ? resource.iron : <span style={{ color: "red"}}>{resource.iron}</span>}
+                  {warehouseCapacity > resource.iron ? resource.iron : <span style={{ color: "red" }}>{resource.iron}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -221,7 +222,7 @@ function Empire(props) {
                     title="stone"
                     style={{ width: "20px" }}
                   />{" "}
-                  {warehouseCapacity > resource.stone ? resource.stone : <span style={{ color: "red"}}>{resource.stone}</span>}
+                  {warehouseCapacity > resource.stone ? resource.stone : <span style={{ color: "red" }}>{resource.stone}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -233,7 +234,7 @@ function Empire(props) {
                       setShowMine(!showMine);
                     }}
                   />{" "}
-                  {warehouseCapacity > resource.gold ? resource.gold : <span style={{ color: "red"}}>{resource.gold}</span>}
+                  {warehouseCapacity > resource.gold ? resource.gold : <span style={{ color: "red" }}>{resource.gold}</span>}
                 </div>
               </div>
             </Grid>
@@ -374,9 +375,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.RESEARCH_CENTER,
                   cursor: "pointer"
                 }}
-                // onClick={() => {
-                //   setShowTownHallModal(!showTownHallModal);
-                // }}
+              // onClick={() => {
+              //   setShowTownHallModal(!showTownHallModal);
+              // }}
               ></Grid>
               {/* TOWN HALL */}
               <Grid
@@ -417,9 +418,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.COURAGE_FARM,
                   cursor: "pointer"
                 }}
-                // onClick={() => {
-                //   setShowTownHallModal(!showTownHallModal);
-                // }}
+              // onClick={() => {
+              //   setShowTownHallModal(!showTownHallModal);
+              // }}
               ></Grid>
 
               <Grid
@@ -508,9 +509,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.WATCH_TOWER,
                   cursor: "pointer"
                 }}
-                // onClick={() => {
-                //   setShowTownHallModal(!showTownHallModal);
-                // }}
+              // onClick={() => {
+              //   setShowTownHallModal(!showTownHallModal);
+              // }}
               ></Grid>
             </Grid>
             <Grid container>
@@ -632,7 +633,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Siege Workshop");
+                  setToggleWorkShopModal(prevState => !prevState);
                 }}
               ></Grid>
 
@@ -772,7 +773,7 @@ function Empire(props) {
           </Grid>
         )}
       </Grid>
-      {showTownHallModal && <ModalComponent> <TownHall/> </ModalComponent>}
+      {showTownHallModal && <ModalComponent> <TownHall /> </ModalComponent>}
       {showloggingModal && (
         <ModalComponent>
           {" "}
@@ -807,13 +808,21 @@ function Empire(props) {
           <RockPicker />
         </ModalComponent>
       )}
-      
-      {showBarrackModal &&(
-        <ModalComponent > 
+
+      {showBarrackModal && (
+        <ModalComponent >
           {" "}
-          <Barrack/> {" "} 
-          </ModalComponent>
-        )}
+          <Barrack /> {" "}
+        </ModalComponent>
+      )}
+      {
+        toggleWorkShopModal && <WorkShopComponent
+          building={getBuildingDetails(buildingNames.STABLE)}
+          units={props.empire.units}
+          empireId={props.empire.empireId}
+          resources={props.empire.resources}
+          onClose={() => setToggleWorkShopModal(prevState => !prevState)} />
+      }
     </div>
   );
 }
