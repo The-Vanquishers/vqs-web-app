@@ -43,6 +43,7 @@ function StableComponent({ dispatch, login, stable, building,
     const [archerAmount, setArcherAmount] = useState(0);
     const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
     const [resourceDemand, setResourceDemand] = useState({ wood: 0, iron: 0, stone: 0 });
+    const [submit, setSubmit] = useState(false);
 
     //modal open-close handler
     const [open, setOpen] = useState(true);
@@ -108,6 +109,15 @@ function StableComponent({ dispatch, login, stable, building,
             stone: stone
         }
         setResourceDemand(resource);
+
+        if (resources.wood < resource.wood || resources.stone < resource.stone ||
+            resources.iron < resource.iron ||
+            (cavalryAmount === 0 && archerAmount === 0 && heavyArcherAmount === 0 &&
+                heavyCavalryAmount === 0)) {
+            setSubmit(false);
+        } else {
+            setSubmit(true);
+        }
     }
 
     const getMinimumUnit = (unitCost) => {
@@ -600,6 +610,7 @@ function StableComponent({ dispatch, login, stable, building,
 
                     <div align="center">
                         <Button
+                            disabled={!submit}
                             startIcon={<GroupAddIcon />}
                             size='large'
                             sx={{
