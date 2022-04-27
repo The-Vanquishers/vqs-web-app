@@ -44,8 +44,23 @@ function StableComponent({ dispatch, login, stable, building,
     const [heavyArcherAmount, setHeavyArcherAmount] = useState(0);
     const [resourceDemand, setResourceDemand] = useState({ wood: 0, iron: 0, stone: 0 });
 
+    //modal open-close handler
+    const [open, setOpen] = useState(true);
+    const handleClose = () => {
+        onClose();
+        setOpen(!open)
+    };
 
+    //fetching training queue
+    useEffect(() => {
+        dispatch(getTrainingQueue({
+            token: login.token,
+            'Content-Type': "application/json"
+        }, empireId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [stable.queueFetched])
 
+    //resource flag
     const getAvailableUnitsQuantity = (name) => {
         var count = 0;
         const selectedUnits = units.filter(e => e.unitId === unitSets[name]);
@@ -54,11 +69,6 @@ function StableComponent({ dispatch, login, stable, building,
         });
         return count;
     }
-    const [open, setOpen] = useState(true);
-    const handleClose = () => {
-        onClose();
-        setOpen(!open)
-    };
 
     const checkResourceAvailability = (currResource, reqResourceUnit, quantity) => {
         if (currResource >= reqResourceUnit * quantity) {
@@ -69,8 +79,6 @@ function StableComponent({ dispatch, login, stable, building,
         }
     }
 
-
-
     const getTrainingUnits = () => {
         const units = [];
         if (cavalryAmount) { units.push({ unitId: unitSets[stableUnitNames.CAVALRY], quantity: cavalryAmount }) }
@@ -80,14 +88,7 @@ function StableComponent({ dispatch, login, stable, building,
         return units;
     }
 
-    useEffect(() => {
-        dispatch(getTrainingQueue({
-            token: login.token,
-            'Content-Type': "application/json"
-        }, empireId))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stable.queueFetched])
-
+    //Eligible unit count
     const resourceDemandHandler = () => {
         const wood = (stableTrainingCost[stableUnitNames.CAVALRY].Wood * cavalryAmount) +
             (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Wood * heavyCavalryAmount) +
@@ -101,35 +102,28 @@ function StableComponent({ dispatch, login, stable, building,
             (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY].Stone * heavyCavalryAmount) +
             (stableTrainingCost[stableUnitNames.CAVALRY_ARCHER].Stone * archerAmount) +
             (stableTrainingCost[stableUnitNames.HEAVY_CAVALRY_ARCHER].Stone * heavyArcherAmount);
-
         const resource = {
             wood: wood,
             iron: iron,
             stone: stone
         }
-        console.log(resource)
         setResourceDemand(resource);
     }
-
 
     const getMinimumUnit = (unitCost) => {
         let withWood = 0;
         if ((resources.wood - resourceDemand.wood) > 0) {
             withWood = Math.floor((resources.wood - resourceDemand.wood) / unitCost.Wood)
         }
-
         let withIron = 0;
         if ((resources.iron - resourceDemand.iron) > 0) {
             withIron = Math.floor((resources.iron - resourceDemand.iron) / unitCost.Iron)
         }
-
         let withStone = 0;
         if ((resources.stone - resourceDemand.stone) > 0) {
             withStone = Math.floor((resources.stone - resourceDemand.stone) / unitCost.Stone)
         }
-
         return Math.min(withWood, (Math.min(withIron, withStone)));
-
     }
 
     const [egUnits, setEgUnits] = useState({ CV: 0, HA: 0, AR: 0, HC: 0 })
@@ -140,10 +134,9 @@ function StableComponent({ dispatch, login, stable, building,
         const ar = getMinimumUnit(stableTrainingCost[stableUnitNames.CAVALRY_ARCHER]);
         const hc = getMinimumUnit(stableTrainingCost[stableUnitNames.HEAVY_CAVALRY]);
         setEgUnits({ CV: cv, HA: ha, AR: ar, HC: hc })
-
     }, [resourceDemand])
 
-
+    //handling state callbacks
     useEffect(() => {
         resourceDemandHandler();
     }, [cavalryAmount, archerAmount, heavyArcherAmount, heavyCavalryAmount])
