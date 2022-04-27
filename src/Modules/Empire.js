@@ -34,6 +34,7 @@ import RockPicker from './RockPicker';
 import { warehouseReducer } from "../reducers/warehouse";
 import { warehouse } from "../actions/warehouse";
 import TownHall from "./TownHall";
+
 const showGrid = false;
 
 function Empire(props) {
@@ -85,6 +86,7 @@ function Empire(props) {
     if (props.empire.isFetched) {
       setResource(props.empire.resources);
       setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].level);
+      setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve);
       return;
     }
     if (props.empire.fetchingFailed) {
@@ -94,6 +96,7 @@ function Empire(props) {
   }, [props, token,showloggingModal,wareHouseId]);
 
   
+
   useEffect(() => {
     if (props.empire.isFetched && !props.warehouse.isFetched) {
       props.dispatch(warehouse(wareHouseId, warehouseLevel));
@@ -105,6 +108,7 @@ function Empire(props) {
     }
   },[wareHouseId,warehouseLevel,props]);
   
+
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -778,14 +782,12 @@ function Empire(props) {
           <Mine />
         </ModalCompo>
       )}
-      {toggleStableModal && (
-        <StableComponent
-          building={getBuildingDetails(buildingNames.STABLE)}
-          units={props.empire.units}
-          empireId={props.empire.empireId}
-          onClose={() => setToggleStableModal(prevState => !prevState)}
-        />
-      )}
+      {toggleStableModal && <StableComponent
+        building={getBuildingDetails(buildingNames.STABLE)}
+        units={props.empire.units}
+        empireId={props.empire.empireId}
+        resources={props.empire.resources}
+        onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && (
         <ModalCompo>
           {" "}
