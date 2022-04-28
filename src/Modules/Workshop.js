@@ -90,7 +90,47 @@ function Workshop({ dispatch, login, stable, building,
                         </Grid>
                     </Grid>
 
+                    {/* Training Queue */}
+                    {(stable.queue !== null) &&
+                        <Box>
+                            <Typography variant="h6" align='center' color={'#8E3200'}>
+                                <strong>Training Queue </strong>
+                            </Typography>
+                            < Table >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>
+                                            <strong>Unit Name</strong>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <strong>Quantity</strong>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <strong>Time Remaining</strong>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {Object.keys(unitSets).find(k => unitSets[k] === stable.queue.unitId)}
+                                        </TableCell>
+                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {stable.queue.quantity}
+                                        </TableCell>
+                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
 
+                                            <Countdown daysInHours={true}
+                                                date={new Date(stable.queue.endTime).getTime()}>
+                                                <span id='completed'><strong>Completed</strong></span>
+                                            </Countdown>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Box>}
+
+                    {/* Submit */}
                     <div align="center">
                         <Button
                             startIcon={<GroupAddIcon />}
@@ -115,7 +155,8 @@ function Workshop({ dispatch, login, stable, building,
 
 const mapStateToProps = state => {
     return {
-        login: loginReducer(state)
+        login: loginReducer(state),
+        stable: stableReducer(state),
     }
 }
 
