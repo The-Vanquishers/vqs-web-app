@@ -826,7 +826,7 @@ function Empire(props) {
       )}
       {
         toggleWorkShopModal && <WorkShop
-          building={getBuildingDetails(buildingNames.STABLE)}
+          building={getBuildingDetails(buildingNames.WORKSHOP)}
           units={props.empire.units}
           empireId={props.empire.empireId}
           resources={props.empire.resources}

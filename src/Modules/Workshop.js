@@ -45,6 +45,24 @@ function Workshop({ dispatch, login, stable, building,
         setOpen(!open)
     };
 
+    const getAvailableUnitsQuantity = (name) => {
+        var count = 0;
+        const selectedUnits = units.filter(e => e.unitId === unitSets[name]);
+        selectedUnits.forEach(element => {
+            count += element.quantity;
+        });
+        return count;
+    }
+
+    //fetching training queue
+    useEffect(() => {
+        dispatch(getTrainingQueue({
+            token: login.token,
+            'Content-Type': "application/json"
+        }, empireId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [stable.queueFetched])
+
 
     return (
         <div>
@@ -129,6 +147,202 @@ function Workshop({ dispatch, login, stable, building,
                                 </TableBody>
                             </Table>
                         </Box>}
+
+                    {/* Train units */}
+                    <Typography variant="h6" align='center' color={'#8E3200'}>
+                        <strong>Train Units </strong>
+                    </Typography>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <strong>Unit Name</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong> Available Units</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong>Unit Requirements</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong>Recruit Unit</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong>Max Unit</strong>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {workShopUnitNames.CATAPULT}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {getAvailableUnitsQuantity(workShopUnitNames.CATAPULT)}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
+                                        <Typography variant='body1' align='center'>
+                                            {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].housingRequirement}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                        // className={
+                                        //     flagResource(resourceDemand.wood,
+                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Wood, resources.wood)
+                                        // }
+                                        >
+                                            {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                        // className={
+                                        //     flagResource(resourceDemand.iron,
+                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Iron,
+                                        //         resources.iron)}
+                                        >
+                                            {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                        // className={
+                                        //     flagResource(resourceDemand.stone,
+                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Stone,
+                                        //         resources.stone)}
+                                        >
+                                            {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(workShopUnitTrainingCost[workShopUnitNames.CATAPULT].time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <TextField
+                                        inputProps={{
+                                            style: {
+                                                height: 40,
+                                                width: 50,
+                                                padding: '0 14px',
+                                            },
+                                        }}
+                                        type="number"
+                                        value={'00'}
+                                    // onChange={(e) => {
+                                    //     const value = parseInt(e.target.value)
+                                    //     if (value >= 0 && value <= 10) {
+                                    //         setCavalryAmount(value)
+                                    //     }
+                                    // }}
+                                    />
+                                </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Typography align='center' sx={{ cursor: "pointer" }}>
+                                        {'00'}
+                                    </Typography>
+                                </TableCell>
+                            </TableRow>
+
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {workShopUnitNames.RAM}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {getAvailableUnitsQuantity(workShopUnitNames.RAM)}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }}>
+                                        <img src={ManIcon} alt="capacity" style={{ width: "18px" }} />
+                                        <Typography variant='body1' align='center'>
+                                            {workShopUnitTrainingCost[workShopUnitNames.RAM].housingRequirement}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                        // className={
+                                        //     flagResource(resourceDemand.wood,
+                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Wood, resources.wood)
+                                        // }
+                                        >
+                                            {workShopUnitTrainingCost[workShopUnitNames.RAM].Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                        // className={
+                                        //     flagResource(resourceDemand.iron,
+                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Iron,
+                                        //         resources.iron)}
+                                        >
+                                            {workShopUnitTrainingCost[workShopUnitNames.RAM].Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                        // className={
+                                        //     flagResource(resourceDemand.stone,
+                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Stone,
+                                        //         resources.stone)}
+                                        >
+                                            {workShopUnitTrainingCost[workShopUnitNames.RAM].Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(workShopUnitTrainingCost[workShopUnitNames.RAM].time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <TextField
+                                        inputProps={{
+                                            style: {
+                                                height: 40,
+                                                width: 50,
+                                                padding: '0 14px',
+                                            },
+                                        }}
+                                        type="number"
+                                        value={'0'}
+                                    // onChange={(e) => {
+                                    //     const value = parseInt(e.target.value)
+                                    //     if (value >= 0 && value <= 10) {
+                                    //         setCavalryAmount(value)
+                                    //     }
+                                    // }}
+                                    />
+                                </TableCell>
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Typography align='center' sx={{ cursor: "pointer" }}>
+                                        {'0'}
+                                    </Typography>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+
 
                     {/* Submit */}
                     <div align="center">
