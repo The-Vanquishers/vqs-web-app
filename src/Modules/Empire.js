@@ -12,10 +12,9 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
-import MapIcon from "../Assets/map.png";
+// import MapIcon from "../Assets/map.png";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
-import TownHall from "./TownHall";
 import Spinner from "../Components/Spinner";
 import {
   buildingNameToId,
@@ -29,12 +28,13 @@ import AlertComponent from "../Components/AlertComponent";
 import Logging from "./Logging";
 import Mine from "../Modules/Mine";
 import StableComponent from "../Components/StableComponent";
-import ModalCompo from "../Components/ModalCompo";
+import ModalComponent from "../Components/ModalComponent";
 import WareHouse from "../Modules/WareHouse";
 import RockPicker from './RockPicker';
 import { warehouseReducer } from "../reducers/warehouse";
 import { warehouse } from "../actions/warehouse";
-
+import TownHall from "./TownHall";
+import Barrack from "./Barrack";
 const showGrid = false;
 
 function Empire(props) {
@@ -53,6 +53,7 @@ function Empire(props) {
   const [warehouseCapacity, setWarehouseCapacity] = useState(0);
   const [warehouseLevel, setWarehouseLevel] = useState(null);
   const wareHouseId = buildingNameToId["Warehouse"];
+  const [showBarrackModal, setShowBarrackModal] = useState(false);
 
   if (!token) {
     Navigate("/");
@@ -85,6 +86,7 @@ function Empire(props) {
     }
     if (props.empire.isFetched) {
       setResource(props.empire.resources);
+      setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].level);
       setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve);
       return;
     }
@@ -94,6 +96,7 @@ function Empire(props) {
     }
   }, [props, token,showloggingModal,wareHouseId]);
 
+  
 
   useEffect(() => {
     if (props.empire.isFetched && !props.warehouse.isFetched) {
@@ -104,8 +107,10 @@ function Empire(props) {
       setWarehouseCapacity(props.warehouse.capacity);
       return;
     }
-  },[wareHouseId,warehouseLevel,props]);
-  console.log(warehouseCapacity);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[warehouseLevel]);
+  
+
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -369,9 +374,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.RESEARCH_CENTER,
                   cursor: "pointer"
                 }}
-                onClick={() => {
-                  setShowTownHallModal(!showTownHallModal);
-                }}
+                // onClick={() => {
+                //   setShowTownHallModal(!showTownHallModal);
+                // }}
               ></Grid>
               {/* TOWN HALL */}
               <Grid
@@ -412,9 +417,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.COURAGE_FARM,
                   cursor: "pointer"
                 }}
-                onClick={() => {
-                  setShowTownHallModal(!showTownHallModal);
-                }}
+                // onClick={() => {
+                //   setShowTownHallModal(!showTownHallModal);
+                // }}
               ></Grid>
 
               <Grid
@@ -455,7 +460,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("Barracks");
+                  setShowBarrackModal(!showBarrackModal);
                 }}
               ></Grid>
               <Grid
@@ -503,9 +508,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.WATCH_TOWER,
                   cursor: "pointer"
                 }}
-                onClick={() => {
-                  setShowTownHallModal(!showTownHallModal);
-                }}
+                // onClick={() => {
+                //   setShowTownHallModal(!showTownHallModal);
+                // }}
               ></Grid>
             </Grid>
             <Grid container>
@@ -767,17 +772,17 @@ function Empire(props) {
           </Grid>
         )}
       </Grid>
-      {showTownHallModal && <TownHall />}
+      {showTownHallModal && <ModalComponent> <TownHall/> </ModalComponent>}
       {showloggingModal && (
-        <ModalCompo>
+        <ModalComponent>
           {" "}
           <Logging />{" "}
-        </ModalCompo>
+        </ModalComponent>
       )}
       {showMine && (
-        <ModalCompo>
+        <ModalComponent>
           <Mine />
-        </ModalCompo>
+        </ModalComponent>
       )}
       {toggleStableModal && <StableComponent
         building={getBuildingDetails(buildingNames.STABLE)}
@@ -786,25 +791,33 @@ function Empire(props) {
         resources={props.empire.resources}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && (
-        <ModalCompo>
+        <ModalComponent>
           {" "}
           <Farm />{" "}
-        </ModalCompo>
+        </ModalComponent>
       )}
       {showWareHouseModal && (
-        <ModalCompo>
+        <ModalComponent>
           {" "}
           <WareHouse />{" "}
-        </ModalCompo>
+        </ModalComponent>
       )}
       {showRockPicker && (
-        <ModalCompo>
+        <ModalComponent>
           <RockPicker />
-        </ModalCompo>
+        </ModalComponent>
       )}
+      
+      {showBarrackModal &&(
+        <ModalComponent > 
+          {" "}
+          <Barrack/> {" "} 
+          </ModalComponent>
+        )}
     </div>
   );
 }
+
 const mapStateToProps = state => {
   return {
     empire: empireReducer(state),
