@@ -63,6 +63,89 @@ function Workshop({ dispatch, login, stable, building,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stable.queueFetched])
 
+    const [catapultAmount, setCatapultAmount] = useState(0);
+    const [ramAmount, setRamAmount] = useState(0);
+    const [resourceDemand, setResourceDemand] = useState({ wood: 0, iron: 0, stone: 0 });
+    const [submit, setSubmit] = useState(false);
+
+    const flagResource = (resDemand, reqResource, availableRes) => {
+        if (availableRes >= resDemand) {
+            return 'enoughResource';
+        }
+        else {
+            return 'notEnoughResource';
+        }
+    }
+
+    const getTrainingUnits = () => {
+        const units = [];
+        if (catapultAmount) { units.push({ unitId: unitSets[workShopUnitNames.CATAPULT], quantity: catapultAmount }) }
+        if (ramAmount) { units.push({ unitId: unitSets[workShopUnitNames.RAM], quantity: ramAmount }) }
+        if (units.length) {
+            return units;
+        }
+        else {
+            alert('Select unit first!')
+            return;
+        }
+    }
+
+    //Eligible unit count
+    const resourceDemandHandler = () => {
+        const wood = (workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Wood * catapultAmount) +
+            (workShopUnitTrainingCost[workShopUnitNames.RAM].Wood * ramAmount);
+
+        const iron = (workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Iron * catapultAmount) +
+            (workShopUnitTrainingCost[workShopUnitNames.RAM].Iron * ramAmount);
+
+        const stone = (workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Stone * catapultAmount) +
+            (workShopUnitTrainingCost[workShopUnitNames.RAM].Stone * ramAmount);
+
+        const resource = {
+            wood: wood,
+            iron: iron,
+            stone: stone
+        }
+        setResourceDemand(resource);
+
+        if (resources.wood < resource.wood || resources.stone < resource.stone ||
+            (catapultAmount === 0 && ramAmount === 0) || stable.queueFetched) {
+            setSubmit(false);
+        } else {
+            setSubmit(true);
+        }
+    }
+
+    const getMinimumUnit = (unitCost) => {
+        let withWood = 0;
+        if ((resources.wood - resourceDemand.wood) > 0) {
+            withWood = Math.floor((resources.wood - resourceDemand.wood) / unitCost.Wood)
+        }
+        let withIron = 0;
+        if ((resources.iron - resourceDemand.iron) > 0) {
+            withIron = Math.floor((resources.iron - resourceDemand.iron) / unitCost.Iron)
+        }
+        let withStone = 0;
+        if ((resources.stone - resourceDemand.stone) > 0) {
+            withStone = Math.floor((resources.stone - resourceDemand.stone) / unitCost.Stone)
+        }
+        return Math.min(withWood, (Math.min(withIron, withStone)));
+    }
+
+    const [egUnits, setEgUnits] = useState({ CA: 0, RA: 0 })
+
+    useEffect(() => {
+        const ca = getMinimumUnit(workShopUnitTrainingCost[workShopUnitNames.CATAPULT]);
+        const ra = getMinimumUnit(workShopUnitTrainingCost[workShopUnitNames.RAM]);
+        setEgUnits({ CA: ca, RA: ra })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resourceDemand])
+
+    //handling state callbacks
+    useEffect(() => {
+        resourceDemandHandler();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [catapultAmount, ramAmount])
 
     return (
         <div>
@@ -192,10 +275,10 @@ function Workshop({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                        // className={
-                                        //     flagResource(resourceDemand.wood,
-                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Wood, resources.wood)
-                                        // }
+                                            className={
+                                                flagResource(resourceDemand.wood,
+                                                    workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Wood, resources.wood)
+                                            }
                                         >
                                             {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Wood}
                                         </Typography>
@@ -203,10 +286,10 @@ function Workshop({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
-                                        // className={
-                                        //     flagResource(resourceDemand.iron,
-                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Iron,
-                                        //         resources.iron)}
+                                            className={
+                                                flagResource(resourceDemand.iron,
+                                                    workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Iron,
+                                                    resources.iron)}
                                         >
                                             {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Iron}
                                         </Typography>
@@ -215,10 +298,10 @@ function Workshop({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                        // className={
-                                        //     flagResource(resourceDemand.stone,
-                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Stone,
-                                        //         resources.stone)}
+                                            className={
+                                                flagResource(resourceDemand.stone,
+                                                    workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Stone,
+                                                    resources.stone)}
                                         >
                                             {workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Stone}
                                         </Typography>
@@ -241,18 +324,19 @@ function Workshop({ dispatch, login, stable, building,
                                             },
                                         }}
                                         type="number"
-                                        value={'00'}
-                                    // onChange={(e) => {
-                                    //     const value = parseInt(e.target.value)
-                                    //     if (value >= 0 && value <= 10) {
-                                    //         setCavalryAmount(value)
-                                    //     }
-                                    // }}
+                                        value={catapultAmount}
+                                        onChange={(e) => {
+                                            const value = parseInt(e.target.value)
+                                            if (value >= 0 && value <= 10) {
+                                                setCatapultAmount(value);
+                                            }
+                                        }}
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center' sx={{ cursor: "pointer" }}>
-                                        {'00'}
+                                    <Typography align='center' sx={{ cursor: "pointer" }}
+                                        onClick={() => setCatapultAmount(egUnits.CA)}>
+                                        {egUnits.CA}
                                     </Typography>
                                 </TableCell>
                             </TableRow>
@@ -276,10 +360,10 @@ function Workshop({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                        // className={
-                                        //     flagResource(resourceDemand.wood,
-                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Wood, resources.wood)
-                                        // }
+                                            className={
+                                                flagResource(resourceDemand.wood,
+                                                    workShopUnitTrainingCost[workShopUnitNames.RAM].Wood, resources.wood)
+                                            }
                                         >
                                             {workShopUnitTrainingCost[workShopUnitNames.RAM].Wood}
                                         </Typography>
@@ -287,10 +371,10 @@ function Workshop({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
-                                        // className={
-                                        //     flagResource(resourceDemand.iron,
-                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Iron,
-                                        //         resources.iron)}
+                                            className={
+                                                flagResource(resourceDemand.iron,
+                                                    workShopUnitTrainingCost[workShopUnitNames.RAM].Iron,
+                                                    resources.iron)}
                                         >
                                             {workShopUnitTrainingCost[workShopUnitNames.RAM].Iron}
                                         </Typography>
@@ -299,10 +383,10 @@ function Workshop({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                        // className={
-                                        //     flagResource(resourceDemand.stone,
-                                        //         stableTrainingCost[stableUnitNames.CAVALRY].Stone,
-                                        //         resources.stone)}
+                                            className={
+                                                flagResource(resourceDemand.stone,
+                                                    workShopUnitTrainingCost[workShopUnitNames.CATAPULT].Stone,
+                                                    resources.stone)}
                                         >
                                             {workShopUnitTrainingCost[workShopUnitNames.RAM].Stone}
                                         </Typography>
@@ -325,18 +409,19 @@ function Workshop({ dispatch, login, stable, building,
                                             },
                                         }}
                                         type="number"
-                                        value={'0'}
-                                    // onChange={(e) => {
-                                    //     const value = parseInt(e.target.value)
-                                    //     if (value >= 0 && value <= 10) {
-                                    //         setCavalryAmount(value)
-                                    //     }
-                                    // }}
+                                        value={ramAmount}
+                                        onChange={(e) => {
+                                            const value = parseInt(e.target.value)
+                                            if (value >= 0 && value <= 10) {
+                                                setRamAmount(value);
+                                            }
+                                        }}
                                     />
                                 </TableCell>
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Typography align='center' sx={{ cursor: "pointer" }}>
-                                        {'0'}
+                                    <Typography align='center' sx={{ cursor: "pointer" }}
+                                        onClick={() => setRamAmount(egUnits.RA)}>
+                                        {egUnits.RA}
                                     </Typography>
                                 </TableCell>
                             </TableRow>
@@ -347,6 +432,7 @@ function Workshop({ dispatch, login, stable, building,
                     {/* Submit */}
                     <div align="center">
                         <Button
+                            disabled={!submit}
                             startIcon={<GroupAddIcon />}
                             size='large'
                             sx={{
@@ -357,6 +443,26 @@ function Workshop({ dispatch, login, stable, building,
                                 ':hover': {
                                     bgcolor: '#8E3200'
                                 },
+                            }}
+                            onClick={() => {
+                                try {
+                                    if (!stable.queueFetched) {
+                                        dispatch(trainRequest({
+                                            empireId: empireId,
+                                            units: getTrainingUnits()
+                                        },
+                                            {
+                                                token: login.token,
+                                                'Content-Type': "application/json"
+                                            }
+                                        ))
+                                        setCatapultAmount(0);
+                                        setRamAmount(0);
+                                    }
+                                    else { alert("Training queue is busy!") }
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }}>
                             <strong>Train Units</strong>
                         </Button>
