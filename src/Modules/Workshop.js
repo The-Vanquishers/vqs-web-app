@@ -16,7 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import ManIcon from "../Assets/resources/man.png";
 import ClockIcon from "../Assets/clock.png";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import { buildingPosition, unitSets, stableUnitNames, stableTrainingCost } from "../variables";
+import { buildingPosition, unitSets, workShopUnitNames, workShopUnitTrainingCost } from "../variables";
 import { stableReducer } from '../reducers/stableReducer';
 import { trainRequest, getTrainingQueue } from '../actions/stable';
 import Countdown from "react-countdown";
