@@ -43,26 +43,26 @@ const resourceMapper = (id) => {
     }
 }
 
-const RockPicker = ({ login, empire }) => {
+const House = ({ login, empire }) => {
     const [oneLevelup, setOnelevelUp] = useState(0);
     const [current, setCurrent] = useState(0);
     const [requirements, setRequirements] = useState({});
 
-    const rockPicker = buildingNameToId["Rock picker"];
-    const level = empire.buildings.filter((item) => item.buildingId === rockPicker)[0].level;
+    const houseId = buildingNameToId["House"];
+    const level = empire.buildings.filter((item) => item.buildingId === houseId)[0].level;
 
     useEffect(() => {
         const fetchHourProduction = async (lvl) => {
-            const { data } = await axios.get(`${apiUrl}/building/${rockPicker}/${lvl}`);
+            const { data } = await axios.get(`${apiUrl}/building/${houseId}/${lvl}`);
             lvl === level ? setCurrent(data) : setOnelevelUp(data);
         }
         fetchHourProduction(level);
         fetchHourProduction(level + 1);
-    }, [level, rockPicker])
+    }, [level, houseId])
 
     useEffect(() => {
         const fetchRequirements = async () => {
-            const { data } = await axios.get(`${apiUrl}/buildings/${rockPicker}`, {
+            const { data } = await axios.get(`${apiUrl}/buildings/${houseId}`, {
                 headers: { token: login.token, empireId: empire.empireId },
             });
             setRequirements(
@@ -75,9 +75,10 @@ const RockPicker = ({ login, empire }) => {
             );
         }
         fetchRequirements();
-    }, [empire.empireId, rockPicker, login.token])
-     
+    }, [empire.empireId, houseId, login.token])
+
     console.log(oneLevelup);
+    console.log(current);
 
 
     return (
@@ -100,36 +101,36 @@ const RockPicker = ({ login, empire }) => {
                 ></Grid>
                 <Grid item xs={8}>
                     <Typography variant="h5" component="h6">
-                    <strong> Rock Picker </strong> (Level {level})
+                        <strong> House </strong> (Level {level})
                     </Typography>
                     <Typography variant="body2">
-                        This is Rock Picker that's produce Rock.
+                        This is House.
                     </Typography>
                 </Grid>
             </Grid>
 
-            <Grid container spacing={2} style={{ backgroundColor: "#d6ae7b", paddingBottom: "10px" }} sx={{ my: 1 }}>
+            <Grid container spacing={2} sx={{ my: 1 }}>
 
                 <Grid item xs={6}>
                     <Typography variant="h6" component="h6">
-                         Rock Picker (Level {level})
+                        House (Level {level})
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
                     <Typography variant="h6" component="h6">
-                        Current Level
+                        population
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
                     <Typography variant="h6" component="h6">
-                        Next Level
+                        population (Level {level + 1})
                     </Typography>
                 </Grid>
             </Grid>
 
             <Grid container spacing={2} sx={{ my: 1 }}>
                 <Grid item xs={6}>
-                    <Typography variant="body2">Hourly production</Typography>
+                    <Typography variant="body2">Capacity</Typography>
                 </Grid>
                 <Grid item xs={3}>
                     <Typography variant="body2" style={{
@@ -141,7 +142,7 @@ const RockPicker = ({ login, empire }) => {
                             src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
-                        /> <Typography sx={{ mx: 2 }}> {current.hourlyProduction}</Typography >
+                        /> <Typography sx={{ mx: 2 }}> {current.capacity}</Typography >
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -150,11 +151,11 @@ const RockPicker = ({ login, empire }) => {
                         alignItems: "center",
                         flexWrap: "wrap",
                     }}>
-                        < img 
+                        < img
                             src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
-                        /> <Typography sx={{ mx: 2 }}> {oneLevelup.hourlyProduction}</Typography >
+                        /> <Typography sx={{ mx: 2 }}> {oneLevelup.capacity}</Typography >
                     </Typography>
                 </Grid>
             </Grid>
@@ -215,4 +216,4 @@ const mapStateToProps = (state) => {
         empire: empireReducer(state),
     };
 };
-export default connect(mapStateToProps)(RockPicker);
+export default connect(mapStateToProps)(House);

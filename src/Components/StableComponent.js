@@ -257,7 +257,7 @@ function StableComponent({ dispatch, login, stable, building,
                                     <strong>Recruit Unit</strong>
                                 </TableCell>
                                 <TableCell align='center'>
-                                    <strong>Eligible Amount</strong>
+                                    <strong>Max Unit</strong>
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -628,6 +628,10 @@ function StableComponent({ dispatch, login, stable, building,
                                                 'Content-Type': "application/json"
                                             }
                                         ))
+                                        setArcherAmount(0);
+                                        setCavalryAmount(0);
+                                        setHeavyArcherAmount(0);
+                                        setHeavyCavalryAmount(0);
                                     }
                                     else { alert("Training queue is busy!") }
                                 } catch (error) {
