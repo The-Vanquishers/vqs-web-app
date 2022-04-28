@@ -12,7 +12,7 @@ import WoodIcon from "../Assets/resources/wood.png";
 import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
-import WorkShopComponent from "../Components/WorkshopComponent";
+import WorkShop from "../Modules/Workshop";
 // import MapIcon from "../Assets/map.png";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
@@ -816,7 +816,7 @@ function Empire(props) {
         </ModalComponent>
       )}
       {
-        toggleWorkShopModal && <WorkShopComponent
+        toggleWorkShopModal && <WorkShop
           building={getBuildingDetails(buildingNames.STABLE)}
           units={props.empire.units}
           empireId={props.empire.empireId}

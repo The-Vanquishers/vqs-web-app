@@ -21,7 +21,7 @@ import { stableReducer } from '../reducers/stableReducer';
 import { trainRequest, getTrainingQueue } from '../actions/stable';
 import Countdown from "react-countdown";
 
-function WorkshopComponent({ dispatch, login, stable, building,
+function Workshop({ dispatch, login, stable, building,
     units, onClose, empireId, resources }) {
 
     const style = {
@@ -119,4 +119,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(WorkshopComponent);
+export default connect(mapStateToProps)(Workshop);
