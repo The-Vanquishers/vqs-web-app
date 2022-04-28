@@ -35,6 +35,7 @@ import { warehouseReducer } from "../reducers/warehouse";
 import { warehouse } from "../actions/warehouse";
 import TownHall from "./TownHall";
 import Barrack from "./Barrack";
+import House from "./House";
 const showGrid = false;
 
 function Empire(props) {
@@ -54,6 +55,8 @@ function Empire(props) {
   const [warehouseLevel, setWarehouseLevel] = useState(null);
   const wareHouseId = buildingNameToId["Warehouse"];
   const [showBarrackModal, setShowBarrackModal] = useState(false);
+  const [showHouse, setShowHouse] = useState(false);
+
 
   if (!token) {
     Navigate("/");
@@ -676,7 +679,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert("HOUSE");
+                  setShowHouse(!showHouse);
                 }}
               ></Grid>
               <Grid
@@ -812,6 +815,12 @@ function Empire(props) {
         <ModalComponent > 
           {" "}
           <Barrack/> {" "} 
+          </ModalComponent>
+        )}
+        {showHouse &&(
+        <ModalComponent > 
+          {" "}
+          <House/> {" "} 
           </ModalComponent>
         )}
     </div>
