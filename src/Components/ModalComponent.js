@@ -27,8 +27,11 @@ const style = {
 
 const ModalCompo = (props) => {
   const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
-  
+  const handleClose = () => {
+    props.onClose();
+    setOpen(false);
+  }
+ 
   return (
     <>
       <Modal open={open} onClose={handleClose}>

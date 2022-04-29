@@ -776,15 +776,15 @@ function Empire(props) {
           </Grid>
         )}
       </Grid>
-      {showTownHallModal && <ModalComponent> <TownHall /> </ModalComponent>}
+      {showTownHallModal && <ModalComponent onClose={() => setShowTownHallModal(prevState=>!prevState)}> <TownHall /> </ModalComponent>}
       {showloggingModal && (
-        <ModalComponent>
+        <ModalComponent onClose={() => setShowLoggingMoadl(prevState=>!prevState)}>
           {" "}
           <Logging />{" "}
         </ModalComponent>
       )}
       {showMine && (
-        <ModalComponent>
+        <ModalComponent onClose={() => setShowMine(prevState=>!prevState)}>
           <Mine />
         </ModalComponent>
       )}
@@ -795,31 +795,30 @@ function Empire(props) {
         resources={props.empire.resources}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && (
-        <ModalComponent>
-          {" "}
-          <Farm />{" "}
+        <ModalComponent onClose={() => setShowFirmModal(prevState=>!prevState)}>
+          <Farm />
         </ModalComponent>
       )}
       {showWareHouseModal && (
-        <ModalComponent>
+        <ModalComponent onClose={() => setShowWareHouseModal(prevState=>!prevState)}>
           {" "}
           <WareHouse />{" "}
         </ModalComponent>
       )}
       {showRockPicker && (
-        <ModalComponent>
+        <ModalComponent  onClose={() => setShowRockPicker(prevState=>!prevState)}>
           <RockPicker />
         </ModalComponent>
       )}
 
       {showBarrackModal && (
-        <ModalComponent >
+        <ModalComponent onClose={() => setShowBarrackModal(prevState=>!prevState)}>
           {" "}
           <Barrack /> {" "}
         </ModalComponent>
       )}
       {showHouse && (
-        <ModalComponent >
+        <ModalComponent onClose={() => setShowHouse(prevState=>!prevState)}>
           {" "}
           <House /> {" "}
         </ModalComponent>
