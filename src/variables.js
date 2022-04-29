@@ -87,14 +87,14 @@ const unitSets = {
   "Spear Man": "6232bf7b79c7546bbfe20e14",
   "Axe Man": "6232bf7b79c7546bbfe20e15",
   "Sword Man": "6232bf7b79c7546bbfe20e16",
-  Ram: "6232bf7b79c7546bbfe20e1b",
   "Heavy Cavalry": "6232bf7b79c7546bbfe20e18",
-  Cavalry: "6232bf7b79c7546bbfe20e17",
   "Cavalry Archer": "6232bf7b79c7546bbfe20e19",
   "Heavy Cavalry Archer": "6232bf7b79c7546bbfe20e1a",
-  Catapult: "6232bf7b79c7546bbfe20e1c",
+  Cavalry: "6232bf7b79c7546bbfe20e17",
   Scouts: "6232bf7b79c7546bbfe20e1d",
-  Vanquisher: "624c1fc47d042172892edd9a"
+  Vanquisher: "624c1fc47d042172892edd9a",
+  Catapult: "6232bf7b79c7546bbfe20e1c",
+  Ram: "6232bf7b79c7546bbfe20e1b"
 };
 
 const stableUnitNames = {
@@ -102,6 +102,11 @@ const stableUnitNames = {
   CAVALRY: "Cavalry",
   CAVALRY_ARCHER: "Cavalry Archer",
   HEAVY_CAVALRY_ARCHER: "Heavy Cavalry Archer"
+};
+
+const workShopUnitNames = {
+  CATAPULT: 'Catapult',
+  RAM: 'Ram'
 };
 
 const stableTrainingCost = {
@@ -135,6 +140,23 @@ const stableTrainingCost = {
   },
 }
 
+const workShopUnitTrainingCost = {
+  [workShopUnitNames.CATAPULT]: {
+    Iron: 532,
+    Wood: 316,
+    Stone: 888,
+    time: 550,
+    housingRequirement: 3
+  },
+  [workShopUnitNames.RAM]: {
+    Iron: 532,
+    Wood: 316,
+    Stone: 887,
+    time: 550,
+    housingRequirement: 3
+  },
+}
+
 
 
 module.exports = {
@@ -149,5 +171,7 @@ module.exports = {
   ITEM_VISIBLE_CLASS,
   unitSets,
   stableUnitNames,
-  stableTrainingCost
+  stableTrainingCost,
+  workShopUnitTrainingCost,
+  workShopUnitNames
 };
