@@ -17,9 +17,11 @@ const style = {
   bgcolor: "#ecd7ac",
   border: "2px solid #000",
   boxShadow: 2,
-  px: 1,
   maxHeight: '95vh',
-  overflow: 'auto'
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  px: 3,
+  py: 2,
 };
 
 

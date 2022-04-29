@@ -49,7 +49,7 @@ const WareHouse = ({login,empire}) => {
   const [requirements, setRequirements] = useState({});
 
   const wareHouse = buildingNameToId["Warehouse"];
-  const level = empire.buildings.filter((item) => item.buildingId === wareHouse)[0].leve;
+  const level = empire.buildings.filter((item) => item.buildingId === wareHouse)[0].level;
 
   useEffect(() => {
     const fetchHourProduction = async(lvl) => {

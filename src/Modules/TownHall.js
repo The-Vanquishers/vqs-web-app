@@ -51,7 +51,7 @@ const isBuidlingAvailable = (id, allBuildings) => {
   return ok;
 }
 
-const Test = ({login,empire}) => {
+const TownHall = ({login,empire}) => {
 
   const [buildings, setBuildings] = useState([{}]);
   const [ok, setOk] = useState(false);
@@ -172,7 +172,7 @@ const Test = ({login,empire}) => {
                   </Grid>
                   <Grid item xs={2} key={item.buildingId + Math.random()}>
                     <Button variant="outlined" color="inherit">
-                      { item.isAvailable? <>Level {item.currentLevel + 1}</>: "Build it"}
+                      { item.isAvailable? <>Level {item.currentLevel + 1}</>: "Build"}
                     </Button>
                   </Grid>  
                 </>
@@ -190,4 +190,4 @@ const mapStateToProps = (state) => {
     empire: empireReducer(state),
   };
 };
-export default connect(mapStateToProps) (Test);
+export default connect(mapStateToProps) (TownHall);
