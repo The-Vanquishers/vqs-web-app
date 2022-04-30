@@ -17,16 +17,21 @@ const style = {
   bgcolor: "#ecd7ac",
   border: "2px solid #000",
   boxShadow: 2,
-  px: 1,
   maxHeight: '95vh',
-  overflow: 'auto'
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  px: 3,
+  py: 2,
 };
 
 
 const ModalCompo = (props) => {
   const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
-  
+  const handleClose = () => {
+    props.onClose();
+    setOpen(false);
+  }
+ 
   return (
     <>
       <Modal open={open} onClose={handleClose}>
