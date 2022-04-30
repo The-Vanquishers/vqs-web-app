@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
+import * as React from 'react';
 import { loginReducer } from "../reducers/login";
 import { empireReducer } from "../reducers/empire";
 import { connect } from 'react-redux';
-import { buildingNameToId, buildingPosition,apiUrl,resourceSets,buildingIdToName,buildingSets } from "../variables";
-import { Grid, Typography , Button, Box} from "@mui/material";
+import { buildingNameToId, buildingPosition,apiUrl,resourceSets,buildingIdToName,buildingSets,building1,building2,building3 } from "../variables";
+import { Grid, Typography, Box, Tabs, Tab, Container, Button,styled } from "@mui/material";
 import Buildings from "../Assets/buildings.png";
 import axios from 'axios';
 import FoodIcon from "../Assets/resources/food.png";
@@ -13,6 +14,13 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import Divider from '@mui/material/Divider';
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
+
+
+const StyledButton = styled(Button)({
+  '&.Mui-disabled': {
+    backgroundColor: 'red', 
+  }
+});
 
 const msToTime = (time) => {
   let seconds = Math.floor((time / 1000) % 60),
@@ -52,12 +60,12 @@ const isBuidlingAvailable = (id, allBuildings) => {
 }
 
 const TownHall = ({login,empire}) => {
+const [buildings, setBuildings] = useState([{}]);
+const [ok, setOk] = useState(false);
+const [value, setValue] = useState('one');
 
-  const [buildings, setBuildings] = useState([{}]);
-  const [ok, setOk] = useState(false);
-
-  const Town_Hall = buildingNameToId['Town Hall'];
-  const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0].level;
+const Town_Hall = buildingNameToId['Town Hall'];
+const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0].level;
 
   useEffect(() => {
     const fetchRequirements = async id => {
@@ -78,7 +86,6 @@ const TownHall = ({login,empire}) => {
     };
     const fetchRequirementsByLevel = async (id,lvl) => {
       const { data } = await axios.get(`${apiUrl}/building/${id}/${lvl}`);
-      console.log("fetch level",data, id);
       setBuildings(oldArray => [
         ...oldArray,
         {
@@ -90,12 +97,17 @@ const TownHall = ({login,empire}) => {
         }
       ]);
     };
+    
     setOk(false);
     for (let i in buildingSets) {
       isBuidlingAvailable(buildingSets[i], empire.buildings) ? fetchRequirements(buildingSets[i]) : fetchRequirementsByLevel(buildingSets[i],1);
     }
     setOk(true)
   }, [login.token, empire.empireId,empire.buildings]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Box >
@@ -120,6 +132,24 @@ const TownHall = ({login,empire}) => {
           </Typography>
         </Grid>
       </Grid>
+      <Container maxWidth="sm" >
+        <Box>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          centered="true"
+          
+        >
+          <Tab value="one" label="Building 1" />
+          <Tab value="two" label="Building 2" />
+          <Tab value="three" label="Building 3" />
+        </Tabs>
+      </Box>
+      </Container>
+      
+
 
       <Grid container spacing={2} sx={{ my: 1 }}>
         <Grid item xs={2}>
@@ -148,7 +178,7 @@ const TownHall = ({login,empire}) => {
         <Grid container spacing={2} sx={{ my: 1 }}>
           {buildings.map((item, indx) => (
             <>
-              {indx > 0 && (
+              {indx > 0 && reduceBuilding(value,item.buildingId) &&(
                 <>
                   <Grid item xs={2} key={item.buildingId + Math.random()}>
                     {buildingIdToName[item.buildingId]} <br/>
@@ -156,7 +186,7 @@ const TownHall = ({login,empire}) => {
                   </Grid>
                   <Grid item xs={2} key={item.buildingId + Math.random()}>
                     <img src={resourceMapper(item.constructionCost? item.constructionCost[0].resourceId : null)} alt="" style={{ width: "20px" }}/> <br/>
-                    {item.constructionCost[1].quantity}
+                    {item.constructionCost[0].quantity}
                   </Grid>
                   <Grid item xs={2} key={item.buildingId + Math.random()}>
                     <img src={resourceMapper(item.constructionCost[1].resourceId)}  alt=""  style={{ width: "20px" }} /> <br/>
@@ -164,15 +194,21 @@ const TownHall = ({login,empire}) => {
                   </Grid>
                   <Grid item xs={2} key={item.buildingId + Math.random()}>
                     <img src={resourceMapper(item.constructionCost[2].resourceId)} alt="" style={{ width: "20px" }} /> <br/>
-                    {item.constructionCost[1].quantity}
+                    {item.constructionCost[2].quantity}
                   </Grid>
                   <Grid item xs={2} key={item.buildingId + Math.random()}> 
                     <AccessAlarmsIcon sx={{ mx: 1 }} /> <br/>
                     {msToTime(item.constructionTime)}
                   </Grid>
                   <Grid item xs={2} key={item.buildingId + Math.random()}>
-                    <Button variant="outlined" color="inherit">
-                      { item.isAvailable? <>Level {item.currentLevel + 1}</>: "Build"}
+                    <Button
+                      variant="outlined"
+                      color={isUpgradeAble(item.constructionCost, empire.resources) ? "error" : "success"}
+                      disabled={isUpgradeAble(item.constructionCost, empire.resources)}
+                      classes={StyledButton}
+                    >
+                      {item.isAvailable ? <>Level {item.currentLevel + 1}</> : "Build"}
+        
                     </Button>
                   </Grid>  
                 </>
@@ -190,4 +226,32 @@ const mapStateToProps = (state) => {
     empire: empireReducer(state),
   };
 };
-export default connect(mapStateToProps) (TownHall);
+export default connect(mapStateToProps)(TownHall);
+
+const reduceBuilding = (value, buildingId) => {
+  switch (value) {
+    case 'one':
+      return building1.includes(buildingId);
+    case 'two':
+      return building2.includes(buildingId);
+    default:
+      return building3.includes(buildingId);
+  }
+}
+
+const isUpgradeAble = (constructionCost, resources) => {
+  
+  let ok = false;
+  constructionCost.forEach(element => {
+    if (element.resourceId === '6231728ff10faea791509fac' && element.quantity > resources.iron) {
+      ok = true;
+    }
+    else if (element.resourceId === '623172adf10faea791509fae' && element.quantity > resources.wood) {
+      ok = true
+    }
+    else if (element.resourceId === '623172a5f10faea791509fad' && element.quantity > resources.stone) {
+      ok = true
+    }
+  });
+  return ok;
+}
