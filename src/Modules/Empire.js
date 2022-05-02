@@ -13,6 +13,7 @@ import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import WorkShop from "../Modules/Workshop";
+import Research from "./Research"
 // import MapIcon from "../Assets/map.png";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
@@ -57,6 +58,7 @@ function Empire(props) {
   const wareHouseId = buildingNameToId["Warehouse"];
   const [showBarrackModal, setShowBarrackModal] = useState(false);
   const [showHouse, setShowHouse] = useState(false);
+  const [showResearchCenter, setResearchCenter] = useState(false);
 
 
   if (!token) {
@@ -379,7 +381,7 @@ function Empire(props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  alert('RC')
+                  setResearchCenter(prevState => !prevState);
                 }}
               ></Grid>
               {/* TOWN HALL */}
@@ -830,6 +832,14 @@ function Empire(props) {
           empireId={props.empire.empireId}
           resources={props.empire.resources}
           onClose={() => setToggleWorkShopModal(prevState => !prevState)} />
+      }
+
+      {
+        showResearchCenter && <Research
+          building={getBuildingDetails(buildingNames.RESEARCH_CENTER)}
+          empireId={props.empire.empireId}
+          resources={props.empire.resources}
+          onClose={() => setResearchCenter(prevState => !prevState)} />
       }
     </div>
   );
