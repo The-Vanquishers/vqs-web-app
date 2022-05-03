@@ -181,6 +181,7 @@ const researchSets = {
   [researchNames.RECIPROCAL]: "62322d2079c7546bbfe20d52"
 }
 
+
 const researchCost = {
   BIOPHILIC:
   {
@@ -244,4 +245,7 @@ module.exports = {
   building1,
   building2,
   building3,
+  researchCost, 
+  researchSets, 
+  researchNames
 };

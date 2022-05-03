@@ -1,5 +1,5 @@
 import {
-    Box, Modal, Grid, TableHead, TableRow, TableBody, TableCell, TextField,
+    Box, Modal, Grid, TableHead, TableRow, TableBody, TableCell,
     Button, Table
 } from '@mui/material';
 import { connect } from "react-redux";
@@ -15,8 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import ManIcon from "../Assets/resources/man.png";
 import ClockIcon from "../Assets/clock.png";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import { buildingPosition, unitSets, workShopUnitNames, workShopUnitTrainingCost } from "../variables";
-import { trainRequest, getTrainingQueue } from '../actions/stable';
+import { buildingPosition, researchCost, researchSets, researchNames } from "../variables";
 import Countdown from "react-countdown";
 
 function Research({ dispatch, login, stable, building,
@@ -47,6 +46,8 @@ function Research({ dispatch, login, stable, building,
         <div>
             <Modal open={open} onClose={handleClose} >
                 <Box sx={style}>
+
+                    {/* Close Button */}
                     <Grid
                         container
                         justifyContent="right"
@@ -58,6 +59,7 @@ function Research({ dispatch, login, stable, building,
                             </IconButton>
                         </Grid>
                     </Grid>
+                    {/* Building Image */}
                     <Grid container spacing={2} sx={{ my: 3 }}>
                         <Grid
                             item
@@ -73,6 +75,8 @@ function Research({ dispatch, login, stable, building,
                                 backgroundPosition: buildingPosition.RESEARCH_CENTER,
                             }}
                         ></Grid>
+
+                        {/* Description */}
                         <Grid item>
                             <Grid item xs={12}>
                                 <Typography variant="h5" component="h6">
@@ -81,11 +85,185 @@ function Research({ dispatch, login, stable, building,
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body1" component="p">
-                                    The research center is where you conduct research works.
+                                    The research center is where you conduct research for your empire.
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
+
+
+                    {/* //Research */}
+                    <Typography variant="h6" align='center' color={'#8E3200'}>
+                        <strong>Train Units </strong>
+                    </Typography>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <strong>Research Name</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong> Status</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                    <strong>Research Requirements</strong>
+                                </TableCell>
+                                <TableCell align='center'>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+
+                        {/* Table Rows */}
+                        <TableBody>
+                            {/* Row-1 */}
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {researchNames.BIOPHILIC}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {"Not Done Yet"}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={""}
+                                        >
+                                            {researchCost.BIOPHILIC.Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                            className={""}
+                                        >
+                                            {researchCost.BIOPHILIC.Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={''}
+                                        >
+                                            {researchCost.BIOPHILIC.Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(researchCost.BIOPHILIC.time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Button>Start</Button>
+                                </TableCell>
+                            </TableRow>
+
+                            {/* Row-2 */}
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {researchNames.BRANCHING}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {"Not Done Yet"}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={""}
+                                        >
+                                            {researchCost.BRANCHING.Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                            className={""}
+                                        >
+                                            {researchCost.BRANCHING.Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={''}
+                                        >
+                                            {researchCost.BRANCHING.Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(researchCost.BRANCHING.time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Button>Start</Button>
+                                </TableCell>
+                            </TableRow>
+
+                            {/* Row-3 */}
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {researchNames.COMPUTATIONAL}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {"Not Done Yet"}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={""}
+                                        >
+                                            {researchCost.COMPUTATIONAL.Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                            className={""}
+                                        >
+                                            {researchCost.COMPUTATIONAL.Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={''}
+                                        >
+                                            {researchCost.COMPUTATIONAL.Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(researchCost.COMPUTATIONAL.time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Button>Start</Button>
+                                </TableCell>
+                            </TableRow>
+
+                        </TableBody>
+                    </Table>
 
 
                     {/* Submit */}
