@@ -18,7 +18,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, researchCost, researchSets, researchNames } from "../variables";
 import Countdown from "react-countdown";
 
-function Research({ dispatch, login, stable, building,
+function Research({ dispatch, login, building,
     units, onClose, empireId, resources }) {
 
     const style = {
@@ -41,6 +41,30 @@ function Research({ dispatch, login, stable, building,
         onClose();
         setOpen(!open)
     };
+
+    const [bioButtonStatus, setBioButtonStatus] = useState(true);
+    const [branButtonStatus, setBranButtonStatus] = useState(true);
+    const [compButtonStatus, setCompButtonStatus] = useState(true);
+
+    const checkResource = (requiredResource, availableResource) => {
+        if (availableResource < requiredResource) {
+            return 'notEnoughResource';
+        }
+        return 'enoughResource';
+    }
+
+    const setButtonStatus = (availableResources, requiredResources, setButtonStatus) => {
+        if (availableResources.wood < requiredResources.Wood ||
+            availableResources.iron < requiredResources.Iron ||
+            availableResources.stone < requiredResources.Stone) {
+            setButtonStatus(false);
+        }
+    }
+    useEffect(() => {
+        setButtonStatus(resources, researchCost.BIOPHILIC, setBioButtonStatus);
+        setButtonStatus(resources, researchCost.BRANCHING, setBranButtonStatus);
+        setButtonStatus(resources, researchCost.COMPUTATIONAL, setCompButtonStatus);
+    }, [resources])
 
     return (
         <div>
@@ -94,7 +118,7 @@ function Research({ dispatch, login, stable, building,
 
                     {/* //Research */}
                     <Typography variant="h6" align='center' color={'#8E3200'}>
-                        <strong>Train Units </strong>
+                        <strong>Research</strong>
                     </Typography>
                     <Table>
                         <TableHead>
@@ -128,7 +152,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                            className={""}
+                                            className={checkResource(researchCost.BIOPHILIC.Wood,
+                                                resources.wood)}
                                         >
                                             {researchCost.BIOPHILIC.Wood}
                                         </Typography>
@@ -136,7 +161,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
-                                            className={""}
+                                            className={checkResource(researchCost.BIOPHILIC.Iron,
+                                                resources.iron)}
                                         >
                                             {researchCost.BIOPHILIC.Iron}
                                         </Typography>
@@ -145,7 +171,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                            className={''}
+                                            className={checkResource(researchCost.BIOPHILIC.Stone,
+                                                resources.stone)}
                                         >
                                             {researchCost.BIOPHILIC.Stone}
                                         </Typography>
@@ -160,7 +187,8 @@ function Research({ dispatch, login, stable, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Button>Start</Button>
+                                    {/* <Button>Start</Button> */}
+                                    {bioButtonStatus.toString()}
                                 </TableCell>
                             </TableRow>
 
@@ -177,7 +205,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                            className={""}
+                                            className={checkResource(researchCost.BRANCHING.Wood,
+                                                resources.wood)}
                                         >
                                             {researchCost.BRANCHING.Wood}
                                         </Typography>
@@ -185,7 +214,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
-                                            className={""}
+                                            className={checkResource(researchCost.BRANCHING.Iron,
+                                                resources.iron)}
                                         >
                                             {researchCost.BRANCHING.Iron}
                                         </Typography>
@@ -194,7 +224,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                            className={''}
+                                            className={checkResource(researchCost.BRANCHING.Stone,
+                                                resources.stone)}
                                         >
                                             {researchCost.BRANCHING.Stone}
                                         </Typography>
@@ -209,7 +240,8 @@ function Research({ dispatch, login, stable, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Button>Start</Button>
+                                    {/* <Button>Start</Button> */}
+                                    {branButtonStatus.toString()}
                                 </TableCell>
                             </TableRow>
 
@@ -226,7 +258,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
                                         <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                            className={""}
+                                            className={checkResource(researchCost.COMPUTATIONAL.Wood,
+                                                resources.wood)}
                                         >
                                             {researchCost.COMPUTATIONAL.Wood}
                                         </Typography>
@@ -234,7 +267,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
                                         <Typography variant='body1'
-                                            className={""}
+                                            className={checkResource(researchCost.COMPUTATIONAL.Iron,
+                                                resources.iron)}
                                         >
                                             {researchCost.COMPUTATIONAL.Iron}
                                         </Typography>
@@ -243,7 +277,8 @@ function Research({ dispatch, login, stable, building,
                                     <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
                                         <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
                                         <Typography variant='body1'
-                                            className={''}
+                                            className={checkResource(researchCost.COMPUTATIONAL.Stone,
+                                                resources.stone)}
                                         >
                                             {researchCost.COMPUTATIONAL.Stone}
                                         </Typography>
@@ -258,10 +293,10 @@ function Research({ dispatch, login, stable, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    <Button>Start</Button>
+                                    {/* <Button>Start</Button> */}
+                                    {compButtonStatus.toString()}
                                 </TableCell>
                             </TableRow>
-
                         </TableBody>
                     </Table>
 
