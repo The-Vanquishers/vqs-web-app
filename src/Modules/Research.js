@@ -187,8 +187,22 @@ function Research({ dispatch, login, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* <Button>Start</Button> */}
-                                    {bioButtonStatus.toString()}
+
+                                    <Button
+                                        disabled={!bioButtonStatus}
+                                        size='medium'
+                                        sx={{
+                                            bgcolor: "#A64B2A",
+                                            margin: 2,
+                                            color: '#e6e6e6',
+                                            fontSize: 12,
+                                            ':hover': {
+                                                bgcolor: '#8E3200'
+                                            },
+                                        }}>
+                                        <strong>Start</strong>
+                                    </Button>
+
                                 </TableCell>
                             </TableRow>
 
@@ -240,8 +254,20 @@ function Research({ dispatch, login, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* <Button>Start</Button> */}
-                                    {branButtonStatus.toString()}
+                                    <Button
+                                        disabled={!branButtonStatus}
+                                        size='medium'
+                                        sx={{
+                                            bgcolor: "#A64B2A",
+                                            margin: 2,
+                                            color: '#e6e6e6',
+                                            fontSize: 12,
+                                            ':hover': {
+                                                bgcolor: '#8E3200'
+                                            },
+                                        }}>
+                                        <strong>Start</strong>
+                                    </Button>
                                 </TableCell>
                             </TableRow>
 
@@ -293,32 +319,25 @@ function Research({ dispatch, login, building,
                                 </TableCell>
 
                                 <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* <Button>Start</Button> */}
-                                    {compButtonStatus.toString()}
+                                    <Button
+                                        disabled={!compButtonStatus}
+                                        size='medium'
+                                        sx={{
+                                            bgcolor: "#A64B2A",
+                                            margin: 2,
+                                            color: '#e6e6e6',
+                                            fontSize: 12,
+                                            ':hover': {
+                                                bgcolor: '#8E3200'
+                                            },
+                                        }}>
+                                        <strong>Start</strong>
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
 
-
-                    {/* Submit */}
-                    <div align="center">
-                        <Button
-                            startIcon={<GroupAddIcon />}
-                            size='large'
-                            sx={{
-                                bgcolor: "#A64B2A",
-                                margin: 2,
-                                color: '#e6e6e6',
-                                fontSize: 14,
-                                ':hover': {
-                                    bgcolor: '#8E3200'
-                                },
-                            }}
-                        >
-                            <strong>Train Units</strong>
-                        </Button>
-                    </div>
                 </Box >
             </Modal >
         </div >
