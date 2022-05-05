@@ -12,14 +12,14 @@ import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import CancelIcon from "@mui/icons-material/Cancel";
 import IconButton from "@mui/material/IconButton";
-import ManIcon from "../Assets/resources/man.png";
 import ClockIcon from "../Assets/clock.png";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { buildingPosition, researchCost, researchSets, researchNames } from "../variables";
 import Countdown from "react-countdown";
+import { loginReducer } from '../reducers/login';
+import { researchReducer } from '../reducers/researchReducer';
+import { getResearchQueue, researchRequest } from "../actions/research"
 
-function Research({ dispatch, login, building,
-    units, onClose, empireId, resources }) {
+function Research({ dispatch, login, research, building, onClose, empireId, resources }) {
 
     const style = {
         position: "absolute",
@@ -42,6 +42,15 @@ function Research({ dispatch, login, building,
         setOpen(!open)
     };
 
+    //fetching research queue
+    useEffect(() => {
+        dispatch(getResearchQueue({
+            token: login.token,
+            'Content-Type': "application/json"
+        }, empireId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [research.queueFetched])
+
     const [bioButtonStatus, setBioButtonStatus] = useState(true);
     const [branButtonStatus, setBranButtonStatus] = useState(true);
     const [compButtonStatus, setCompButtonStatus] = useState(true);
@@ -56,7 +65,8 @@ function Research({ dispatch, login, building,
     const setButtonStatus = (availableResources, requiredResources, setButtonStatus) => {
         if (availableResources.wood < requiredResources.Wood ||
             availableResources.iron < requiredResources.Iron ||
-            availableResources.stone < requiredResources.Stone) {
+            availableResources.stone < requiredResources.Stone ||
+            research.queueFetched) {
             setButtonStatus(false);
         }
     }
@@ -64,7 +74,9 @@ function Research({ dispatch, login, building,
         setButtonStatus(resources, researchCost.BIOPHILIC, setBioButtonStatus);
         setButtonStatus(resources, researchCost.BRANCHING, setBranButtonStatus);
         setButtonStatus(resources, researchCost.COMPUTATIONAL, setCompButtonStatus);
-    }, [resources])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resources, research.queueFetched])
+
 
     return (
         <div>
@@ -115,6 +127,38 @@ function Research({ dispatch, login, building,
                         </Grid>
                     </Grid>
 
+                    {/* Research Queue */}
+                    {research.queueFetched &&
+                        <Box>
+                            <Typography variant="h6" align='center' color={'#8E3200'}>
+                                <strong>Research Queue </strong>
+                            </Typography>
+                            < Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>
+                                            <strong>Unit Name</strong>
+                                        </TableCell>
+                                        <TableCell align='center'>
+                                            <strong>Time Remaining</strong>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            {research.researchQueue.researchName}
+                                        </TableCell>
+                                        <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                            <Countdown daysInHours={true}
+                                                date={new Date(research.researchQueue.endTime)}>
+                                                <span id='completed'><strong>Completed</strong></span>
+                                            </Countdown>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </Box>}
 
                     {/* //Research */}
                     <Typography variant="h6" align='center' color={'#8E3200'}>
@@ -344,11 +388,11 @@ function Research({ dispatch, login, building,
     );
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         login: loginReducer(state),
-//         stable: stableReducer(state),
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        research: researchReducer(state),
+        login: loginReducer(state),
+    }
+}
 
-export default Research;
+export default connect(mapStateToProps)(Research);
