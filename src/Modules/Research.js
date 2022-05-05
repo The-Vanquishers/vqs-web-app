@@ -42,15 +42,8 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
         setOpen(!open)
     };
 
-    //fetching research queue
-    useEffect(() => {
-        dispatch(getResearchQueue({
-            token: login.token,
-            'Content-Type': "application/json"
-        }, empireId))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [research.queueFetched])
-
+    const [researchStatus, setResearchStatus] = useState(false)
+    const [researchId, setResearchId] = useState(null);
     const [bioButtonStatus, setBioButtonStatus] = useState(true);
     const [branButtonStatus, setBranButtonStatus] = useState(true);
     const [compButtonStatus, setCompButtonStatus] = useState(true);
@@ -66,7 +59,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
         if (availableResources.wood < requiredResources.Wood ||
             availableResources.iron < requiredResources.Iron ||
             availableResources.stone < requiredResources.Stone ||
-            research.queueFetched) {
+            research.queueFetched || researchStatus) {
             setButtonStatus(false);
         }
     }
@@ -74,9 +67,40 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
         setButtonStatus(resources, researchCost.BIOPHILIC, setBioButtonStatus);
         setButtonStatus(resources, researchCost.BRANCHING, setBranButtonStatus);
         setButtonStatus(resources, researchCost.COMPUTATIONAL, setCompButtonStatus);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resources, research.queueFetched])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resources, research.queueFetched, researchStatus])
 
+
+    useEffect(() => {
+        if (researchId) {
+            dispatch(researchRequest({ empireId: empireId, researchId: researchId },
+                {
+                    token: login.token,
+                    'Content-Type': "application/json"
+                }))
+            setResearchStatus(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [researchId])
+
+    //fetching research queue
+    useEffect(() => {
+        dispatch(getResearchQueue({
+            token: login.token,
+            'Content-Type': "application/json"
+        }, empireId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(getResearchQueue({
+                token: login.token,
+                'Content-Type': "application/json"
+            }, empireId))
+        }, 3000)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [research.queueFetched, researchStatus])
 
     return (
         <div>
@@ -128,7 +152,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                     </Grid>
 
                     {/* Research Queue */}
-                    {research.queueFetched &&
+                    {(research.queueFetched) &&
                         <Box>
                             <Typography variant="h6" align='center' color={'#8E3200'}>
                                 <strong>Research Queue </strong>
@@ -243,10 +267,12 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                             ':hover': {
                                                 bgcolor: '#8E3200'
                                             },
-                                        }}>
+                                        }}
+                                        onClick={() => setResearchId(
+                                            researchSets[researchNames.BIOPHILIC])
+                                        }>
                                         <strong>Start</strong>
                                     </Button>
-
                                 </TableCell>
                             </TableRow>
 
@@ -309,7 +335,10 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                             ':hover': {
                                                 bgcolor: '#8E3200'
                                             },
-                                        }}>
+                                        }}
+                                        onClick={() => setResearchId(
+                                            researchSets[researchNames.BRANCHING])
+                                        }>
                                         <strong>Start</strong>
                                     </Button>
                                 </TableCell>
@@ -374,14 +403,16 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                             ':hover': {
                                                 bgcolor: '#8E3200'
                                             },
-                                        }}>
+                                        }}
+                                        onClick={() => setResearchId(
+                                            researchSets[researchNames.COMPUTATIONAL])
+                                        }>
                                         <strong>Start</strong>
                                     </Button>
                                 </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
-
                 </Box >
             </Modal >
         </div >

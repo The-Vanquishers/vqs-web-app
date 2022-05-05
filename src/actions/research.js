@@ -23,7 +23,7 @@ exports.researchRequest = (body, headers) => dispatch => {
                 type: this.RESEARCH_FAILED_TO_START,
                 errMsg: error.response.data
             })
-            alert(error.response.data);
+            //alert(error.response.data);
         })
 }
 
