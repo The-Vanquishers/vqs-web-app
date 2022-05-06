@@ -45,6 +45,8 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
     const [bioButtonStatus, setBioButtonStatus] = useState(true);
     const [branButtonStatus, setBranButtonStatus] = useState(true);
     const [compButtonStatus, setCompButtonStatus] = useState(true);
+    const [nutrButtonStatus, setNutrButtonStatus] = useState(true);
+    const [bactButtonStatus, setBactButtonStatus] = useState(true);
 
     const checkResource = (requiredResource, availableResource) => {
         if (availableResource < requiredResource) {
@@ -61,10 +63,13 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
             setButtonStatus(false);
         }
     }
+
     useEffect(() => {
         setButtonStatus(resources, researchCost.BIOPHILIC, setBioButtonStatus);
         setButtonStatus(resources, researchCost.BRANCHING, setBranButtonStatus);
         setButtonStatus(resources, researchCost.COMPUTATIONAL, setCompButtonStatus);
+        setButtonStatus(resources, researchCost.NUTRIENT, setNutrButtonStatus);
+        setButtonStatus(resources, researchCost.BACTERIAL, setBactButtonStatus);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resources, research.queueFetched, research.researchStarted])
 
@@ -396,6 +401,146 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                     </Button>
                                 </TableCell>
                             </TableRow>
+
+
+                            {/* Row-4 */}
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {researchNames.NUTRIENT}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {"Not Done Yet"}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={checkResource(researchCost.NUTRIENT.Wood,
+                                                resources.wood)}
+                                        >
+                                            {researchCost.NUTRIENT.Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                            className={checkResource(researchCost.NUTRIENT.Iron,
+                                                resources.iron)}
+                                        >
+                                            {researchCost.NUTRIENT.Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={checkResource(researchCost.NUTRIENT.Stone,
+                                                resources.stone)}
+                                        >
+                                            {researchCost.NUTRIENT.Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(researchCost.NUTRIENT.time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Button
+                                        disabled={!nutrButtonStatus}
+                                        size='medium'
+                                        sx={{
+                                            bgcolor: "#A64B2A",
+                                            margin: 2,
+                                            color: '#e6e6e6',
+                                            fontSize: 12,
+                                            ':hover': {
+                                                bgcolor: '#8E3200'
+                                            },
+                                        }}
+                                        onClick={() => startResearch(
+                                            researchSets[researchNames.NUTRIENT])
+                                        }>
+                                        <strong>Start</strong>
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+
+
+                            {/* Row-5 */}
+                            <TableRow >
+                                <TableCell scope="row" style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {researchNames.BACTERIAL}
+                                </TableCell>
+                                <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    {"Not Done Yet"}
+                                </TableCell>
+                                <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+
+                                    <TableCell style={{ paddingTop: 1, paddingBottom: 1 }} >
+                                        <img src={WoodIcon} alt="Wood" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={checkResource(researchCost.BACTERIAL.Wood,
+                                                resources.wood)}
+                                        >
+                                            {researchCost.BACTERIAL.Wood}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={IronIcon} alt="Iron" style={{ width: "18px" }} />
+                                        <Typography variant='body1'
+                                            className={checkResource(researchCost.BACTERIAL.Iron,
+                                                resources.iron)}
+                                        >
+                                            {researchCost.BACTERIAL.Iron}
+                                        </Typography>
+                                    </TableCell>
+
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={StoneIcon} alt="Stone" style={{ width: "20px" }} />
+                                        <Typography variant='body1'
+                                            className={checkResource(researchCost.BACTERIAL.Stone,
+                                                resources.stone)}
+                                        >
+                                            {researchCost.BACTERIAL.Stone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                        <img src={ClockIcon} alt="time" style={{ width: "18px" }} />
+                                        <Typography variant='body1'>
+                                            {new Date(researchCost.BACTERIAL.time * 1000)
+                                                .toISOString().substr(14, 5)}
+                                        </Typography>
+                                    </TableCell>
+                                </TableCell>
+
+                                <TableCell style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
+                                    <Button
+                                        disabled={!bactButtonStatus}
+                                        size='medium'
+                                        sx={{
+                                            bgcolor: "#A64B2A",
+                                            margin: 2,
+                                            color: '#e6e6e6',
+                                            fontSize: 12,
+                                            ':hover': {
+                                                bgcolor: '#8E3200'
+                                            },
+                                        }}
+                                        onClick={() => startResearch(
+                                            researchSets[researchNames.BACTERIAL])
+                                        }>
+                                        <strong>Start</strong>
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+
+
                         </TableBody>
                     </Table>
                 </Box >
