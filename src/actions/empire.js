@@ -28,7 +28,8 @@ exports.getEmpireDetails = token => dispatch => {
         empireName: data.data.name,
         strength: data.data.strength,
         units: data.data.units,
-        trainings: data.data.trainings
+        trainings: data.data.trainings,
+        researches: data.data.researches
       });
     })
     .catch(() => {
