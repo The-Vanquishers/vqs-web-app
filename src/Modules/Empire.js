@@ -13,6 +13,7 @@ import StoneIcon from "../Assets/resources/stone.png";
 import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import WorkShop from "../Modules/Workshop";
+import Research from "./Research"
 // import MapIcon from "../Assets/map.png";
 import { getEmpireDetails } from "../actions/empire";
 import { empireReducer } from "../reducers/empire";
@@ -57,6 +58,7 @@ function Empire(props) {
   const wareHouseId = buildingNameToId["Warehouse"];
   const [showBarrackModal, setShowBarrackModal] = useState(false);
   const [showHouse, setShowHouse] = useState(false);
+  const [showResearchCenter, setResearchCenter] = useState(false);
 
 
   if (!token) {
@@ -368,7 +370,7 @@ function Empire(props) {
                   buildingNames.RESEARCH_CENTER
                 )}
                 item
-                title={buildingNames.TOWN_HALL}
+                title={buildingNames.RESEARCH_CENTER}
                 xs={2}
                 sx={{
                   borderColor: "gray",
@@ -378,9 +380,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.RESEARCH_CENTER,
                   cursor: "pointer"
                 }}
-              // onClick={() => {
-              //   setShowTownHallModal(!showTownHallModal);
-              // }}
+                onClick={() => {
+                  setResearchCenter(prevState => !prevState);
+                }}
               ></Grid>
               {/* TOWN HALL */}
               <Grid
@@ -776,15 +778,15 @@ function Empire(props) {
           </Grid>
         )}
       </Grid>
-      {showTownHallModal && <ModalComponent onClose={() => setShowTownHallModal(prevState=>!prevState)}> <TownHall /> </ModalComponent>}
+      {showTownHallModal && <ModalComponent onClose={() => setShowTownHallModal(prevState => !prevState)}> <TownHall /> </ModalComponent>}
       {showloggingModal && (
-        <ModalComponent onClose={() => setShowLoggingMoadl(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowLoggingMoadl(prevState => !prevState)}>
           {" "}
           <Logging />{" "}
         </ModalComponent>
       )}
       {showMine && (
-        <ModalComponent onClose={() => setShowMine(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowMine(prevState => !prevState)}>
           <Mine />
         </ModalComponent>
       )}
@@ -795,30 +797,30 @@ function Empire(props) {
         resources={props.empire.resources}
         onClose={() => setToggleStableModal(prevState => !prevState)} />}
       {showFirmModal && (
-        <ModalComponent onClose={() => setShowFirmModal(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowFirmModal(prevState => !prevState)}>
           <Farm />
         </ModalComponent>
       )}
       {showWareHouseModal && (
-        <ModalComponent onClose={() => setShowWareHouseModal(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowWareHouseModal(prevState => !prevState)}>
           {" "}
           <WareHouse />{" "}
         </ModalComponent>
       )}
       {showRockPicker && (
-        <ModalComponent  onClose={() => setShowRockPicker(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowRockPicker(prevState => !prevState)}>
           <RockPicker />
         </ModalComponent>
       )}
 
       {showBarrackModal && (
-        <ModalComponent onClose={() => setShowBarrackModal(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowBarrackModal(prevState => !prevState)}>
           {" "}
           <Barrack /> {" "}
         </ModalComponent>
       )}
       {showHouse && (
-        <ModalComponent onClose={() => setShowHouse(prevState=>!prevState)}>
+        <ModalComponent onClose={() => setShowHouse(prevState => !prevState)}>
           {" "}
           <House /> {" "}
         </ModalComponent>
@@ -830,6 +832,15 @@ function Empire(props) {
           empireId={props.empire.empireId}
           resources={props.empire.resources}
           onClose={() => setToggleWorkShopModal(prevState => !prevState)} />
+      }
+
+      {
+        showResearchCenter && <Research
+          building={getBuildingDetails(buildingNames.RESEARCH_CENTER)}
+          empireId={props.empire.empireId}
+          resources={props.empire.resources}
+          userResearches={props.empire.researches}
+          onClose={() => setResearchCenter(prevState => !prevState)} />
       }
     </div>
   );

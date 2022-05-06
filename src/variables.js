@@ -163,7 +163,69 @@ const workShopUnitTrainingCost = {
   },
 }
 
+const researchNames = {
+  BIOPHILIC: 'Biophilic Design',
+  BRANCHING: 'Branching Structure',
+  COMPUTATIONAL: 'Computational Design',
+  NUTRIENT: 'Nutrient Dynamics',
+  BACTERIAL: 'Bacterial Species',
+  RECIPROCAL: 'Reciprocal Grafting'
+}
 
+const researchSets = {
+  [researchNames.BIOPHILIC]: "6232291d79c7546bbfe20d48",
+  [researchNames.BRANCHING]: "6232293e79c7546bbfe20d4a",
+  [researchNames.COMPUTATIONAL]: "6232294c79c7546bbfe20d4c",
+  [researchNames.NUTRIENT]: "62322cea79c7546bbfe20d4e",
+  [researchNames.BACTERIAL]: "62322d1279c7546bbfe20d50",
+  [researchNames.RECIPROCAL]: "62322d2079c7546bbfe20d52"
+}
+
+
+const researchCost = {
+  BIOPHILIC:
+  {
+    time: 1200,
+    Iron: 1500,
+    Wood: 1500,
+    Stone: 1500
+  },
+  BRANCHING:
+  {
+    time: 3000,
+    Iron: 5000,
+    Wood: 5000,
+    Stone: 5000
+  },
+  COMPUTATIONAL:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  },
+  NUTRIENT:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  },
+  BACTERIAL:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  },
+  RECIPROCAL:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  }
+}
 
 module.exports = {
   apiUrl,
@@ -183,4 +245,7 @@ module.exports = {
   building1,
   building2,
   building3,
+  researchCost, 
+  researchSets, 
+  researchNames
 };
