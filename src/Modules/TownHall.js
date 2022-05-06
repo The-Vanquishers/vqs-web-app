@@ -108,7 +108,17 @@ const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const handleUpgrade = (buildingId) => {
+    axios.post(`${apiUrl}/build/${empire.empireId}/${buildingId}`,{headers: { token: login.token}})
+      .then(data => {
+    
+        console.log(data);
+      })
+      .catch(e => {
+        console.log("error");
+      })
+    
+  }
   return (
     <Box >
       <Grid container spacing={2} sx={{ my: 2 }}>
@@ -206,6 +216,7 @@ const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0
                       color={isUpgradeAble(item.constructionCost, empire.resources) ? "error" : "success"}
                       disabled={isUpgradeAble(item.constructionCost, empire.resources)}
                       classes={StyledButton}
+                      onClick={()=>handleUpgrade(item.buildingId)}
                     >
                       {item.isAvailable ? <>Level {item.currentLevel + 1}</> : "Build"}
         
