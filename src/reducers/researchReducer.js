@@ -50,7 +50,7 @@ const research = (state = initialState, action) => {
                 ...state,
                 queueFetched: true,
                 researchQueue: action.researchQueue,
-                errMsgResearch: null
+                errMsgResearch: null,
             }
         }
 
@@ -59,7 +59,9 @@ const research = (state = initialState, action) => {
                 ...state,
                 queueFetched: false,
                 researchQueue: null,
-                errMsgResearch: action.errMsgQueue
+                errMsgResearch: action.errMsgQueue,
+                researchStarted: false,
+                researchRequested: false
             }
         }
 
