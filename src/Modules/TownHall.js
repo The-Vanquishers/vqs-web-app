@@ -108,10 +108,12 @@ const level = empire.buildings.filter((item) => item.buildingId === Town_Hall)[0
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const handleUpgrade = (buildingId) => {
-    axios.post(`${apiUrl}/build/${empire.empireId}/${buildingId}`,{headers: { token: login.token}})
+    axios.post(`${apiUrl}/build/${empire.empireId}/${buildingId}`,{},{
+        headers: { token: login.token }
+      })
       .then(data => {
-    
         console.log(data);
       })
       .catch(e => {
