@@ -839,6 +839,7 @@ function Empire(props) {
           building={getBuildingDetails(buildingNames.RESEARCH_CENTER)}
           empireId={props.empire.empireId}
           resources={props.empire.resources}
+          userResearches={props.empire.researches}
           onClose={() => setResearchCenter(prevState => !prevState)} />
       }
     </div>

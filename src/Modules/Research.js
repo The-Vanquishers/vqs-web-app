@@ -19,7 +19,7 @@ import { loginReducer } from '../reducers/login';
 import { researchReducer } from '../reducers/researchReducer';
 import { getResearchQueue, researchRequest } from "../actions/research"
 
-function Research({ dispatch, login, research, building, onClose, empireId, resources }) {
+function Research({ dispatch, login, research, building, onClose, empireId, resources, userResearches }) {
 
     const style = {
         position: "absolute",
@@ -84,8 +84,8 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
     }
 
     const researchStatus = (researchId) => {
-        if (research.userResearches.includes(item => item.researchId === researchId)) {
-            return "Conducted";
+        if (userResearches.filter(item => item.researchId === researchId).length > 0) {
+            return <strong>Conducted</strong>;
         }
         else {
             return "Not Done Yet";
@@ -213,7 +213,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                     {researchNames.BIOPHILIC}
                                 </TableCell>
                                 <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* {researchStatus(researchSets[researchNames.BIOPHILIC])} */}
+                                    {researchStatus(researchSets[researchNames.BIOPHILIC])}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
 
@@ -282,7 +282,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                     {researchNames.BRANCHING}
                                 </TableCell>
                                 <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* {researchStatus(researchSets[researchNames.BRANCHING])} */}
+                                    {researchStatus(researchSets[researchNames.BRANCHING])}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
 
@@ -350,7 +350,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                     {researchNames.COMPUTATIONAL}
                                 </TableCell>
                                 <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* {researchStatus(researchSets[researchNames.COMPUTATIONAL])} */}
+                                    {researchStatus(researchSets[researchNames.COMPUTATIONAL])}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
 
@@ -419,7 +419,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                     {researchNames.NUTRIENT}
                                 </TableCell>
                                 <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* {researchStatus(researchSets[researchNames.NUTRIENT])} */}
+                                    {researchStatus(researchSets[researchNames.NUTRIENT])}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
 
@@ -488,7 +488,7 @@ function Research({ dispatch, login, research, building, onClose, empireId, reso
                                     {researchNames.BACTERIAL}
                                 </TableCell>
                                 <TableCell scope="row" align='center' style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
-                                    {/* {researchStatus(researchSets[researchNames.BACTERIAL])} */}
+                                    {researchStatus(researchSets[researchNames.BACTERIAL])}
                                 </TableCell>
                                 <TableCell sx={{ "& td": { border: 0 } }} style={{ paddingTop: 1.5, paddingBottom: 1.5 }}>
 
