@@ -54,14 +54,14 @@ const Mine = props => {
 
   const mineId = buildingNameToId["Mine"];
   const level = props.empire.buildings.filter((item) => item.buildingId === mineId)[0].level;
-  //console.log(level);
+
 
   useEffect(() => {
     const fetchHourProduction = async (lvl) => {
       const { data } = await axios.get(`${apiUrl}/building/${mineId}/${lvl}`);
       lvl === level ? setCurrent(data) : setOnelevelUp(data);
     }
-    fetchHourProduction(level);
+    //fetchHourProduction(level);
     fetchHourProduction(level + 1);
   }, [level, mineId])
 
@@ -83,23 +83,6 @@ const Mine = props => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [props]);
 console.log(requirements);
-
-//   useEffect(() => {
-//     const fetchRequirements = async () => {
-//       const { data } = await axios.get(`${apiUrl}/buildings/${mineId}`, {
-//         headers: { token: login.token, empireId: empire.empireId },
-//       });
-//       setRequirements(
-//         {
-//           buildingId: data.buildingId,
-//           constructionCost: data.constructionCost,
-//           constructionTime: data.constructionTime,
-//           currentLevel: data.level,
-//         },
-//       );
-//     }
-//     fetchRequirements();
-// },[empire.empireId,mineId,login.token])
 
 
 return (
