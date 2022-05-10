@@ -5,8 +5,10 @@ import signup from "./reducers/signup";
 import logging from "./reducers/logging"
 import mine from './reducers/mine';
 import stable from "./reducers/stableReducer";
-import warehouse from "./reducers/warehouse"
-import research from "./reducers/researchReducer"
+import warehouse from "./reducers/warehouse";
+import research from "./reducers/researchReducer";
+import house from "./reducers/house";
+
 
 const rootReducer = combineReducers({
   login,
@@ -16,7 +18,8 @@ const rootReducer = combineReducers({
   mine,
   stable,
   warehouse,
-  research
+  research,
+  house
 });
 
 export default rootReducer;
