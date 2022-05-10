@@ -40,6 +40,10 @@ const buildingSets = ["623173e1f10faea791509fb3", "62318861b51742f20a95513e", "6
   "62318931b51742f20a955149", "62318945b51742f20a95514b", "62318965b51742f20a95514d", "62318982b51742f20a95514f", "6231899db51742f20a955152", "623189b9b51742f20a955154",
   "623189dab51742f20a955156", "6232a83b79c7546bbfe20d58", "624855f0824e3e47905e0685"];
 
+const building1 = ["623173e1f10faea791509fb3", "62318861b51742f20a95513e", "62318895b51742f20a955140", "623188b7b51742f20a955142", "623188e4b51742f20a955144"];
+const building2 = ["62318919b51742f20a955147", "62318931b51742f20a955149", "62318945b51742f20a95514b", "62318965b51742f20a95514d", "62318982b51742f20a95514f"];
+const building3 = ["6231899db51742f20a955152", "623189b9b51742f20a955154", "623189dab51742f20a955156", "6232a83b79c7546bbfe20d58", "624855f0824e3e47905e0685"];
+
 const buildingIdToName = {
   "623173e1f10faea791509fb3": "Town Hall",
   "62318861b51742f20a95513e": "House",
@@ -83,18 +87,20 @@ const resourceSets = {
   Gold: "6233f80ae996f0998ee1ce7c"
 };
 
+
+
 const unitSets = {
   "Spear Man": "6232bf7b79c7546bbfe20e14",
   "Axe Man": "6232bf7b79c7546bbfe20e15",
   "Sword Man": "6232bf7b79c7546bbfe20e16",
-  Ram: "6232bf7b79c7546bbfe20e1b",
   "Heavy Cavalry": "6232bf7b79c7546bbfe20e18",
-  Cavalry: "6232bf7b79c7546bbfe20e17",
   "Cavalry Archer": "6232bf7b79c7546bbfe20e19",
   "Heavy Cavalry Archer": "6232bf7b79c7546bbfe20e1a",
-  Catapult: "6232bf7b79c7546bbfe20e1c",
+  Cavalry: "6232bf7b79c7546bbfe20e17",
   Scouts: "6232bf7b79c7546bbfe20e1d",
-  Vanquisher: "624c1fc47d042172892edd9a"
+  Vanquisher: "624c1fc47d042172892edd9a",
+  Catapult: "6232bf7b79c7546bbfe20e1c",
+  Ram: "6232bf7b79c7546bbfe20e1b"
 };
 
 const stableUnitNames = {
@@ -102,6 +108,11 @@ const stableUnitNames = {
   CAVALRY: "Cavalry",
   CAVALRY_ARCHER: "Cavalry Archer",
   HEAVY_CAVALRY_ARCHER: "Heavy Cavalry Archer"
+};
+
+const workShopUnitNames = {
+  CATAPULT: 'Catapult',
+  RAM: 'Ram'
 };
 
 const stableTrainingCost = {
@@ -135,7 +146,86 @@ const stableTrainingCost = {
   },
 }
 
+const workShopUnitTrainingCost = {
+  [workShopUnitNames.CATAPULT]: {
+    Iron: 532,
+    Wood: 316,
+    Stone: 888,
+    time: 550,
+    housingRequirement: 3
+  },
+  [workShopUnitNames.RAM]: {
+    Iron: 532,
+    Wood: 316,
+    Stone: 887,
+    time: 550,
+    housingRequirement: 3
+  },
+}
 
+const researchNames = {
+  BIOPHILIC: 'Biophilic Design',
+  BRANCHING: 'Branching Structure',
+  COMPUTATIONAL: 'Computational Design',
+  NUTRIENT: 'Nutrient Dynamics',
+  BACTERIAL: 'Bacterial Species',
+  RECIPROCAL: 'Reciprocal Grafting'
+}
+
+const researchSets = {
+  [researchNames.BIOPHILIC]: "6232291d79c7546bbfe20d48",
+  [researchNames.BRANCHING]: "6232293e79c7546bbfe20d4a",
+  [researchNames.COMPUTATIONAL]: "6232294c79c7546bbfe20d4c",
+  [researchNames.NUTRIENT]: "62322cea79c7546bbfe20d4e",
+  [researchNames.BACTERIAL]: "62322d1279c7546bbfe20d50",
+  [researchNames.RECIPROCAL]: "62322d2079c7546bbfe20d52"
+}
+
+
+const researchCost = {
+  BIOPHILIC:
+  {
+    time: 1200,
+    Iron: 1500,
+    Wood: 1500,
+    Stone: 1500
+  },
+  BRANCHING:
+  {
+    time: 3000,
+    Iron: 5000,
+    Wood: 5000,
+    Stone: 5000
+  },
+  COMPUTATIONAL:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  },
+  NUTRIENT:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  },
+  BACTERIAL:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  },
+  RECIPROCAL:
+  {
+    time: 7000,
+    Iron: 15000,
+    Wood: 15000,
+    Stone: 15000
+  }
+}
 
 module.exports = {
   apiUrl,
@@ -149,5 +239,13 @@ module.exports = {
   ITEM_VISIBLE_CLASS,
   unitSets,
   stableUnitNames,
-  stableTrainingCost
+  stableTrainingCost,
+  workShopUnitTrainingCost,
+  workShopUnitNames,
+  building1,
+  building2,
+  building3,
+  researchCost, 
+  researchSets, 
+  researchNames
 };

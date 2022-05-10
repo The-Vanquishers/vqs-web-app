@@ -52,17 +52,15 @@ const Farm = ({ login, empire }) => {
   const [oneLevelup, setOnelevelUp] = useState(0);
   const [current, setCurrent] = useState(0);
   const [requirements, setRequirements] = useState({});
-  console.log("Buildings", empire.buildings);
+
   const farm = buildingNameToId["Farm"];
-  const level = empire.buildings.filter(item => item.buildingId === farm)[0]
-    .level;
+  const level = empire.buildings.filter(item => item.buildingId === farm)[0].level;
 
   useEffect(() => {
     const fetchHourlyProduction = async lvl => {
       const { data } = await axios.get(`${apiUrl}/building/${farm}/${lvl}`);
-      lvl === level
-        ? setCurrent(data.hourlyProduction)
-        : setOnelevelUp(data.hourlyProduction);
+      
+      lvl === level ? setCurrent(data.hourlyProduction) : setOnelevelUp(data.hourlyProduction);
     };
     fetchHourlyProduction(level);
     fetchHourlyProduction(level + 1);
@@ -73,7 +71,7 @@ const Farm = ({ login, empire }) => {
       const { data } = await axios.get(`${apiUrl}/buildings/${farm}`, {
         headers: { token: login.token, empireId: empire.empireId }
       });
-      console.log("Requirements", data);
+      
       setRequirements({
         buildingId: data.buildingId,
         constructionCost: data.constructionCost,
@@ -83,7 +81,7 @@ const Farm = ({ login, empire }) => {
     };
     fetchRequirements();
   }, [empire.empireId, farm, login.token]);
-
+  
   return (
     <>
       <Grid container spacing={2} sx={{ my: 2 }}>
