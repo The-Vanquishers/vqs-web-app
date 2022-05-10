@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { apiUrl, buildingNameToId } = require("../variables");
-const mineBuildingId = buildingNameToId['Mine'];
+const mineId = buildingNameToId['Mine'];
 
 exports.FETCHING_MINE = "FETCHING_MINE";
 exports.FETCHED_MINE = "FETCHED_MINE";
@@ -11,14 +11,15 @@ exports.mine = (token, empireId) => dispatch => {
         type: this.FETCHING_MINE
     })
     return axios
-        .get(`${apiUrl}/buildings/${mineBuildingId}`, { headers: { token: token }, empireId: empireId })
+        .get(`${apiUrl}/buildings/${mineId}`, { headers: { token: token, empireid: empireId } })
         .then(data => {
             dispatch({
                 type: this.FETCHED_MINE,
                 level: data.data.level,
                 hp: data.data.hp,
                 hourlyProduction: data.data.hourlyProduction,
-                constructionTime: data.data.constructionTime
+                constructionTime: data.data.constructionTime,
+                constructionCost:data.data.constructionCost
 
             });
         })

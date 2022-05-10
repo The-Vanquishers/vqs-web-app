@@ -3,7 +3,7 @@ import login from "./reducers/login";
 import empire from "./reducers/empire";
 import signup from "./reducers/signup";
 import logging from "./reducers/logging"
-import mineReducer from './reducers/mine';
+import mine from './reducers/mine';
 import stable from "./reducers/stableReducer";
 import warehouse from "./reducers/warehouse"
 import research from "./reducers/researchReducer"
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   empire,
   signup,
   logging,
-  mineReducer,
+  mine,
   stable,
   warehouse,
   research
