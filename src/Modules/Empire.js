@@ -36,6 +36,8 @@ import RockPicker from './RockPicker';
 import { warehouseReducer } from "../reducers/warehouse";
 import { warehouse } from "../actions/warehouse";
 import TownHall from "./TownHall";
+import { loggingReducer } from "../reducers/logging";
+
 import Barrack from "./Barrack";
 import House from "./House";
 const showGrid = false;
@@ -56,6 +58,10 @@ function Empire(props) {
   const [warehouseCapacity, setWarehouseCapacity] = useState(0);
   const [warehouseLevel, setWarehouseLevel] = useState(null);
   const wareHouseId = buildingNameToId["Warehouse"];
+  const [foodCount, setFoodCount] = useState(resource.food);
+  const [woodCount, setWoodCount] = useState(resource.wood);
+  const [ironCount, setIronCount] = useState(resource.iron);
+  const [stoneCount, setStoneCount] = useState(resource.stone);
   const [showBarrackModal, setShowBarrackModal] = useState(false);
   const [showHouse, setShowHouse] = useState(false);
   const [showResearchCenter, setResearchCenter] = useState(false);
@@ -93,19 +99,23 @@ function Empire(props) {
     if (props.empire.isFetched) {
       setResource(props.empire.resources);
       setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].level);
-      setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve);
+      setFoodCount(resource.food);
+      setWoodCount(resource.wood);
+      setIronCount(resource.iron);
+      setStoneCount(resource.stone);
       return;
     }
     if (props.empire.fetchingFailed) {
       setErr(props.empire.errMsg);
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, token, showloggingModal, wareHouseId]);
 
 
-
   useEffect(() => {
-    if (props.empire.isFetched && !props.warehouse.isFetched) {
+    if (props.empire.isFetched && !props.warehouse.isFetched && warehouseLevel ) {
+      //console.log(wareHouseId,warehouseLevel);
       props.dispatch(warehouse(wareHouseId, warehouseLevel));
       return;
     }
@@ -114,9 +124,35 @@ function Empire(props) {
       return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [warehouseLevel]);
+  }, [wareHouseId, warehouseLevel,props.empire.buildings]);
 
 
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setFoodCount(foodCount + 50);
+      if(foodCount >= warehouseCapacity){
+        setFoodCount(warehouseCapacity)
+      }
+      setWoodCount(woodCount + 50);
+      if(woodCount >= warehouseCapacity){
+        setWoodCount(warehouseCapacity)
+      }
+      setIronCount(ironCount + 50);
+      if(ironCount >= warehouseCapacity){
+        setIronCount(warehouseCapacity)
+      }
+      setStoneCount(stoneCount + 50);
+      if(stoneCount >= warehouseCapacity){
+        setStoneCount(warehouseCapacity)
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [foodCount,woodCount,warehouseCapacity,stoneCount,ironCount]);
+  //console.log(props.logging.loggingData);
   return (
     <div>
       {props.empire.isFetching && !props.empire.fetchingFailed && <Spinner />}
@@ -196,7 +232,7 @@ function Empire(props) {
                       setShowFirmModal(!showFirmModal);
                     }}
                   />{" "}
-                  {warehouseCapacity > resource.food ? resource.food : <span style={{ color: "red" }}>{resource.food}</span>}
+                  {warehouseCapacity > foodCount ? foodCount : <span style={{ color: "red" }}>{warehouseCapacity}</span>}
 
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
@@ -209,7 +245,7 @@ function Empire(props) {
                       setShowLoggingMoadl(!showloggingModal);
                     }}
                   />{" "}
-                  {warehouseCapacity > resource.wood ? resource.wood : <span style={{ color: "red" }}>{resource.wood}</span>}
+                  {warehouseCapacity > woodCount ? woodCount : <span style={{ color: "red" }}>{warehouseCapacity}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -217,8 +253,11 @@ function Empire(props) {
                     alt=""
                     title="iron"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowMine(!showMine);
+                    }}
                   />{" "}
-                  {warehouseCapacity > resource.iron ? resource.iron : <span style={{ color: "red" }}>{resource.iron}</span>}
+                  {warehouseCapacity > ironCount ? ironCount : <span style={{ color: "red" }}>{warehouseCapacity}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -226,8 +265,11 @@ function Empire(props) {
                     alt=""
                     title="stone"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowRockPicker(!showRockPicker);
+                    }}
                   />{" "}
-                  {warehouseCapacity > resource.stone ? resource.stone : <span style={{ color: "red" }}>{resource.stone}</span>}
+                  {warehouseCapacity > stoneCount ? stoneCount : <span style={{ color: "red" }}>{warehouseCapacity}</span>}
                 </div>
                 <div style={{ float: "left", marginRight: "10px" }}>
                   <img
@@ -380,6 +422,9 @@ function Empire(props) {
                   backgroundPosition: buildingPosition.RESEARCH_CENTER,
                   cursor: "pointer"
                 }}
+              // onClick={() => {
+              //   setShowTownHallModal(!showTownHallModal);
+              // }}
                 onClick={() => {
                   setResearchCenter(prevState => !prevState);
                 }}
@@ -850,7 +895,8 @@ const mapStateToProps = state => {
   return {
     empire: empireReducer(state),
     login: loginReducer(state),
-    warehouse: warehouseReducer(state)
+    warehouse: warehouseReducer(state),
+    logging: loggingReducer(state)
   };
 };
 export default connect(mapStateToProps)(Empire);
