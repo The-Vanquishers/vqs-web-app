@@ -108,12 +108,12 @@ return (
           Mine (Level {level})
         </Typography>
         <Typography variant="body2">
-          This is mine that's produce Gold.
+          This is mine that's produce Iron.
         </Typography>
       </Grid>
     </Grid>
 
-    <Grid container spacing={2} style={{ backgroundColor: "#d6ae7b", paddingBottom: "10px" }} sx={{ my: 1 }}>
+    <Grid container spacing={2}  sx={{ my: 1 }}>
 
       <Grid item xs={6}>
         <Typography variant="h6" component="h6">
@@ -143,7 +143,7 @@ return (
           flexWrap: "wrap",
         }}>
           < img
-            src={GoldIcon}
+            src={IronIcon}
             alt=""
             style={{ width: "20px" }}
           /> <Typography sx={{ mx: 2 }}> {requirements.hourlyProduction}</Typography >
@@ -156,7 +156,7 @@ return (
           flexWrap: "wrap",
         }}>
           < img
-            src={GoldIcon}
+            src={IronIcon}
             alt=""
             style={{ width: "20px" }}
           /> <Typography sx={{ mx: 2 }}> {oneLevelup.hourlyProduction}</Typography >
