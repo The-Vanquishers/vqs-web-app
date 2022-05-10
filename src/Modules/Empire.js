@@ -91,7 +91,6 @@ function Empire(props) {
     if (props.empire.isFetched) {
       setResource(props.empire.resources);
       setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].level);
-      //setWarehouseLevel(props.empire.buildings.filter((item) => item.buildingId === wareHouseId)[0].leve);
       setFoodCount(resource.food);
       setWoodCount(resource.wood);
       setIronCount(resource.iron);
@@ -102,11 +101,13 @@ function Empire(props) {
       setErr(props.empire.errMsg);
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, token, showloggingModal, wareHouseId]);
 
 
   useEffect(() => {
-    if (props.empire.isFetched && !props.warehouse.isFetched) {
+    if (props.empire.isFetched && !props.warehouse.isFetched && warehouseLevel ) {
+      //console.log(wareHouseId,warehouseLevel);
       props.dispatch(warehouse(wareHouseId, warehouseLevel));
       return;
     }
@@ -114,7 +115,8 @@ function Empire(props) {
       setWarehouseCapacity(props.warehouse.capacity);
       return;
     }
-  }, [wareHouseId, warehouseLevel, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wareHouseId, warehouseLevel,props.empire.buildings]);
 
 
 
@@ -243,6 +245,9 @@ function Empire(props) {
                     alt=""
                     title="iron"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowMine(!showMine);
+                    }}
                   />{" "}
                   {warehouseCapacity > ironCount ? ironCount : <span style={{ color: "red" }}>{warehouseCapacity}</span>}
                 </div>
@@ -252,6 +257,9 @@ function Empire(props) {
                     alt=""
                     title="stone"
                     style={{ width: "20px" }}
+                    onClick={() => {
+                      setShowRockPicker(!showRockPicker);
+                    }}
                   />{" "}
                   {warehouseCapacity > stoneCount ? stoneCount : <span style={{ color: "red" }}>{warehouseCapacity}</span>}
                 </div>
