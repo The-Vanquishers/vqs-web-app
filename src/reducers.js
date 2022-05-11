@@ -7,6 +7,7 @@ import mine from './reducers/mine';
 import stable from "./reducers/stableReducer";
 import warehouse from "./reducers/warehouse"
 import research from "./reducers/researchReducer"
+import RockPicker from './reducers/rockPicker';
 
 const rootReducer = combineReducers({
   login,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   mine,
   stable,
   warehouse,
-  research
+  research,
+  RockPicker
 });
 
 export default rootReducer;
