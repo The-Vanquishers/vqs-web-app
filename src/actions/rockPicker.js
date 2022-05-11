@@ -11,7 +11,6 @@ exports.rockPicker = (token, empireId) => dispatch => {
         type: this.FETCHING_ROCK_PICKER
    
     })
-    console.log(rockPickerId);
     return axios
         .get(`${apiUrl}/buildings/${rockPickerId}`, { headers: { token: token, empireid: empireId } })
         .then(data => {
