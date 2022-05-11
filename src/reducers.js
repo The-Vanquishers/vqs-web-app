@@ -8,6 +8,7 @@ import stable from "./reducers/stableReducer";
 import warehouse from "./reducers/warehouse";
 import research from "./reducers/researchReducer";
 import house from "./reducers/house";
+import RockPicker from './reducers/rockPicker';
 
 const rootReducer = combineReducers({
   login,
