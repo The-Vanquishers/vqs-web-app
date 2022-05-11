@@ -9,7 +9,6 @@ import warehouse from "./reducers/warehouse";
 import research from "./reducers/researchReducer";
 import house from "./reducers/house";
 
-
 const rootReducer = combineReducers({
   login,
   empire,
@@ -19,7 +18,8 @@ const rootReducer = combineReducers({
   stable,
   warehouse,
   research,
-  house
+  house,
+  RockPicker
 });
 
 export default rootReducer;

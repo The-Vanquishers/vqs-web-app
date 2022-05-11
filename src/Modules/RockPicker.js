@@ -13,6 +13,9 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import Divider from '@mui/material/Divider';
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
+import { rockPickerReducer } from './../reducers/rockPicker';
+import { rockPicker } from '../actions/rockPicker';
+
 
 const msToTime = (time) => {
     let seconds = Math.floor((time / 1000) % 60),
@@ -43,41 +46,41 @@ const resourceMapper = (id) => {
     }
 }
 
-const RockPicker = ({ login, empire }) => {
+const RockPicker = props => {
+    const { token } = props.login;
+    const { empireId } = props.empire;
     const [oneLevelup, setOnelevelUp] = useState(0);
     const [current, setCurrent] = useState(0);
     const [requirements, setRequirements] = useState({});
 
-    const rockPicker = buildingNameToId["Rock picker"];
-    const level = empire.buildings.filter((item) => item.buildingId === rockPicker)[0].level;
+    const rockPickerId = buildingNameToId["Rock picker"];
+    const level = props.empire.buildings.filter((item) => item.buildingId === rockPickerId)[0].level;
 
     useEffect(() => {
         const fetchHourProduction = async (lvl) => {
-            const { data } = await axios.get(`${apiUrl}/building/${rockPicker}/${lvl}`);
+            const { data } = await axios.get(`${apiUrl}/building/${rockPickerId}/${lvl}`);
             lvl === level ? setCurrent(data) : setOnelevelUp(data);
         }
-        fetchHourProduction(level);
         fetchHourProduction(level + 1);
-    }, [level, rockPicker])
+    }, [level, rockPickerId])
 
     useEffect(() => {
-        const fetchRequirements = async () => {
-            const { data } = await axios.get(`${apiUrl}/buildings/${rockPicker}`, {
-                headers: { token: login.token, empireId: empire.empireId },
-            });
-            setRequirements(
-                {
-                    buildingId: data.buildingId,
-                    constructionCost: data.constructionCost,
-                    constructionTime: data.constructionTime,
-                    currentLevel: data.level,
-                },
-            );
+        if (!props.rockPicker.isFetching && !props.rockPicker.isFetched) {
+            props.dispatch(rockPicker(token, empireId));
+            return;
         }
-        fetchRequirements();
-    }, [empire.empireId, rockPicker, login.token])
-     
-    console.log(oneLevelup);
+        if (props.rockPicker.isFetched) {
+
+            setRequirements({
+                level: props.rockPicker.level,
+                hourlyProduction: props.rockPicker.hourlyProduction,
+                constructionCost: props.rockPicker.constructionCost,
+                constructionTime: props.rockPicker.constructionTime
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props]);
+    
 
 
     return (
@@ -100,7 +103,7 @@ const RockPicker = ({ login, empire }) => {
                 ></Grid>
                 <Grid item xs={8}>
                     <Typography variant="h5" component="h6">
-                    <strong> Rock Picker </strong> (Level {level})
+                        <strong> Rock Picker </strong> (Level {level})
                     </Typography>
                     <Typography variant="body2">
                         This is Rock Picker that's produce Rock.
@@ -108,11 +111,11 @@ const RockPicker = ({ login, empire }) => {
                 </Grid>
             </Grid>
 
-            <Grid container spacing={2} style={{ backgroundColor: "#d6ae7b", paddingBottom: "10px" }} sx={{ my: 1 }}>
+            <Grid container spacing={2}  sx={{ my: 1 }}>
 
                 <Grid item xs={6}>
                     <Typography variant="h6" component="h6">
-                         Rock Picker (Level {level})
+                        Rock Picker (Level {level})
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -141,7 +144,7 @@ const RockPicker = ({ login, empire }) => {
                             src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
-                        /> <Typography sx={{ mx: 2 }}> {current.hourlyProduction}</Typography >
+                        /> <Typography sx={{ mx: 2 }}> {requirements.hourlyProduction}</Typography >
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -150,7 +153,7 @@ const RockPicker = ({ login, empire }) => {
                         alignItems: "center",
                         flexWrap: "wrap",
                     }}>
-                        < img 
+                        < img
                             src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
@@ -211,6 +214,7 @@ const RockPicker = ({ login, empire }) => {
 }
 const mapStateToProps = (state) => {
     return {
+        rockPicker: rockPickerReducer(state),
         login: loginReducer(state),
         empire: empireReducer(state),
     };
