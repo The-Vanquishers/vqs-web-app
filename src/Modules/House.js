@@ -13,7 +13,8 @@ import IronIcon from "../Assets/resources/iron.png";
 import GoldIcon from "../Assets/resources/gold.png";
 import Divider from '@mui/material/Divider';
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
-
+import { houseReducer } from './../reducers/house';
+import { house } from '../actions/house';
 const msToTime = (time) => {
     let seconds = Math.floor((time / 1000) % 60),
         minutes = Math.floor((time / (1000 * 60)) % 60),
@@ -43,42 +44,41 @@ const resourceMapper = (id) => {
     }
 }
 
-const House = ({ login, empire }) => {
+const House = props => {
+    const { token } = props.login;
+    const { empireId } = props.empire;
     const [oneLevelup, setOnelevelUp] = useState(0);
     const [current, setCurrent] = useState(0);
     const [requirements, setRequirements] = useState({});
 
     const houseId = buildingNameToId["House"];
-    const level = empire.buildings.filter((item) => item.buildingId === houseId)[0].level;
+    const level = props.empire.buildings.filter((item) => item.buildingId === houseId)[0].level;
 
     useEffect(() => {
         const fetchHourProduction = async (lvl) => {
             const { data } = await axios.get(`${apiUrl}/building/${houseId}/${lvl}`);
             lvl === level ? setCurrent(data) : setOnelevelUp(data);
         }
-        fetchHourProduction(level);
         fetchHourProduction(level + 1);
     }, [level, houseId])
 
-    useEffect(() => {
-        const fetchRequirements = async () => {
-            const { data } = await axios.get(`${apiUrl}/buildings/${houseId}`, {
-                headers: { token: login.token, empireId: empire.empireId },
-            });
-            setRequirements(
-                {
-                    buildingId: data.buildingId,
-                    constructionCost: data.constructionCost,
-                    constructionTime: data.constructionTime,
-                    currentLevel: data.level,
-                },
-            );
-        }
-        fetchRequirements();
-    }, [empire.empireId, houseId, login.token])
 
-    console.log(oneLevelup);
-    console.log(current);
+    useEffect(() => {
+        if (!props.house.isFetching && !props.house.isFetched) {
+          props.dispatch(house(token, empireId));
+          return;
+        }
+        if (props.house.isFetched) {
+      
+          setRequirements({
+            level: props.house.level,
+            capacity: props.house.capacity,
+            constructionCost: props.house.constructionCost,
+            constructionTime: props.house.constructionTime
+          });
+        }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [props]);
 
 
     return (
@@ -142,7 +142,7 @@ const House = ({ login, empire }) => {
                             src={StoneIcon}
                             alt=""
                             style={{ width: "20px" }}
-                        /> <Typography sx={{ mx: 2 }}> {current.capacity}</Typography >
+                        /> <Typography sx={{ mx: 2 }}> {requirements.capacity}</Typography >
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -212,6 +212,7 @@ const House = ({ login, empire }) => {
 }
 const mapStateToProps = (state) => {
     return {
+        house: houseReducer(state),
         login: loginReducer(state),
         empire: empireReducer(state),
     };
